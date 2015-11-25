@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ItemDetailViewController">
+            <connections>
+                <outlet property="tableView" destination="tlm-ng-un8" id="HE3-zi-k5w"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tlm-ng-un8">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                    <animations/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
+            </subviews>
+            <animations/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="tlm-ng-un8" secondAttribute="trailing" id="4RN-aq-Ykp"/>
+                <constraint firstItem="tlm-ng-un8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Q9e-7L-EFk"/>
+                <constraint firstItem="tlm-ng-un8" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="RrK-B2-sut"/>
+                <constraint firstAttribute="bottom" secondItem="tlm-ng-un8" secondAttribute="bottom" id="vRP-lH-9HG"/>
+            </constraints>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="tlm-ng-un8"/>
+                </mask>
+                <mask key="constraints">
+                    <exclude reference="4RN-aq-Ykp"/>
+                    <exclude reference="Q9e-7L-EFk"/>
+                    <exclude reference="RrK-B2-sut"/>
+                    <exclude reference="vRP-lH-9HG"/>
+                </mask>
+            </variation>
+            <variation key="widthClass=compact">
+                <mask key="subviews">
+                    <include reference="tlm-ng-un8"/>
+                </mask>
+                <mask key="constraints">
+                    <include reference="4RN-aq-Ykp"/>
+                    <include reference="Q9e-7L-EFk"/>
+                    <include reference="RrK-B2-sut"/>
+                    <include reference="vRP-lH-9HG"/>
+                </mask>
+            </variation>
+        </view>
+    </objects>
+</document>

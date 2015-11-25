@@ -1,0 +1,62 @@
+PODS:
+  - AFNetworking (2.6.1):
+    - AFNetworking/NSURLConnection (= 2.6.1)
+    - AFNetworking/NSURLSession (= 2.6.1)
+    - AFNetworking/Reachability (= 2.6.1)
+    - AFNetworking/Security (= 2.6.1)
+    - AFNetworking/Serialization (= 2.6.1)
+    - AFNetworking/UIKit (= 2.6.1)
+  - AFNetworking/NSURLConnection (2.6.1):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/NSURLSession (2.6.1):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (2.6.1)
+  - AFNetworking/Security (2.6.1)
+  - AFNetworking/Serialization (2.6.1)
+  - AFNetworking/UIKit (2.6.1):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
+  - Braintree (3.9.6):
+    - Braintree/API (= 3.9.6)
+    - Braintree/Coinbase (= 3.9.6)
+    - Braintree/Drop-In (= 3.9.6)
+    - Braintree/Payments (= 3.9.6)
+    - Braintree/PayPal (= 3.9.6)
+    - Braintree/UI (= 3.9.6)
+    - Braintree/Venmo (= 3.9.6)
+  - Braintree/API (3.9.6)
+  - Braintree/Coinbase (3.9.6):
+    - Braintree/API
+  - Braintree/Drop-In (3.9.6):
+    - Braintree/API
+    - Braintree/Coinbase
+    - Braintree/Payments
+    - Braintree/PayPal
+    - Braintree/UI
+    - Braintree/Venmo
+  - Braintree/Payments (3.9.6):
+    - Braintree/API
+    - Braintree/Coinbase
+    - Braintree/PayPal
+    - Braintree/Venmo
+  - Braintree/PayPal (3.9.6):
+    - Braintree/API
+    - Braintree/UI
+  - Braintree/UI (3.9.6):
+    - Braintree/API
+  - Braintree/Venmo (3.9.6):
+    - Braintree/API
+
+DEPENDENCIES:
+  - AFNetworking (~> 2.5)
+  - Braintree (~> 3.9)
+
+SPEC CHECKSUMS:
+  AFNetworking: 8e4e60500beb8bec644cf575beee72990a76d399
+  Braintree: 74f0bd85743c2227147c361cc2c5c9aefe083ae8
+
+COCOAPODS: 0.38.2

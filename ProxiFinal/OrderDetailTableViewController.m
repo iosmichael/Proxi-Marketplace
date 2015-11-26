@@ -1,24 +1,23 @@
 //
-//
-//  ItemDetailViewController.m
+//  OrderDetailTableViewController.m
 //  ProxiFinal
 //
-//  Created by Michael Liu on 10/20/15.
+//  Created by Michael Liu on 11/25/15.
 //  Copyright © 2015 Michael Liu. All rights reserved.
 //
 
-#import "ItemDetailViewController.h"
-#import "OrderConfirmationTableViewController.h"
+#import "OrderDetailTableViewController.h"
 #define Screen_width [[UIScreen mainScreen]bounds].size.width
 
-@interface ItemDetailViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface OrderDetailTableViewController ()
 
 @end
 
-@implementation ItemDetailViewController{
+@implementation OrderDetailTableViewController{
     UIView *titleView;
     UIView *priceTitleView;
     CGSize descSize;
+    UIView *personDetailView;
     UIView *descView;
 }
 
@@ -44,7 +43,7 @@
 }
 
 -(void)refresh{
-    [self.item_image setImage:[UIImage imageWithData:self.item.image]];
+    [self.item_image setImage:[UIImage imageWithData:self.order.img_data]];
     
 }
 
@@ -58,7 +57,7 @@
     [self.tableView dequeueReusableCellWithIdentifier:@"regularTableViewCell"];
     UITableViewCell *cell = [[UITableViewCell alloc]init];
     switch (indexPath.section) {
-        
+            
         case 0:
             [cell.contentView addSubview:self.item_image];
             break;
@@ -67,6 +66,9 @@
             break;
         case 2:
             [cell.contentView addSubview:descView];
+            break;
+        case 3:
+            [cell.contentView addSubview:personDetailView];
             break;
         default:
             [cell.contentView addSubview:self.orderButton];
@@ -78,7 +80,7 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     switch (indexPath.section) {
-        
+            
         case 0:
             return Screen_width*0.9+10;
             break;
@@ -88,11 +90,14 @@
         case 2:
             return descSize.height+50;
             break;
+        case 3:
+            return 100;
+            break;
         default:
             return 70;
             break;
     }
-
+    
     
     return 0;
 }
@@ -100,7 +105,7 @@
     return 1;
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 4;
+    return 5;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -113,6 +118,10 @@
             break;
         case 3:
             return 10;
+            break;
+        case 4:
+            return 10;
+            break;
         default:
             return 0;
             break;
@@ -145,6 +154,7 @@
     self.navigationController.navigationBar.barTintColor =[UIColor colorWithRed:87/255.0 green:183/255.0 blue:182/255.0 alpha:1.0];
     [self setupTime];
     [self setupItemInfo];
+    [self setupPersonInfo];
 }
 
 -(void)setupTime{
@@ -152,8 +162,7 @@
     /*date Formatter*/
     NSDateFormatter *dateFormatter=[[NSDateFormatter alloc]init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSDate *date=[dateFormatter dateFromString:self.item.date];
-    NSLog(@"%@",self.item.date);
+    NSDate *date=[dateFormatter dateFromString:self.order.order_date];
     NSLocale *usLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
     [dateFormatter setLocale:usLocale];
     dateFormatter.timeStyle = NSDateFormatterNoStyle;
@@ -164,15 +173,15 @@
 -(void)setupItemInfo{
     UIImageView *titleIcon = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 40, 40)];
     self.item_title = [[UILabel alloc]initWithFrame:CGRectMake(75, 20, Screen_width-15, 25)];
-    NSAttributedString *titleStr =[[NSAttributedString alloc]initWithString:self.item.item_title attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:20]}];
+    NSAttributedString *titleStr =[[NSAttributedString alloc]initWithString:self.order.item_title attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:20]}];
     self.item_title.attributedText = titleStr;
     [titleIcon setImage:[UIImage imageNamed:@"gift"]];
     UIImageView *priceIcon = [[UIImageView alloc]initWithFrame:CGRectMake(15, 65, 40, 40)];
     [priceIcon setImage:[UIImage imageNamed:@"vemo"]];
     self.item_current_price = [[UILabel alloc]initWithFrame:CGRectMake(75, 70, Screen_width-15, 25)];
-    NSAttributedString *priceStr =[[NSAttributedString alloc]initWithString:[@"$ " stringByAppendingString:self.item.price_current] attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:19]}];
+    NSAttributedString *priceStr =[[NSAttributedString alloc]initWithString:[@"$ " stringByAppendingString:self.order.order_price] attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:19]}];
     self.item_current_price.attributedText = priceStr;
-    
+
     
     priceTitleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0,Screen_width, 120)];
     [priceTitleView addSubview:self.item_title];
@@ -182,9 +191,11 @@
     
     UIImageView *descIcon = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 40, 40)];
     [descIcon setImage:[UIImage imageNamed:@"note"]];
-    NSAttributedString *descStr =[[NSAttributedString alloc]initWithString:self.item.item_description attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:14]}];
+    
+    
+    NSAttributedString *descStr =[[NSAttributedString alloc]initWithString:self.order.item_description attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:14]}];
     CGSize size = CGSizeMake(230, 999);
-    CGRect textRect = [self.item.item_description
+    CGRect textRect = [self.order.item_description
                        boundingRectWithSize:size
                        options:NSStringDrawingUsesLineFragmentOrigin
                        attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Helvetica" size:14]}
@@ -207,18 +218,37 @@
     [self.orderButton setTitle:@"BUY" forState:UIControlStateNormal];
     
     
-    if (self.item.image) {
-        [self.item_image setImage:[UIImage imageWithData:self.item.image]];
+    
+    if (self.order.img_data) {
+        [self.item_image setImage:[UIImage imageWithData:self.order.img_data]];
     }else{
         [self.item_image setImage:[UIImage imageNamed:@"manshoes"]];
     }
-
 }
 
+-(void)setupPersonInfo{
+    personDetailView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Screen_width, 100)];
+    UIImageView *personIcon = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 40, 40)];
+    [personIcon setImage:[UIImage imageNamed:@"userIcon"]];
+    UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(75, 15, Screen_width-75, 17)];
+    UILabel *emailLabel = [[UILabel alloc]initWithFrame:CGRectMake(75, 36, Screen_width - 75, 17)];
+    UILabel *phoneLabel = [[UILabel alloc]initWithFrame:CGRectMake(75, 60, Screen_width - 75, 17)];
+    NSAttributedString *nameStr =[[NSAttributedString alloc]initWithString:[self profileName:self.order.user_info[@"seller_email"]] attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:14]}];
+    nameLabel.attributedText = nameStr;
+    NSAttributedString *emailStr =[[NSAttributedString alloc]initWithString:self.order.user_info[@"seller_email"] attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:14]}];
+    emailLabel.attributedText = emailStr;
+    NSAttributedString *phoneStr =[[NSAttributedString alloc]initWithString:self.order.user_info[@"seller_phone"] attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:14]}];
+    phoneLabel.attributedText = phoneStr;
+    [personDetailView addSubview:personIcon];
+    [personDetailView addSubview:nameLabel];
+    [personDetailView addSubview:emailLabel];
+    [personDetailView addSubview:phoneLabel];
+    
+    
+}
+
+
 -(void)orderButtonTapped{
-    OrderConfirmationTableViewController *orderConfirmationTableViewController = [[OrderConfirmationTableViewController alloc]init];
-    orderConfirmationTableViewController.orderItem = self.item;
-    [self.navigationController pushViewController:orderConfirmationTableViewController animated:YES];
 }
 
 
@@ -231,14 +261,24 @@
     UIGraphicsEndImageContext();
     return reSizeImage;
 }
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(NSString *)profileName:(NSString *)email{
+    NSString *usernameString = email;
+    NSArray *components = [usernameString componentsSeparatedByString:@"@"];
+    NSString *nameString = [components objectAtIndex:0];
+    NSArray *nameComponents = [nameString componentsSeparatedByString:@"."];
+    NSString *firstName = [nameComponents objectAtIndex:0];
+    
+    NSString *capitalizedFirstName = [firstName stringByReplacingCharactersInRange:NSMakeRange(0,1)
+                                                                        withString:[[firstName substringToIndex:1] capitalizedString]];
+    NSString *lastName = [nameComponents objectAtIndex:1];
+    NSString *capitalizedLastName = [lastName stringByReplacingCharactersInRange:NSMakeRange(0,1)
+                                                                      withString:[[lastName substringToIndex:1] capitalizedString]];
+    
+    NSString *fullName = [capitalizedFirstName stringByAppendingString:[@" " stringByAppendingString:capitalizedLastName]];
+    return fullName;
+
 }
-*/
+
 
 @end

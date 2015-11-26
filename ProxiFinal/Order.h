@@ -18,7 +18,8 @@
 @property (strong,nonatomic) NSString *item_title;
 @property (strong,nonatomic) NSString *item_description;
 @property (strong,nonatomic) NSData *img_data;
+@property (strong,nonatomic) NSDictionary *user_info;
 
--(instancetype)initWithItem:(NSString *)item_id user:(NSString *)user_id orderID:(NSString *)order_id orderDate:(NSString *)orderDate orderPrice:(NSString *)orderPrice item_img_url:(NSString *)item_img_url item_title:(NSString *)item_title item_description:(NSString *)item_description;
+-(instancetype)initWithItem:(NSString *)item_id user:(NSString *)user_id orderID:(NSString *)order_id orderDate:(NSString *)orderDate orderPrice:(NSString *)orderPrice item_img_url:(NSString *)item_img_url item_title:(NSString *)item_title item_description:(NSString *)item_description user_info:(NSDictionary *)user_info;
 
 @end

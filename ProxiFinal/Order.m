@@ -11,7 +11,7 @@
 
 @implementation Order
 
--(instancetype)initWithItem:(NSString *)item_id user:(NSString *)user_id orderID:(NSString *)order_id orderDate:(NSString *)orderDate orderPrice:(NSString *)orderPrice item_img_url:(NSString *)item_img_url item_title:(NSString *)item_title item_description:(NSString *)item_description{
+-(instancetype)initWithItem:(NSString *)item_id user:(NSString *)user_id orderID:(NSString *)order_id orderDate:(NSString *)orderDate orderPrice:(NSString *)orderPrice item_img_url:(NSString *)item_img_url item_title:(NSString *)item_title item_description:(NSString *)item_description user_info:(NSDictionary *)user_info{
     self = [super init];
     if (self) {
         self.order_id = order_id;
@@ -22,6 +22,7 @@
         self.item_img_url = item_img_url;
         self.item_title = item_title;
         self.item_description = item_description;
+        self.user_info = user_info;
         if (self.item_img_url) {
             
             dispatch_async(dispatch_get_global_queue(0,0), ^{

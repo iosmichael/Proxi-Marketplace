@@ -9,6 +9,7 @@
 #import "PersonDetailTableViewController.h"
 #import "MyTableViewCell.h"
 #import "TransactionTableViewController.h"
+#import "OrderDetailTableViewController.h"
 #import "ItemConnection.h"
 #import "ItemContainer.h"
 #import "HHAlertView.h"
@@ -159,15 +160,14 @@
     [self setupDatabase:self.connectionMethod];
 }
 
+//Connection Method
+
+
 -(void)setupDatabase:(NSString *)detailCategory{
     self.datasourceArray = [[NSArray alloc]init];
     self.itemConnection = [[ItemConnection alloc]init];
     self.itemContainer = [[ItemContainer alloc]init];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refresh) name:@"RefreshTableNotification" object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshTable:) name:@"MyTableNotification" object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshTableOrder:) name:@"MyOrderNotification" object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshTableOrder:) name:@"MySellNotification" object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshTableHistory:) name:@"MyHistoryNotification" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(dropSuccess:) name:@"DropNotification" object:nil];
     if (![[NSUserDefaults standardUserDefaults]objectForKey:@"username"]) {
         return;
@@ -175,13 +175,17 @@
     
     if ([self.detailCategory isEqualToString:@"My Items"]) {
         [self.itemConnection myItems:[[NSUserDefaults standardUserDefaults]objectForKey:@"username"] FromIndex:0 amount:20 detail_category:detailCategory];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshTable:) name:@"MyTableNotification" object:nil];
     }else if([self.detailCategory isEqualToString:@"My Orders"]){
         [self.itemConnection myOrders:[[NSUserDefaults standardUserDefaults]objectForKey:@"username"] detail_category:detailCategory];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshTableOrder:) name:@"MyOrderNotification" object:nil];
     }
     else if([self.detailCategory isEqualToString:@"My Sells"]){
         [self.itemConnection mySells:[[NSUserDefaults standardUserDefaults]objectForKey:@"username"] detail_category:detailCategory];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshTableOrder:) name:@"MySellNotification" object:nil];
     }else if([self.detailCategory isEqualToString:@"My History"]){
 #warning myHistory or transaction
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshTableHistory:) name:@"MyHistoryNotification" object:nil];
         [self.itemConnection myTransactions:[[NSUserDefaults standardUserDefaults]objectForKey:@"username"] detail_category:detailCategory];
         
     }
@@ -209,7 +213,8 @@
         NSString *item_img_url = dic[@"item_img_url"];
         NSString *item_title = dic[@"item_title"];
         NSString *item_description = dic[@"item_description"];
-        Order *order = [[Order alloc]initWithItem:item_id user:user_id orderID:order_id orderDate:order_date orderPrice:order_price item_img_url:item_img_url item_title:item_title item_description:item_description];
+        NSDictionary *user_info = dic[@"user_info"];
+        Order *order = [[Order alloc]initWithItem:item_id user:user_id orderID:order_id orderDate:order_date orderPrice:order_price item_img_url:item_img_url item_title:item_title item_description:item_description user_info:user_info];
         [array addObject:order];
     }
     
@@ -260,7 +265,11 @@
         Order *order = [self.datasourceArray objectAtIndex:indexPath.row];
         ttvc.order = order;
         [self.navigationController pushViewController:ttvc animated:YES];
-    }else{
+    }else if([[self.datasourceArray objectAtIndex:indexPath.row]isKindOfClass:[Order class]]&&[self.detailCategory isEqualToString:@"My Orders"]){
+        OrderDetailTableViewController *odtvc = [[OrderDetailTableViewController alloc]init];
+        Order *order = [self.datasourceArray objectAtIndex:indexPath.row];
+        odtvc.order = order;
+        [self.navigationController pushViewController:odtvc animated:YES];
         
     }
 }

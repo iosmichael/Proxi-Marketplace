@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="jrS-r0-y1N">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="52h-0x-rjb">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -37,7 +37,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cUu-1j-WPY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1905" y="594"/>
+            <point key="canvasLocation" x="1515" y="386"/>
         </scene>
         <!--Camera View Controller-->
         <scene sceneID="P9M-gN-QiN">
@@ -615,31 +615,72 @@
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <animations/>
                                 <state key="normal" title="PayPal Button"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="153" y="285" width="95" height="30"/>
-                                </variation>
                                 <connections>
                                     <action selector="paymentButtonTapped:" destination="52h-0x-rjb" eventType="touchUpInside" id="SCx-9W-obV"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jjj-qX-1Xc">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Post Button"/>
+                                <connections>
+                                    <action selector="postViewController:" destination="52h-0x-rjb" eventType="touchUpInside" id="bOZ-0b-Zma"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cll-cN-15b">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Register Button"/>
+                                <connections>
+                                    <action selector="registerViewController:" destination="52h-0x-rjb" eventType="touchUpInside" id="3mf-qZ-3iY"/>
                                 </connections>
                             </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="cll-cN-15b" firstAttribute="centerX" secondItem="O9k-oD-rSD" secondAttribute="centerX" id="BAf-gv-CY7"/>
+                            <constraint firstItem="O9k-oD-rSD" firstAttribute="centerY" secondItem="gqx-kG-TNc" secondAttribute="centerY" id="WJ8-RK-4jD"/>
+                            <constraint firstItem="O9k-oD-rSD" firstAttribute="top" secondItem="jjj-qX-1Xc" secondAttribute="bottom" constant="8" symbolic="YES" id="fko-7a-39g"/>
+                            <constraint firstItem="O9k-oD-rSD" firstAttribute="centerX" secondItem="gqx-kG-TNc" secondAttribute="centerX" id="hrZ-bX-pzk"/>
+                            <constraint firstItem="cll-cN-15b" firstAttribute="top" secondItem="O9k-oD-rSD" secondAttribute="bottom" constant="8" symbolic="YES" id="sBP-hO-XMP"/>
+                            <constraint firstItem="O9k-oD-rSD" firstAttribute="centerX" secondItem="jjj-qX-1Xc" secondAttribute="centerX" id="wB8-Dn-07w"/>
+                        </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="O9k-oD-rSD"/>
+                                <exclude reference="jjj-qX-1Xc"/>
+                                <exclude reference="cll-cN-15b"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="WJ8-RK-4jD"/>
+                                <exclude reference="fko-7a-39g"/>
+                                <exclude reference="hrZ-bX-pzk"/>
+                                <exclude reference="wB8-Dn-07w"/>
+                                <exclude reference="BAf-gv-CY7"/>
+                                <exclude reference="sBP-hO-XMP"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
                             <mask key="subviews">
                                 <include reference="O9k-oD-rSD"/>
+                                <include reference="jjj-qX-1Xc"/>
+                                <include reference="cll-cN-15b"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="WJ8-RK-4jD"/>
+                                <include reference="fko-7a-39g"/>
+                                <include reference="hrZ-bX-pzk"/>
+                                <include reference="wB8-Dn-07w"/>
+                                <include reference="BAf-gv-CY7"/>
+                                <include reference="sBP-hO-XMP"/>
                             </mask>
                         </variation>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZRu-xN-RC3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-90" y="-382"/>
+            <point key="canvasLocation" x="-711" y="-548"/>
         </scene>
         <!--Master View Controller-->
         <scene sceneID="UlH-kK-WR6">
@@ -687,7 +728,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZz-8J-FxB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1143" y="-73"/>
+            <point key="canvasLocation" x="753" y="-281"/>
         </scene>
         <!--Home Table View Controller-->
         <scene sceneID="7XO-0m-1tK">
@@ -722,7 +763,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dyq-ez-HQh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1905" y="-73"/>
+            <point key="canvasLocation" x="1515" y="-281"/>
         </scene>
         <!--Search Results Table View Controller-->
         <scene sceneID="wIO-KK-4lp">
@@ -795,7 +836,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xil-FG-eGE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1143" y="594"/>
+            <point key="canvasLocation" x="753" y="386"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Yu7-eZ-29M">

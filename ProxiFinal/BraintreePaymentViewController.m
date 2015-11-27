@@ -7,7 +7,8 @@
 //
 
 #import "BraintreePaymentViewController.h"
-
+#import "PostItemDetailViewController.h"
+#import "RegisterViewController.h"
 @interface BraintreePaymentViewController ()
 
 @end
@@ -75,6 +76,19 @@
         // TODO: Handle success and failure
     }] resume];
 }
+- (IBAction)postViewController:(id)sender {
+    PostItemDetailViewController *postItemVC = [[PostItemDetailViewController alloc]init];
+    [self presentViewController:postItemVC animated:YES completion:nil];
+}
+
+- (IBAction)registerViewController:(id)sender {
+    RegisterViewController *registerVC = [[RegisterViewController alloc]init];
+    [self presentViewController:registerVC animated:YES completion:nil];
+    
+}
+
+
+
 
 /*
 #pragma mark - Navigation

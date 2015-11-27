@@ -28,6 +28,7 @@
 @property (strong,nonatomic) ItemContainer *itemContainer;
 @property (strong,nonatomic) ItemConnection *itemConnection;
 @property (strong,nonatomic) NSArray *datasourceItemArray;
+@property (strong,nonatomic) UIButton *viewMoreButton;
 
 @end
 
@@ -300,14 +301,14 @@
 -(UIView *)setupFooterView{
     UIView *footerButtonView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 60)];
     footerButtonView.backgroundColor = [UIColor clearColor];
-    UIButton *viewMoreButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width*0.05, 0, self.view.frame.size.width*0.9, 50)];
+    self.viewMoreButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width*0.05, 0, self.view.frame.size.width*0.9, 50)];
 
-    [viewMoreButton setTitle:@"View More" forState:UIControlStateNormal];
-    [viewMoreButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [viewMoreButton.layer setCornerRadius:25];
-    [footerButtonView addSubview:viewMoreButton];
-    viewMoreButton.backgroundColor = [UIColor colorWithRed:251.0f/255.0f green:176.0f/255.0f blue:87.0f/255.0f alpha:1];
-    [viewMoreButton addTarget:self action:@selector(viewMoreButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+    [self.viewMoreButton setTitle:@"View More" forState:UIControlStateNormal];
+    [self.viewMoreButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.viewMoreButton.layer setCornerRadius:25];
+    [footerButtonView addSubview:self.viewMoreButton];
+    self.viewMoreButton.backgroundColor = [UIColor colorWithRed:251.0f/255.0f green:176.0f/255.0f blue:87.0f/255.0f alpha:1];
+    [self.viewMoreButton addTarget:self action:@selector(viewMoreButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     
     return footerButtonView;
     
@@ -328,6 +329,7 @@
     NSLog(@"update");
     self.datasourceItemArray = [[self.itemContainer allItem] copy];
     [self.tableView reloadData];
+    self.viewMoreButton.enabled = YES;
 }
 
 -(void)viewMoreButtonTapped{
@@ -335,6 +337,9 @@
     NSLog(@"%@", [self.itemContainer.container description]);
     [self.itemConnection fetchItemFromIndex:0 amount:[self.itemContainer.container count]+i];
     [self.itemContainer.container removeAllObjects];
+    self.viewMoreButton.enabled = NO;
+    //Refresh indicator show
+    
 }
 
 

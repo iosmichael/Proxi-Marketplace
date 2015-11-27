@@ -29,7 +29,7 @@
 @property (strong,nonatomic) NSMutableDictionary *contentOffsetDictionary;
 @property (strong,nonatomic) UICollectionView *collectionView;
 @property (strong,nonatomic) NSArray *datasourceItemArray;
-
+@property (strong,nonatomic) UIButton *viewMoreButton;
 @end
 
 @implementation SearchTableViewController{
@@ -326,14 +326,14 @@
 -(UIView *)setupFooterView{
     UIView *footerButtonView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 60)];
     footerButtonView.backgroundColor = [UIColor clearColor];
-    UIButton *viewMoreButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width*0.05, 0, self.view.frame.size.width*0.9, 50)];
+    self.viewMoreButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width*0.05, 0, self.view.frame.size.width*0.9, 50)];
     
-    [viewMoreButton setTitle:@"View More" forState:UIControlStateNormal];
-    [viewMoreButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [viewMoreButton.layer setCornerRadius:25];
-    [footerButtonView addSubview:viewMoreButton];
-    viewMoreButton.backgroundColor = [UIColor colorWithRed:251.0f/255.0f green:176.0f/255.0f blue:87.0f/255.0f alpha:1];
-    [viewMoreButton addTarget:self action:@selector(viewMoreButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+    [self.viewMoreButton setTitle:@"View More" forState:UIControlStateNormal];
+    [self.viewMoreButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.viewMoreButton.layer setCornerRadius:25];
+    [footerButtonView addSubview:self.viewMoreButton];
+    self.viewMoreButton.backgroundColor = [UIColor colorWithRed:251.0f/255.0f green:176.0f/255.0f blue:87.0f/255.0f alpha:1];
+    [self.viewMoreButton addTarget:self action:@selector(viewMoreButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     
     return footerButtonView;
     
@@ -362,6 +362,7 @@
 -(void)viewMoreButtonTapped{
     [self.itemContainer.container removeAllObjects];
     [self.itemConnection fetchItemsFromIndex:0 amount:[self.itemContainer.container count]+i];
+    self.viewMoreButton.enabled = NO;
 }
 
 -(void)updateSearch:(NSNotification *)noti{
@@ -374,6 +375,8 @@
         vc.searchResults = [self.searchContainer.container copy];
         [vc.tableView reloadData];
     }
+    self.viewMoreButton.enabled = YES;
+    //refresh indicator show
 }
 
 -(void)detailItem:(NSNotification *)noti{

@@ -145,7 +145,7 @@
     [imageArray addObject:[UIImage imageNamed:@"myItemIcon"]];
     [imageArray addObject:[UIImage imageNamed:@"myOrderIcon"]];
     [imageArray addObject:[UIImage imageNamed:@"mySellsIcon"]];
-    [imageArray addObject:[UIImage imageNamed:@"mySellsIcon"]];
+    [imageArray addObject:[UIImage imageNamed:@"myHistoryIcon"]];
     self.imageArray = [NSArray arrayWithArray:imageArray];
 }
 -(void)refreshTable{

@@ -30,6 +30,7 @@
 @property (strong,nonatomic) UICollectionView *collectionView;
 @property (strong,nonatomic) NSArray *datasourceItemArray;
 @property (strong,nonatomic) UIButton *viewMoreButton;
+@property (strong,nonatomic) NSArray *categoryImagesArray;
 @end
 
 @implementation SearchTableViewController{
@@ -39,6 +40,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [super viewDidLoad];
+    self.categoryImagesArray = @[@"Book",@"Ride",@"Cloth",@"Service",@"Furniture",@"Other"];
     self.itemConnection = [[ItemConnection alloc]init];
     self.searchContainer = [[ItemContainer alloc]init];
     [self.itemConnection fetchItemsFromIndex:0 amount:10];
@@ -168,10 +170,7 @@
         UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Category" forIndexPath:indexPath];
         //custom cell
         NSArray *collectionViewArray = self.colorArray[[(CategoryCollectionView *)collectionView indexPath].row];
-        cell.backgroundColor = collectionViewArray[indexPath.item];
-        [cell.layer setCornerRadius:50];
-        
-        
+        [cell.contentView addSubview:collectionViewArray[indexPath.item]];
         return cell;
     }else if ([collectionView isKindOfClass:[ItemBigCollectionView class]]){
         self.collectionView = collectionView;
@@ -295,7 +294,7 @@
 #pragma mark- setup
 -(void)setupTestingSources{
     const NSInteger numberOfTableViewRows = 1;
-    const NSInteger numberOfCollectionViewCells = 5;
+    const NSInteger numberOfCollectionViewCells = 6;
     
     NSMutableArray *mutableArray = [NSMutableArray arrayWithCapacity:numberOfTableViewRows];
     
@@ -306,12 +305,10 @@
         for (NSInteger collectionViewItem = 0; collectionViewItem < numberOfCollectionViewCells; collectionViewItem++)
         {
             
-            CGFloat red = arc4random() % 255;
-            CGFloat green = arc4random() % 255;
-            CGFloat blue = arc4random() % 255;
-            UIColor *color = [UIColor colorWithRed:red/255.0 green:green/255.0 blue:blue/255.0 alpha:1.0f];
-            
-            [colorArray addObject:color];
+            UIImageView *categoryImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
+            UIImage *categoryImage= [UIImage imageNamed:[self.categoryImagesArray objectAtIndex:collectionViewItem]];
+            [categoryImageView setImage:categoryImage];
+            [colorArray addObject:categoryImageView];
         }
         
         [mutableArray addObject:colorArray];

@@ -22,7 +22,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         if (!self.images) {
-            UIImage *image = [UIImage imageNamed:@"slide"];
+            UIImage *image = [UIImage imageNamed:@"banner"];
             self.images = [[NSMutableArray alloc]init];
             for (int i= 0; i<PageNumber; i++) {
                 
@@ -70,6 +70,7 @@
     self.scrollView.scrollEnabled = YES;
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.scrollView.showsVerticalScrollIndicator = NO;
+    self.scrollView.bounces = NO;
     [self.scrollView setAutoresizingMask:UIViewAutoresizingNone];
     self.scrollView.delegate = self;
 }

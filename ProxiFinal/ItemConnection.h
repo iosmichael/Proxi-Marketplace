@@ -14,6 +14,7 @@
 
 -(void)postItemData: (Item *)newItem;
 -(void)fetchItemFromIndex:(NSInteger)indexOfItems amount:(NSInteger)numberOfItems;
+-(void)fetchItemImageWithItem:(Item *)item;
 -(void)fetchItemsFromIndex:(NSInteger)indexOfItems amount:(NSInteger)numberOfItems;
 -(void)fetchItemsByName:(NSString *)searchName FromIndex:(NSInteger)indexOfItems amount:(NSInteger)numberOfItems;
 -(void)fetchItemsByCategory:(NSString *)searchCategory amount:(NSInteger)numberOfItems;

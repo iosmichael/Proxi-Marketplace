@@ -28,18 +28,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    [[HHAlertView shared] setDelegate:self];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(successPost:) name:@"PostItemNotification" object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(errorPost) name:@"PostItemNotificationError" object:nil];
+    [self setupElements];
     self.tableView.allowsSelection = NO;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
-    [self.refresher setHidden:YES];
     self.navigationController.navigationBarHidden = YES;
     if (!self.postImage) {
         self.postImage = [[UIImage alloc]init];
     }
-    self.navigationController.navigationItem.title = @"Post Item";
     CGFloat screen_width = [UIScreen mainScreen].bounds.size.width;
     
     self.imageButton = [[UIButton alloc]initWithFrame:CGRectMake(10, 5, screen_width-20, screen_width)];
@@ -47,9 +42,7 @@
     self.imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, screen_width-20, screen_width)];
     [self.imageButton addSubview:self.imageView];
     [self.imageButton addTarget:self action:@selector(resetImage) forControlEvents:UIControlEventTouchUpInside];
-    self.imageView.contentMode = UIViewContentModeScaleAspectFill;
-    [self.imageView setClipsToBounds:YES];
-    [self.imageView setImage:self.postImage];
+    
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -218,6 +211,14 @@
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }
-
+-(void)setupElements{
+    [[HHAlertView shared] setDelegate:self];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(successPost:) name:@"PostItemNotification" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(errorPost) name:@"PostItemNotificationError" object:nil];
+    self.imageView.contentMode = UIViewContentModeScaleAspectFill;
+    [self.imageView setClipsToBounds:YES];
+    [self.imageView setImage:self.postImage];
+    [self.refresher setHidden:YES];
+}
 
 @end

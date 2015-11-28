@@ -1,6 +1,6 @@
 
 #import "CameraViewController.h"
-#import "PostItemViewController.h"
+#import "PostItemDetailViewController.h"
 #import "LoginViewController.h"
 
 
@@ -62,11 +62,11 @@
         
     
     self.captureImage =[self centerCropImage:image];
-    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    PostItemViewController *postItemViewController = [storyboard instantiateViewControllerWithIdentifier:@"PostItemID"];
+    PostItemDetailViewController *postItemViewController = [[PostItemDetailViewController alloc]init];
     
-    postItemViewController.postImage = self.captureImage;
-    [self.navigationController pushViewController:postItemViewController animated:YES];
+    postItemViewController.image = self.captureImage;
+        [self presentViewController:postItemViewController animated:YES completion:nil];
+    //[self.navigationController pushViewController:postItemViewController animated:YES];
     }
 
    // [self.cameraView removeFromSuperview];
@@ -78,15 +78,6 @@
     self.captureImage = image;
     
 }
-
-- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
-{
-    //Show error alert if image could not be saved
-    if (error) [[[UIAlertView alloc] initWithTitle:@"Error!" message:@"Image couldn't be saved" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil] show];
-    
-}
-
-
 
 - (UIImage *)centerCropImage:(UIImage *)image
 {

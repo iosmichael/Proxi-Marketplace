@@ -23,12 +23,13 @@
 
 @interface HomeTableViewController ()
 @property (strong,nonatomic) NSArray *colorArray;
-@property (strong,nonatomic) NSMutableDictionary *contentOffsetDictionary;
+
 @property (strong,nonatomic) UICollectionView *collectionView;
 @property (strong,nonatomic) ItemContainer *itemContainer;
 @property (strong,nonatomic) ItemConnection *itemConnection;
 @property (strong,nonatomic) NSArray *datasourceItemArray;
 @property (strong,nonatomic) UIButton *viewMoreButton;
+@property (strong,nonatomic) NSArray *categoryImagesArray;
 
 @end
 
@@ -39,6 +40,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupDatabase];
+    self.categoryImagesArray = @[@"Book",@"Ride",@"Cloth",@"Service",@"Furniture",@"Other"];
+
     self.itemConnection = [[ItemConnection alloc]init];
     [self.itemConnection fetchItemFromIndex:0 amount:10];
     [self setupTestingSources];
@@ -127,7 +130,7 @@
         itemDetailController.item = item;
         [self.navigationController pushViewController:itemDetailController animated:YES];
     }else if ([collectionView isKindOfClass:[CategoryCollectionView class]]){
-        NSString *categoryName = @"Book";
+        NSString *categoryName = [self.categoryImagesArray objectAtIndex:indexPath.item];
         CategoryDetailTableViewController *categoryDTVC = [[CategoryDetailTableViewController alloc]init];
         categoryDTVC.categoryName = categoryName;
         [self.navigationController pushViewController:categoryDTVC animated:YES];
@@ -139,7 +142,7 @@
         UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Category" forIndexPath:indexPath];
         //custom cell
         NSArray *collectionViewArray = self.colorArray[[(CategoryCollectionView *)collectionView indexPath].row];
-        cell.backgroundColor = collectionViewArray[indexPath.item];
+        [cell.contentView addSubview:collectionViewArray[indexPath.item]];
 
     
         
@@ -192,17 +195,11 @@
     if ([cell isKindOfClass:[CategoryTableViewCell class]]) {
         CategoryTableViewCell *categoryCell = (CategoryTableViewCell *)cell;
         [categoryCell setCollectionViewDataSourceDelegate:self indexPath:indexPath];
-        NSInteger index = categoryCell.collectionView.tag;
         
-        CGFloat horizontalOffset = [self.contentOffsetDictionary[[@(index) stringValue]] floatValue];
-        [categoryCell.collectionView setContentOffset:CGPointMake(horizontalOffset, 0)];
     }else if([cell isKindOfClass:[ItemTableViewCell class]]){
         ItemTableViewCell *itemCell = (ItemTableViewCell *)cell;
         [itemCell setCollectionViewDataSourceDelegate:self indexPath:indexPath];
-        //NSInteger index = itemCell.collectionView.tag;
         
-       // CGFloat horizontalOffset = [self.contentOffsetDictionary[[@(index) stringValue]] floatValue];
-        //[itemCell.collectionView setContentOffset:CGPointMake(horizontalOffset, 0)];
     }else{
         
     }
@@ -271,31 +268,32 @@
 
 -(void)setupTestingSources{
     const NSInteger numberOfTableViewRows = 1;
-    const NSInteger numberOfCollectionViewCells = 5;
+    const NSInteger numberOfCollectionViewCells = 6;
     
     NSMutableArray *mutableArray = [NSMutableArray arrayWithCapacity:numberOfTableViewRows];
     
     for (NSInteger tableViewRow = 0; tableViewRow < numberOfTableViewRows; tableViewRow++)
     {
-        NSMutableArray *colorArray = [NSMutableArray arrayWithCapacity:numberOfCollectionViewCells];
+        NSMutableArray *imagesArray = [NSMutableArray arrayWithCapacity:numberOfCollectionViewCells];
         
         for (NSInteger collectionViewItem = 0; collectionViewItem < numberOfCollectionViewCells; collectionViewItem++)
         {
             
-            CGFloat red = arc4random() % 255;
-            CGFloat green = arc4random() % 255;
-            CGFloat blue = arc4random() % 255;
-            UIColor *color = [UIColor colorWithRed:red/255.0 green:green/255.0 blue:blue/255.0 alpha:1.0f];
-            
-            [colorArray addObject:color];
+            UIImageView *categoryImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
+            UIImage *categoryImage= [UIImage imageNamed:[self.categoryImagesArray objectAtIndex:collectionViewItem]];
+            if (!categoryImage) {
+                categoryImage = [UIImage imageNamed:@"manshoes"];
+            }
+            [categoryImageView setImage:categoryImage];
+            [imagesArray addObject:categoryImageView];
         }
         
-        [mutableArray addObject:colorArray];
+        [mutableArray addObject:imagesArray];
     }
     
     self.colorArray = [NSArray arrayWithArray:mutableArray];
     
-    self.contentOffsetDictionary = [NSMutableDictionary dictionary];
+
 }
 
 -(UIView *)setupFooterView{

@@ -26,5 +26,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 
 @property (weak, nonatomic) IBOutlet UIPageControl *pageIndicator;
+@property (weak, nonatomic) IBOutlet UIButton *postButton;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *refresher;
+@property (weak, nonatomic) IBOutlet UILabel *postAlertLabel;
+
+//elements
+
 
 @end

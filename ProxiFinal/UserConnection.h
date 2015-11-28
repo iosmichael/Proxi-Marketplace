@@ -21,5 +21,4 @@
 -(void)registeredUserInfo:(User *)user;
 -(void)loginUserInfo:(User *)user;
 -(void)fetchSellerInfo: (NSString *)sellerEmail;
--(void)fetchSellerImage: (NSString *)sellerID;
 @end

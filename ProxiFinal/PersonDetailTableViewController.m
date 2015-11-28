@@ -18,7 +18,6 @@
 #import "Transaction.h"
 
 #define Image_url_prefix @"http://proximarketplace.com/database/images/"
-#warning  drop notification when controller dismiss
 
 @interface PersonDetailTableViewController ()
 @property (nonatomic,strong) ItemConnection *itemConnection;
@@ -47,6 +46,11 @@
     [self filterDetailCategory];
     
 }
+#warning viewDidDisappear added
+-(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
 
 
 - (void)didReceiveMemoryWarning {
@@ -57,12 +61,12 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
+
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
+
     return [self.datasourceArray count];
 }
 
@@ -228,7 +232,7 @@
     NSMutableArray *array = [[NSMutableArray alloc]init];
     for (NSDictionary *dic in json) {
         NSString *item_title = dic[@"item_title"];
-#warning dic[@"item_price"] is null from database;
+#warning dic[@"item_price"] is null from database; my history;
         NSString *item_price = @"No Price Data";
         NSString *bought_date = dic[@"bought_date"];
         Transaction *transaction = [[Transaction alloc]initWith:item_title date:bought_date price:item_price];
@@ -238,6 +242,7 @@
     self.datasourceArray = array;
     [self.tableView reloadData];
 }
+ 
 
 -(void)refresh{
     self.datasourceArray = [self.itemContainer allItem];

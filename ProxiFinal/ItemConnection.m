@@ -39,7 +39,7 @@
         NSData *response = responseObject;
         NSString *responseString = [[NSString alloc]initWithData:response encoding:NSUTF8StringEncoding];
         NSLog(@"%@",responseString);
-#warning Notification established
+
         
         [[NSNotificationCenter defaultCenter]postNotificationName:@"PostItemNotification" object:responseString];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

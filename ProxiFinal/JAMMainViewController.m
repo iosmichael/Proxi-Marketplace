@@ -18,6 +18,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self setupTextfieldSettings];
+}
+-(void)setupTextfieldSettings{
     self.emailTextField.validationType = JAMValidatingTextFieldTypeEmail;
     self.urlTextField.validationType = JAMValidatingTextFieldTypeURL;
     self.phoneTextField.validationType = JAMValidatingTextFieldTypePhone;

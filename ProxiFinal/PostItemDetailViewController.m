@@ -11,7 +11,7 @@
 #define Screen_height [[UIScreen mainScreen]bounds].size.height
 #define gray [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1]
 #define hightlight_color [UIColor colorWithRed:255/255.0 green:227/255.0 blue:184/255.0 alpha:1]
-@interface PostItemDetailViewController ()
+@interface PostItemDetailViewController ()<UIScrollViewDelegate>
 @property (strong,nonatomic)NSMutableArray *numberArray;
 @property (strong,nonatomic)UIImageView *imageView;
 @property (strong, nonatomic)NSString *category;
@@ -46,6 +46,7 @@
     [self.scrollView addSubview:self.itemPageView];
     [self.scrollView addSubview:self.pricePageView];
     [self.scrollView addSubview:self.postPageView];
+    self.scrollView.delegate = self;
     [self setupScrollView];
     // Do any additional setup after loading the view from its nib.
     NSLog(@"viewDidLoad");
@@ -105,6 +106,7 @@
 #pragma mark- Button Control Methods
 
 - (IBAction)retakeImageButtonTapped:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)numberPadTapped:(id)sender {
@@ -173,7 +175,10 @@
     }
 }
 
-
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+    int page = floor((self.scrollView.contentOffset.x - Screen_width/2)/Screen_width)+1;
+    self.page.currentPage = page;
+}
 
 /*
 #pragma mark - Navigation

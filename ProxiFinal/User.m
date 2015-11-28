@@ -10,19 +10,21 @@
 
 @implementation User
 
--(instancetype)initWithID:(NSString *)userID email:(NSString *)email password:(NSString *)password phone:(NSString *)phone{
+
+-(instancetype)initWithEmail:(NSString *)email firstName:(NSString *)firstName lastName:(NSString *)lastName password:(NSString *)password phone:(NSString *)phone dateOfBirth:(NSString *)dateOfBirth venmoPhoneNumber:(NSString *)venmoPhoneNumber{
     self = [super init];
     if (self) {
-        self.userID = userID;
         self.email = email;
         self.password = password;
         self.phone = phone;
+        self.dateOfBirth = dateOfBirth;
+        self.venmoPhoneNumber = venmoPhoneNumber;
+        self.firstName = firstName;
+        self.lastName =lastName;
     }
     
     return self;
-    
 }
-
 
 -(instancetype)initWithEmail:(NSString *)email password:(NSString *)password{
     self = [super init];

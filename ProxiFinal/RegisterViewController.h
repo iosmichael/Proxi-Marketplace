@@ -18,13 +18,22 @@
 @property (weak, nonatomic) IBOutlet UILabel *registerAlertLabel;
 @property (weak, nonatomic) IBOutlet UIButton *registerButton;
 @property (weak, nonatomic) IBOutlet UIButton *agreeButton;
+@property (weak, nonatomic) IBOutlet UIPageControl *page;
 
 
-@property (weak, nonatomic) IBOutlet UITextField *email;
-@property (weak, nonatomic) IBOutlet UITextField *phone;
-@property (weak, nonatomic) IBOutlet UITextField *dateOfBirth;
-@property (weak, nonatomic) IBOutlet UITextField *venmoPhone;
-@property (weak, nonatomic) IBOutlet UITextField *password;
+@property (weak, nonatomic) IBOutlet JAMValidatingTextField *email;
+@property (weak, nonatomic) IBOutlet JAMValidatingTextField *password;
+@property (weak, nonatomic) IBOutlet JAMValidatingTextField *recheckPassword;
+
+@property (weak, nonatomic) IBOutlet JAMValidatingTextField *phone;
+
+@property (weak, nonatomic) IBOutlet JAMValidatingTextField *year;
+@property (weak, nonatomic) IBOutlet JAMValidatingTextField *month;
+@property (weak, nonatomic) IBOutlet JAMValidatingTextField *day;
+
+@property (weak, nonatomic) IBOutlet JAMValidatingTextField *venmoPhone;
+
+
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *refresher;
 
 @end

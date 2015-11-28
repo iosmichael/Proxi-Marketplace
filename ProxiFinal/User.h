@@ -13,10 +13,15 @@
 @property (strong,nonatomic) NSString *name;
 @property (strong,nonatomic) NSString *email;
 @property (strong,nonatomic) NSString *password;
-@property (strong,nonatomic) NSString *userID;
 @property (strong,nonatomic) NSString *phone;
+@property (strong,nonatomic) NSString *dateOfBirth;
+@property (strong,nonatomic) NSString *venmoPhoneNumber;
+@property (strong,nonatomic) NSString *firstName;
+@property (strong,nonatomic) NSString *lastName;
 
--(instancetype)initWithID:(NSString *)userID email:(NSString *)email password:(NSString *)password phone:(NSString *)phone;
+
+-(instancetype)initWithEmail:(NSString *)email firstName:(NSString *)firstName lastName:(NSString *)lastName password:(NSString *)password phone:(NSString *)phone dateOfBirth:(NSString *)dateOfBirth venmoPhoneNumber:(NSString *)venmoPhoneNumber;
+
 
 -(instancetype)initWithEmail:(NSString *)email password:(NSString *)password;
 @end

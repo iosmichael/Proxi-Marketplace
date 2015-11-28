@@ -16,6 +16,7 @@
 @property (strong, nonatomic) IBOutlet UIView *pricePageView;
 @property (strong, nonatomic) IBOutlet UIView *postPageView;
 //first page
+@property (weak, nonatomic) IBOutlet UIPageControl *page;
 
 @property (weak, nonatomic) IBOutlet UIButton *imagePageRetakeButton;
 //second page

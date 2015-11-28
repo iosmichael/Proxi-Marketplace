@@ -25,7 +25,11 @@
     NSDictionary *param =@{
                            @"email":user.email,
                            @"password":user.password,
-                           @"phone":user.phone
+                           @"firstName":user.firstName,
+                           @"lastName":user.lastName,
+                           @"phone":user.phone,
+                           @"venmoPhone":user.venmoPhoneNumber,
+                           @"dateOfBirth":user.dateOfBirth
                            };
     NSDictionary *param2 = @{
                              @"object":@"User",
@@ -38,7 +42,7 @@
         NSString *responseString = [[NSString alloc]initWithData:response encoding:NSUTF8StringEncoding];
         NSLog(@"%@",[responseString description]);
         
-#warning nsnotification established
+
         
         [[NSNotificationCenter defaultCenter]postNotificationName:@"RegisterPassNotification" object:responseString];
         
@@ -67,7 +71,7 @@
         NSString *responseString = [[NSString alloc]initWithData:response encoding:NSUTF8StringEncoding];
         NSLog(@"%@",[responseString description]);
         
-#warning nsnotification established
+
         
         [[NSNotificationCenter defaultCenter]postNotificationName:@"RegisterPassNotification" object:responseString];
         
@@ -118,19 +122,7 @@
     }];
 }
 
--(void)fetchSellerImage:(NSString *)sellerID{
-#warning Doesn't work
-    NSDictionary *param = @{
-                            @"user_id":sellerID
-                            };
-    
-    [self.manager POST:address parameters:param constructingBodyWithBlock:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSData *sellerImageData = responseObject;
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"ReceiveSellerImage" object:sellerImageData];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"%@",[error description]);
-    }];
-}
+
 
 
 

@@ -11,5 +11,5 @@
 
 
 @interface HomeTableViewController : UITableViewController<UICollectionViewDataSource,UICollectionViewDelegate>
-
+-(void)updateViewController;
 @end

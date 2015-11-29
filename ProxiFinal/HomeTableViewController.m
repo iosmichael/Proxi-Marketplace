@@ -339,6 +339,10 @@
     //Refresh indicator show
     
 }
-
+-(void)updateViewController{
+    [self.itemConnection fetchItemFromIndex:0 amount:[self.itemContainer.container count]];
+    [self.itemContainer.container removeAllObjects];
+    self.viewMoreButton.enabled = NO;
+}
 
 @end

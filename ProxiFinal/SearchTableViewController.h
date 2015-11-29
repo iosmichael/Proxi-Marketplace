@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface SearchTableViewController : UITableViewController
-
+-(void)updateViewController;
 @end

@@ -17,10 +17,16 @@
     
     [super viewDidLoad];
     [self.navigationController setNavigationBarHidden:YES];
-    [self launchCamera];
     
 }
-
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self launchCamera];
+}
+-(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    [self.cameraView removeFromSuperview];
+}
 
 - (void)launchCamera{
     
@@ -81,23 +87,28 @@
 
 - (UIImage *)centerCropImage:(UIImage *)image
 {
+    CGFloat screen_width = [[UIScreen mainScreen]bounds].size.width;
+    CGFloat screen_height = [[UIScreen mainScreen]bounds].size.height;
     
-    /*CGRect squareRect = CGRectMake(offsetX, offsetY, newWidth, newHeight);
-    CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], squareRect);
-    image = [UIImage imageWithCGImage:imageRef scale:1 orientation:image.imageOrientation];
-     */
-    // Use smallest side length as crop square length
-    CGPoint centerPoint = CGPointMake(image.size.width/2.0, image.size.height/2.0);
-    CGFloat squareLength = MIN(image.size.width, image.size.height);
+    UIImage *resizedImage = [self resizeImage:image width:screen_width  height:screen_height];
     // Center the crop area
+
 #warning change the width and the height and change the 20 
-    CGRect clippedRect = CGRectMake(20, centerPoint.y-squareLength/2, squareLength, squareLength);
+    CGRect clippedRect = CGRectMake(0, (screen_height-screen_width)/2+10, screen_width, screen_width);
     
     // Crop logic
-    CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], clippedRect);
-    UIImage * croppedImage = [UIImage imageWithCGImage:imageRef scale:1 orientation:UIImageOrientationRight];
+    CGImageRef imageRef = CGImageCreateWithImageInRect([resizedImage CGImage], clippedRect);
+    UIImage * croppedImage = [UIImage imageWithCGImage:imageRef scale:1 orientation:UIImageOrientationUp];
     CGImageRelease(imageRef);
     return croppedImage;
+}
+
+-(UIImage *)resizeImage:(UIImage *)image width:(CGFloat)resizeWidth height:(CGFloat)resizeHeight{
+    UIGraphicsBeginImageContext(CGSizeMake(resizeWidth, resizeHeight));
+    [image drawInRect:CGRectMake(0, 0, resizeWidth, resizeHeight)];
+    UIImage *resizedImage =  UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return resizedImage;
 }
 
 @end

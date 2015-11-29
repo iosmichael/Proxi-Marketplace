@@ -362,6 +362,12 @@
     self.viewMoreButton.enabled = NO;
 }
 
+-(void)updateViewController{
+    [self.itemContainer.container removeAllObjects];
+    [self.itemConnection fetchItemsFromIndex:0 amount:[self.itemContainer.container count]];
+    self.viewMoreButton.enabled = NO;
+}
+
 -(void)updateSearch:(NSNotification *)noti{
     
     [self.searchContainer.container removeAllObjects];

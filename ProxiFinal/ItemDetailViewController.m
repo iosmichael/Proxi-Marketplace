@@ -37,10 +37,26 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
+    float systemVersion = [[[UIDevice currentDevice] systemVersion] floatValue];
+    if (systemVersion >= 7.0)
+    {
+        self.navigationController.navigationBar.translucent = NO;
+        self.tabBarController.tabBar.translucent =NO;
+    }
+
 }
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
     [[NSNotificationCenter defaultCenter]removeObserver:self];
+    if ([self.parentViewController isKindOfClass:[HomeTableViewController class]]) {
+        HomeTableViewController *parentVC = (HomeTableViewController *)self.parentViewController;
+        [parentVC updateViewController];
+    }else if ([self.parentViewController isKindOfClass:[SearchTableViewController class]]){
+        SearchTableViewController *parentVC = (SearchTableViewController *)self.parentViewController;
+        [parentVC updateViewController];
+    }else{
+        
+    }
 }
 
 -(void)refresh{

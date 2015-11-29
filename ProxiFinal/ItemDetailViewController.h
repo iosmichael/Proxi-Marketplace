@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "Item.h"
+#import "HomeTableViewController.h"
+#import "SearchTableViewController.h"
 @interface ItemDetailViewController : UIViewController
 @property (strong,nonatomic) Item *item;
 

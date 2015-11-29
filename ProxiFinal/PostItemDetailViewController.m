@@ -59,7 +59,6 @@
     self.scrollView.delegate = self;
     [self setupScrollView];
     // Do any additional setup after loading the view from its nib.
-    NSLog(@"viewDidLoad");
     self.titleTextField.delegate = self;
     self.descriptionTextView.delegate = self;
     [self.postButton setBackgroundColor:gray];
@@ -157,10 +156,12 @@
 #warning  highPrice entered only
 #warning NSUserDefaults is invalid
     NSLog( @"%@",[self.titleTextField.text description]);
+    NSArray *priceComponents = [self.priceLabel.text componentsSeparatedByString:@"$"];
+    NSString *price = [priceComponents objectAtIndex:1];
     Item *item = [[Item alloc]initWithTitle:self.titleTextField.text
                                 description:self.descriptionTextView.text
                                   userEmail:[[NSUserDefaults standardUserDefaults]objectForKey:@"username"]
-                                      image:img date:nil itemID:nil price:self.priceLabel.text
+                                      image:img date:nil itemID:nil price:price
                                    category:self.category];
     self.postButton.enabled = NO;
     ItemConnection *connection = [[ItemConnection alloc]init];
@@ -210,7 +211,7 @@
 -(void)didClickButtonAnIndex:(HHAlertButton)button{
     if (button ==HHAlertButtonOk) {
         [[NSNotificationCenter defaultCenter]removeObserver:self];
-        [self.navigationController popToRootViewControllerAnimated:YES];
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
 -(void)setupElements{

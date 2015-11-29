@@ -23,6 +23,7 @@
                             @"user_email":newItem.user_email,
                             @"item_category":newItem.category
                             };
+    NSLog(@"%@",param);
     NSDictionary *param2 = @{
                              @"object":@"Item",
                              @"method":@"postItem",

@@ -40,7 +40,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [super viewDidLoad];
-    self.categoryImagesArray = @[@"Book",@"Ride",@"Cloth",@"Service",@"Furniture",@"Other"];
+    self.categoryImagesArray = @[@"Book",@"Ride",@"Clothing",@"Service",@"Furniture",@"Other"];
     self.itemConnection = [[ItemConnection alloc]init];
     self.searchContainer = [[ItemContainer alloc]init];
     [self.itemConnection fetchItemsFromIndex:0 amount:10];

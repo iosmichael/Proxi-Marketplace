@@ -256,7 +256,7 @@
         self.datasourceArray = self.itemContainer.container;
         [self.tableView deleteRowsAtIndexPaths:@[deleteRow] withRowAnimation:UITableViewRowAnimationFade];
     }else{
-        [HHAlertView showAlertWithStyle:HHAlertStyleError inView:self.view Title:@"Error" detail:@"check your wifi connection or contact with proxi support team" cancelButton:nil Okbutton:@"thank you"];
+        [HHAlertView showAlertWithStyle:HHAlertStyleError inView:self.view Title:@"Sorry" detail:@"Item has been ordered" cancelButton:nil Okbutton:@"OK"];
     }
     
 }

@@ -16,6 +16,7 @@
 #import "Item.h"
 #import "Order.h"
 #import "Transaction.h"
+#import "GMDCircleLoader.h"
 
 #define Image_url_prefix @"http://proximarketplace.com/database/images/"
 
@@ -32,7 +33,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [GMDCircleLoader setOnView:self.view withTitle:@"Loading..." animated:YES];
     [self.tableView registerNib:[UINib nibWithNibName:@"MyTableViewCell" bundle:nil] forCellReuseIdentifier:@"myTableViewCell"];
     self.navigationController.navigationItem.title= self.detailCategory;
     self.navigationController.navigationBarHidden = NO;
@@ -50,6 +51,7 @@
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
     [[NSNotificationCenter defaultCenter]removeObserver:self];
+    [GMDCircleLoader hideFromView:self.view animated:YES];
 }
 
 
@@ -76,12 +78,12 @@
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     if (editingStyle == UITableViewCellEditingStyleDelete) {
     // Delete the row from the data source
-        NSLog(@"delete");
         deleteRow = indexPath;
         if ([[self.itemContainer.container objectAtIndex:indexPath.row]isKindOfClass:[Item class]]) {
             Item *item = [self.itemContainer.container objectAtIndex:indexPath.row];
             NSString *item_id = item.item_id;
             [self.itemConnection drop:item_id detail_category:self.detailCategory];
+            [GMDCircleLoader setOnView:self.view withTitle:@"Loading..." animated:YES];
         }else if ([[self.itemContainer.container objectAtIndex:indexPath.row]isKindOfClass:[Order class]]){
             if ([self.detailCategory isEqualToString:@"My Orders"]) {
                 Order *order = [self.itemContainer.container objectAtIndex:indexPath.row];
@@ -200,6 +202,7 @@
     [self.itemContainer addItemsFromJSONDictionaries:[noti object]];
     self.datasourceArray = [self.itemContainer allItem];
     [self.tableView reloadData];
+    [GMDCircleLoader hideFromView:self.view animated:YES];
 }
 
 
@@ -226,6 +229,7 @@
     self.datasourceArray = array;
     NSLog(@"%@",[self.itemContainer.container description]);
     [self.tableView reloadData];
+    [GMDCircleLoader hideFromView:self.view animated:YES];
 }
 -(void)refreshTableHistory:(NSNotification *)noti{
     NSArray *json = [noti object];
@@ -241,15 +245,18 @@
     self.itemContainer.container = array;
     self.datasourceArray = array;
     [self.tableView reloadData];
+    [GMDCircleLoader hideFromView:self.view animated:YES];
 }
  
 
 -(void)refresh{
     self.datasourceArray = [self.itemContainer allItem];
     [self.tableView reloadData];
+    [GMDCircleLoader hideFromView:self.view animated:YES];
 }
 -(void)dropSuccess:(NSNotification *)noti{
     NSString *protocol = [noti object];
+    [GMDCircleLoader hideFromView:self.view animated:YES];
     if ([protocol isEqualToString:@"success"]) {
         [HHAlertView showAlertWithStyle:HHAlertStyleOk inView:self.view Title:@"Success" detail:@"delete item from database" cancelButton:nil Okbutton:@"thank you"];
         [self.itemContainer.container removeObjectAtIndex:deleteRow.row];
@@ -258,6 +265,7 @@
     }else{
         [HHAlertView showAlertWithStyle:HHAlertStyleError inView:self.view Title:@"Sorry" detail:@"Item has been ordered" cancelButton:nil Okbutton:@"OK"];
     }
+
     
 }
 

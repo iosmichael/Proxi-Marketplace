@@ -35,6 +35,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupDatabase];
+    self.tableView.backgroundColor = [UIColor colorWithRed:245/255.0f green:245/255.0f blue:241/255.0f alpha:1];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -120,11 +121,14 @@
             
         }
         NSString *item_title = item.item_title;
-        cell.cellPrice.text =[@"$ " stringByAppendingString:item.price_current];
-        cell.cellLabel.backgroundColor = [UIColor colorWithRed:140/255.0 green:158/255.0 blue:255/255.0 alpha:1];
-        cell.cellLabel.textColor = [UIColor whiteColor];
+        cell.cellPrice.text =[[@"$ " stringByAppendingString:item.price_current]stringByAppendingString:@" USD"];
         cell.cellLabel.text = item_title;
         cell.cellLabel.textAlignment = NSTextAlignmentCenter;
+        cell.layer.masksToBounds = NO;
+        cell.layer.cornerRadius = 2;
+        cell.layer.shadowOffset = CGSizeMake(-1, 2);
+        cell.layer.shadowRadius = 2;
+        cell.layer.shadowOpacity = 0.5;
         return cell;
     }else{
         return nil;

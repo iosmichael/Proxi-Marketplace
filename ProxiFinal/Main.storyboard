@@ -72,132 +72,6 @@
             </objects>
             <point key="canvasLocation" x="-27" y="1514"/>
         </scene>
-        <!--Post Item View Controller-->
-        <scene sceneID="UTW-2b-SF5">
-            <objects>
-                <viewController storyboardIdentifier="PostItemID" id="4DG-lF-Pgx" customClass="PostItemViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="MKk-KK-L9t"/>
-                        <viewControllerLayoutGuide type="bottom" id="FbW-K9-E3r"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="M19-wb-twa">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="pfe-2o-MzV">
-                                <rect key="frame" x="-10" y="-10" width="20" height="20"/>
-                                <animations/>
-                            </activityIndicatorView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jCZ-Gq-eUP">
-                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <animations/>
-                                <color key="backgroundColor" red="0.98431372549999996" green="0.69019607839999997" blue="0.3411764706" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="E3Q-Ue-WNt"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                <state key="normal" title="Post">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                </state>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="E3Q-Ue-WNt"/>
-                                    </mask>
-                                </variation>
-                                <variation key="widthClass=compact">
-                                    <mask key="constraints">
-                                        <include reference="E3Q-Ue-WNt"/>
-                                    </mask>
-                                </variation>
-                                <connections>
-                                    <action selector="postItem:" destination="4DG-lF-Pgx" eventType="touchUpInside" id="Gjq-fd-ksk"/>
-                                </connections>
-                            </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ppo-5o-Ka0">
-                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                <animations/>
-                                <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <color key="sectionIndexBackgroundColor" red="0.3411764706" green="0.71764705880000002" blue="0.71372549019999998" alpha="1" colorSpace="calibratedRGB"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="pmQ-ev-rKO">
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pmQ-ev-rKO" id="yTs-Ch-BcA">
-                                            <rect key="frame" x="0.0" y="0.0" width="240" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <animations/>
-                                        </tableViewCellContentView>
-                                        <animations/>
-                                    </tableViewCell>
-                                </prototypes>
-                                <sections/>
-                            </tableView>
-                        </subviews>
-                        <animations/>
-                        <color key="backgroundColor" red="0.3411764706" green="0.71764705880000002" blue="0.71372549019999998" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstItem="jCZ-Gq-eUP" firstAttribute="leading" secondItem="M19-wb-twa" secondAttribute="leadingMargin" id="87l-8n-67g"/>
-                            <constraint firstItem="ppo-5o-Ka0" firstAttribute="trailing" secondItem="pfe-2o-MzV" secondAttribute="trailing" id="AE3-wc-CBL"/>
-                            <constraint firstItem="FbW-K9-E3r" firstAttribute="top" secondItem="jCZ-Gq-eUP" secondAttribute="bottom" constant="8" symbolic="YES" id="Aul-Un-EeE"/>
-                            <constraint firstItem="jCZ-Gq-eUP" firstAttribute="top" secondItem="ppo-5o-Ka0" secondAttribute="bottom" constant="8" symbolic="YES" id="Fju-gT-DMC"/>
-                            <constraint firstItem="pfe-2o-MzV" firstAttribute="leading" secondItem="ppo-5o-Ka0" secondAttribute="leading" id="Lyo-FZ-8IC"/>
-                            <constraint firstItem="pfe-2o-MzV" firstAttribute="centerY" secondItem="M19-wb-twa" secondAttribute="centerY" id="S7z-aT-ONk"/>
-                            <constraint firstItem="jCZ-Gq-eUP" firstAttribute="centerX" secondItem="pfe-2o-MzV" secondAttribute="centerX" id="SHO-nt-k23"/>
-                            <constraint firstAttribute="trailing" secondItem="ppo-5o-Ka0" secondAttribute="trailing" id="Vxo-k0-xgR"/>
-                            <constraint firstItem="pfe-2o-MzV" firstAttribute="leading" secondItem="M19-wb-twa" secondAttribute="leading" id="ZYc-5K-Vw8"/>
-                            <constraint firstItem="ppo-5o-Ka0" firstAttribute="top" secondItem="M19-wb-twa" secondAttribute="top" id="eKp-rF-VpX"/>
-                            <constraint firstItem="pfe-2o-MzV" firstAttribute="leading" secondItem="M19-wb-twa" secondAttribute="leading" id="jS9-6E-vfj"/>
-                        </constraints>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="pfe-2o-MzV"/>
-                                <exclude reference="jCZ-Gq-eUP"/>
-                                <exclude reference="ppo-5o-Ka0"/>
-                            </mask>
-                            <mask key="constraints">
-                                <exclude reference="Aul-Un-EeE"/>
-                                <exclude reference="Lyo-FZ-8IC"/>
-                                <exclude reference="S7z-aT-ONk"/>
-                                <exclude reference="ZYc-5K-Vw8"/>
-                                <exclude reference="jS9-6E-vfj"/>
-                                <exclude reference="87l-8n-67g"/>
-                                <exclude reference="Fju-gT-DMC"/>
-                                <exclude reference="SHO-nt-k23"/>
-                                <exclude reference="AE3-wc-CBL"/>
-                                <exclude reference="Vxo-k0-xgR"/>
-                                <exclude reference="eKp-rF-VpX"/>
-                            </mask>
-                        </variation>
-                        <variation key="widthClass=compact">
-                            <mask key="subviews">
-                                <include reference="pfe-2o-MzV"/>
-                                <include reference="jCZ-Gq-eUP"/>
-                                <include reference="ppo-5o-Ka0"/>
-                            </mask>
-                            <mask key="constraints">
-                                <include reference="Aul-Un-EeE"/>
-                                <include reference="Lyo-FZ-8IC"/>
-                                <include reference="S7z-aT-ONk"/>
-                                <include reference="ZYc-5K-Vw8"/>
-                                <exclude reference="jS9-6E-vfj"/>
-                                <include reference="87l-8n-67g"/>
-                                <include reference="Fju-gT-DMC"/>
-                                <include reference="SHO-nt-k23"/>
-                                <include reference="AE3-wc-CBL"/>
-                                <include reference="Vxo-k0-xgR"/>
-                                <include reference="eKp-rF-VpX"/>
-                            </mask>
-                        </variation>
-                    </view>
-                    <connections>
-                        <outlet property="postButton" destination="jCZ-Gq-eUP" id="bGb-jg-rxq"/>
-                        <outlet property="refresher" destination="pfe-2o-MzV" id="ZML-WP-L26"/>
-                        <outlet property="tableView" destination="ppo-5o-Ka0" id="zKQ-ad-NJz"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="j6J-c3-eVp" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-27" y="2167"/>
-        </scene>
         <!--Login View Controller-->
         <scene sceneID="lnu-YT-sLH">
             <objects>
@@ -597,12 +471,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jrx-ba-XKK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="753" y="2167"/>
+            <point key="canvasLocation" x="597" y="2165"/>
         </scene>
         <!--Braintree Payment View Controller-->
         <scene sceneID="g6Y-8w-XIK">
             <objects>
-                <viewController id="52h-0x-rjb" customClass="BraintreePaymentViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="braintreepayment" id="52h-0x-rjb" customClass="BraintreePaymentViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="azT-3G-Glv"/>
                         <viewControllerLayoutGuide type="bottom" id="mLJ-iH-4wO"/>
@@ -930,7 +804,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zaa-wN-CPR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1932" y="1600"/>
+            <point key="canvasLocation" x="1932" y="1514"/>
         </scene>
         <!--Settings-->
         <scene sceneID="s9O-ay-hUb">
@@ -963,7 +837,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F1A-FH-1KE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2685" y="1600"/>
+            <point key="canvasLocation" x="2676" y="1514"/>
         </scene>
     </scenes>
     <resources>

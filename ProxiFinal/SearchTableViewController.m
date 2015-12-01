@@ -14,6 +14,7 @@
 #import "ItemContainer.h"
 #import "ItemConnection.h"
 #import "CategoryTableViewCell.h"
+#import "GMDCircleLoader.h"
 #import "Item.h"
 
 #define Image_url_prefix @"http://proximarketplace.com/database/images/"
@@ -77,7 +78,7 @@
     self.tableView.backgroundColor = [UIColor colorWithRed:153.0f/255.0f green:226.0f/255.0f blue:225.0f/255.0f alpha:1];
     self.tableView.backgroundView= nil;
     self.tableView.tableHeaderView = self.searchController.searchBar;
-    
+    [self.tableView setShowsVerticalScrollIndicator:NO];
     i = 10;
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -203,13 +204,8 @@
         }
         NSString *item_title = item.item_title;
         
-        cell.cellPrice.text =[@"$ " stringByAppendingString:item.price_current];
-        cell.cellTitle.backgroundColor = [UIColor colorWithRed:140/255.0 green:158/255.0 blue:255/255.0 alpha:1];
-        cell.cellTitle.textColor = [UIColor whiteColor];
+        cell.cellPrice.text =[[@"$ " stringByAppendingString:item.price_current] stringByAppendingString:@" USD    "];
         cell.cellTitle.text = item_title;
-        cell.cellTitle.textAlignment = NSTextAlignmentCenter;
-        cell.cellPrice.textAlignment = NSTextAlignmentCenter;
-        
         return cell;
 
         
@@ -252,7 +248,7 @@
         return 120;
     }else if(indexPath.section ==1){
         
-        return [self.datasourceItemArray count]*([[UIScreen mainScreen]bounds].size.height*0.8+15)+10;
+        return [self.datasourceItemArray count]*([[UIScreen mainScreen]bounds].size.height*0.8-20+15)+10;
         
     }else{
         return 10;
@@ -348,6 +344,7 @@
     
     [self.itemContainer addItemsFromJSONDictionaries:[noti object]];
     [self updateTable];
+    [GMDCircleLoader hideFromView:self.view animated:YES];
 }
 
 -(void)updateTable{
@@ -360,6 +357,7 @@
     [self.itemContainer.container removeAllObjects];
     [self.itemConnection fetchItemsFromIndex:0 amount:[self.itemContainer.container count]+i];
     self.viewMoreButton.enabled = NO;
+    [GMDCircleLoader setOnView:self.view withTitle:@"Exploring..." animated:YES];
 }
 
 -(void)updateViewController{

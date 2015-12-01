@@ -38,7 +38,7 @@
     self.collectionView = [[ItemCollectionView alloc]initWithFrame:CGRectZero collectionViewLayout:layout];
     self.layout = layout;
     [self.collectionView registerClass:[ItemCollectionViewCell class] forCellWithReuseIdentifier:@"ItemCollectionCell"];
-    self.collectionView.backgroundColor = [UIColor whiteColor];
+    self.collectionView.backgroundColor = [UIColor colorWithRed:245/255.0f green:245/255.0f blue:241/255.0f alpha:1];
     self.collectionView.showsHorizontalScrollIndicator =NO;
     [self.contentView addSubview:self.collectionView];
     return self;

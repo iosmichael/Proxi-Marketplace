@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface CategoryDetailTableViewController : UITableViewController<UICollectionViewDataSource,UICollectionViewDelegate>
+#warning add view more button. limit the downloads numbers
 
 @property (strong,nonatomic)NSString *categoryName;
 

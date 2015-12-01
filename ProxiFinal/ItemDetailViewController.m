@@ -180,8 +180,11 @@
 -(void)setupItemInfo{
     UIImageView *titleIcon = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 40, 40)];
     self.item_title = [[UILabel alloc]initWithFrame:CGRectMake(75, 20, Screen_width-15, 25)];
-    NSAttributedString *titleStr =[[NSAttributedString alloc]initWithString:self.item.item_title attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:20]}];
-    self.item_title.attributedText = titleStr;
+    //NSAttributedString *titleStr =[[NSAttributedString alloc]initWithString:self.item.item_title attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:20]}];
+    self.item_title.adjustsFontSizeToFitWidth = YES;
+    self.item_title.lineBreakMode = NSLineBreakByWordWrapping;
+    self.item_title.numberOfLines= 0;
+    self.item_title.text = self.item.item_title;
     [titleIcon setImage:[UIImage imageNamed:@"gift"]];
     UIImageView *priceIcon = [[UIImageView alloc]initWithFrame:CGRectMake(15, 65, 40, 40)];
     [priceIcon setImage:[UIImage imageNamed:@"vemo"]];

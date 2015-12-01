@@ -14,6 +14,7 @@
 #import "ItemConnection.h"
 #import "ItemDetailViewController.h"
 #import "CategoryDetailTableViewController.h"
+#import "GMDCircleLoader.h"
 
 #define CategoryNum 10
 #define Image_url_prefix @"http://proximarketplace.com/database/images/"
@@ -52,6 +53,7 @@
     UINib *nibForScrollViewCell = [UINib nibWithNibName:@"HomePageTableViewCell" bundle:nil];
     [self.tableView registerNib:nibForScrollViewCell forCellReuseIdentifier:@"ScrollViewCell"];
     self.tableView.tableHeaderView = [[HomePageSlideView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width,200)];
+    [self.tableView setShowsVerticalScrollIndicator:NO];
     UIView *footerView = [self setupFooterView];
     
     self.tableView.tableFooterView = footerView;
@@ -179,11 +181,14 @@
             
         }
         NSString *item_title = item.item_title;
-        cell.cellPrice.text =[@"$ " stringByAppendingString:item.price_current];
-        cell.cellLabel.backgroundColor = [UIColor colorWithRed:140/255.0 green:158/255.0 blue:255/255.0 alpha:1];
-        cell.cellLabel.textColor = [UIColor whiteColor];
+        cell.cellPrice.text =[[@"$ " stringByAppendingString:item.price_current]stringByAppendingString:@" USD"];
         cell.cellLabel.text = item_title;
         cell.cellLabel.textAlignment = NSTextAlignmentCenter;
+        cell.layer.masksToBounds = NO;
+        cell.layer.cornerRadius = 2;
+        cell.layer.shadowOffset = CGSizeMake(-1, 2);
+        cell.layer.shadowRadius = 2;
+        cell.layer.shadowOpacity = 0.5;
         return cell;
     }else{
         return nil;
@@ -321,6 +326,7 @@
 -(void)refreshTable:(NSNotification *)noti{
     [self.itemContainer addItemsFromJSONDictionaries:[noti object]];
     [self updateTable];
+    [GMDCircleLoader hideFromView:self.view animated:YES];
 }
 
 -(void)updateTable{
@@ -331,8 +337,7 @@
 }
 
 -(void)viewMoreButtonTapped{
-    NSLog(@"%@", [self.itemConnection description]);
-    NSLog(@"%@", [self.itemContainer.container description]);
+    [GMDCircleLoader setOnView:self.view withTitle:@"Loading..." animated:YES];
     [self.itemConnection fetchItemFromIndex:0 amount:[self.itemContainer.container count]+i];
     [self.itemContainer.container removeAllObjects];
     self.viewMoreButton.enabled = NO;

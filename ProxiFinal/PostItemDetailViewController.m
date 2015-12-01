@@ -152,7 +152,7 @@
     
 }
 - (IBAction)postItemButtonTapped:(id)sender {
-    NSData *img = UIImageJPEGRepresentation(self.imageView.image, 0.2);
+    NSData *img = UIImageJPEGRepresentation(self.imageView.image, 0.7);
 #warning  highPrice entered only
 #warning NSUserDefaults is invalid
     NSLog( @"%@",[self.titleTextField.text description]);

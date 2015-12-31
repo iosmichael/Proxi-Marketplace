@@ -7,7 +7,7 @@
 //
 
 #import "ItemConnection.h"
-#define address @"http://proximarketplace.com/database/index.php"
+#define address @"https://proximarketplace.com/database/index.php"
 
 @implementation ItemConnection
 

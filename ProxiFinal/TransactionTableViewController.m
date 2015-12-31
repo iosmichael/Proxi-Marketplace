@@ -136,6 +136,12 @@
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(checkoutPostSuccess:) name:@"FinishCheckoutNotification" object:nil];
     
+    if (![self.order.order_status isEqualToString:@"held"]) {
+        completeTransaction.enabled = NO;
+        completeTransaction.backgroundColor = [UIColor grayColor];
+        [completeTransaction setTitle:@"Payment Pending..." forState:UIControlStateNormal];
+    }
+    
 }
 
 -(void)completeTransactionButtonTapped{

@@ -46,18 +46,18 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"regularCell" forIndexPath:indexPath];
     UIButton *paymentButton = [[UIButton alloc]initWithFrame:CGRectMake(100, 0, 80, 40)];
-    [paymentButton setTitle:@"Payment" forState:UIControlStateNormal];
+    [paymentButton setTitle:@"Logout" forState:UIControlStateNormal];
     [paymentButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [paymentButton addTarget:self action:@selector(paymentButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+    [paymentButton addTarget:self action:@selector(logoutTapped) forControlEvents:UIControlEventTouchUpInside];
     // Configure the cell...
     [cell.contentView addSubview:paymentButton];
     return cell;
 }
 
--(void)paymentButtonTapped{
-    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    BraintreePaymentViewController *btvc = (BraintreePaymentViewController *)[sb instantiateViewControllerWithIdentifier:@"braintreepayment"];
-    [self.navigationController pushViewController:btvc animated:YES];
+-(void)logoutTapped{
+    [[NSUserDefaults standardUserDefaults]setObject:nil forKey:@"username"];
+    [[NSUserDefaults standardUserDefaults]setObject:nil forKey:@"password"];
+    NSLog(@"logged out");
 }
 /*
 // Override to support conditional editing of the table view.

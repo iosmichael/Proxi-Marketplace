@@ -8,7 +8,7 @@
 
 #import "UserConnection.h"
 
-#define address @"http://proximarketplace.com/database/index.php"
+#define address @"https://proximarketplace.com/database/index.php"
 @implementation UserConnection
 
 -(instancetype)init{
@@ -31,6 +31,7 @@
                            @"venmoPhone":user.venmoPhoneNumber,
                            @"dateOfBirth":user.dateOfBirth
                            };
+    NSLog(@"%@",[param description]);
     NSDictionary *param2 = @{
                              @"object":@"User",
                              @"method":@"register",
@@ -41,8 +42,6 @@
         NSData *response = responseObject;
         NSString *responseString = [[NSString alloc]initWithData:response encoding:NSUTF8StringEncoding];
         NSLog(@"%@",[responseString description]);
-        
-
         
         [[NSNotificationCenter defaultCenter]postNotificationName:@"RegisterPassNotification" object:responseString];
         

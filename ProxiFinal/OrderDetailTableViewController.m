@@ -5,7 +5,7 @@
 //  Created by Michael Liu on 11/25/15.
 //  Copyright © 2015 Michael Liu. All rights reserved.
 //
-
+#import "OrderConnection.h"
 #import "OrderDetailTableViewController.h"
 #define Screen_width [[UIScreen mainScreen]bounds].size.width
 
@@ -72,7 +72,6 @@
             break;
         default:
             [cell.contentView addSubview:self.orderButton];
-            cell.backgroundColor = [UIColor colorWithRed:239/255.0f green:239/255.0f blue:239/255.0f alpha:1  ];
             break;
     }
     
@@ -211,19 +210,34 @@
     
     
     self.item_image = [[UIImageView alloc]initWithFrame:CGRectMake(Screen_width*0.05, 10, Screen_width*0.9,Screen_width*0.9)];
+    
     self.orderButton = [[UIButton alloc]initWithFrame:CGRectMake(Screen_width*0.05, 5, Screen_width*0.9, 50)];
     [self.orderButton addTarget:self action:@selector(orderButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.orderButton.layer setCornerRadius:25];
     self.orderButton.backgroundColor = [UIColor colorWithRed:251/255.0f green:176/255.0f blue:87/255.0f alpha:1];
-    [self.orderButton setTitle:@"BUY" forState:UIControlStateNormal];
+    [self.orderButton setTitle:@"Refund" forState:UIControlStateNormal];
+    [self.orderButton setTitle:@"Payment Pending..." forState:UIControlStateDisabled];
     
-    
+    if (![self.order.order_status isEqualToString:@"held"]) {
+        self.orderButton.backgroundColor = [UIColor grayColor];
+        self.orderButton.enabled = NO;
+    }
     
     if (self.order.img_data) {
         [self.item_image setImage:[UIImage imageWithData:self.order.img_data]];
     }else{
         [self.item_image setImage:[UIImage imageNamed:@"manshoes"]];
     }
+}
+
+-(void)orderButtonTapped{
+    OrderConnection *orderConnection = [[OrderConnection alloc]init];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(finish:) name:@"RefundNotification" object:nil];
+    [orderConnection refund:self.order.item_id];
+}
+
+-(void)finish:(NSNotification *)noti{
+    
 }
 
 -(void)setupPersonInfo{
@@ -245,10 +259,6 @@
     [personDetailView addSubview:phoneLabel];
     
     
-}
-
-
--(void)orderButtonTapped{
 }
 
 

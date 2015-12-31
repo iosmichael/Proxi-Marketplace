@@ -33,6 +33,10 @@
 		9E2D37C01BD6DC05005BE36A /* PersonDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E2D37BF1BD6DC05005BE36A /* PersonDetailTableViewController.m */; };
 		9E6DE3601BC0718200C68E45 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E6DE35F1BC0718200C68E45 /* Main.storyboard */; };
 		9E7620351C03F99000248250 /* BraintreePaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E7620341C03F99000248250 /* BraintreePaymentViewController.m */; };
+		9E7620381C06B3BC00248250 /* OrderDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E7620371C06B3BC00248250 /* OrderDetailTableViewController.m */; };
+		9E76203A1C06C78900248250 /* icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E7620391C06C78900248250 /* icons.xcassets */; };
+		9E76203E1C07C5BD00248250 /* PostItemDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E76203C1C07C5BD00248250 /* PostItemDetailViewController.m */; };
+		9E76203F1C07C5BD00248250 /* PostItemDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E76203D1C07C5BD00248250 /* PostItemDetailViewController.xib */; };
 		9E8BA26D1BEFEAE30039F790 /* Transaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E8BA26C1BEFEAE30039F790 /* Transaction.m */; };
 		9E9CB14B1BE7DB7C00AC03A0 /* TransactionTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E9CB14A1BE7DB7C00AC03A0 /* TransactionTableViewController.m */; };
 		9EB66AB91BCE944F001D5416 /* JAMValidatingTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EB66AB81BCE944F001D5416 /* JAMValidatingTextField.m */; };
@@ -48,13 +52,13 @@
 		9EB66B131BD2EA61001D5416 /* UserConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EB66B121BD2EA61001D5416 /* UserConnection.m */; };
 		9EB66B161BD2EA8B001D5416 /* ItemConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EB66B151BD2EA8B001D5416 /* ItemConnection.m */; };
 		9EBDCA9B1BF9313C0006013C /* CategoryDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EBDCA9A1BF9313C0006013C /* CategoryDetailTableViewController.m */; };
+		9EC219961C0ACE330004F426 /* GMDCircleLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC219951C0ACE330004F426 /* GMDCircleLoader.m */; };
 		9EE687451BC037C80030BC8F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EE687441BC037C80030BC8F /* main.m */; };
 		9EE687481BC037C80030BC8F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EE687471BC037C80030BC8F /* AppDelegate.m */; };
 		9EE687531BC037C80030BC8F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9EE687511BC037C80030BC8F /* LaunchScreen.storyboard */; };
 		9EE6875E1BC037C80030BC8F /* ProxiFinalTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EE6875D1BC037C80030BC8F /* ProxiFinalTests.m */; };
 		9EE687691BC037C80030BC8F /* ProxiFinalUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EE687681BC037C80030BC8F /* ProxiFinalUITests.m */; };
 		9EF4C4251BC9CE8D00F4ED38 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF4C4241BC9CE8D00F4ED38 /* MasterViewController.m */; };
-		9EF4C4291BC9CF5600F4ED38 /* PostItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF4C4271BC9CF5600F4ED38 /* PostItemViewController.m */; };
 		9EF4C42E1BC9CFE600F4ED38 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF4C42C1BC9CFE600F4ED38 /* LoginViewController.m */; };
 		9EF4C4331BC9D05E00F4ED38 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF4C4311BC9D05E00F4ED38 /* RegisterViewController.m */; };
 		9EF4C4341BC9D05E00F4ED38 /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9EF4C4321BC9D05E00F4ED38 /* RegisterViewController.xib */; };
@@ -139,6 +143,12 @@
 		9E6DE35F1BC0718200C68E45 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		9E7620331C03F99000248250 /* BraintreePaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BraintreePaymentViewController.h; sourceTree = "<group>"; };
 		9E7620341C03F99000248250 /* BraintreePaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BraintreePaymentViewController.m; sourceTree = "<group>"; };
+		9E7620361C06B3BC00248250 /* OrderDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDetailTableViewController.h; sourceTree = "<group>"; };
+		9E7620371C06B3BC00248250 /* OrderDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderDetailTableViewController.m; sourceTree = "<group>"; };
+		9E7620391C06C78900248250 /* icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = icons.xcassets; sourceTree = "<group>"; };
+		9E76203B1C07C5BD00248250 /* PostItemDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostItemDetailViewController.h; sourceTree = "<group>"; };
+		9E76203C1C07C5BD00248250 /* PostItemDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostItemDetailViewController.m; sourceTree = "<group>"; };
+		9E76203D1C07C5BD00248250 /* PostItemDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostItemDetailViewController.xib; sourceTree = "<group>"; };
 		9E8BA26B1BEFEAE30039F790 /* Transaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Transaction.h; sourceTree = "<group>"; };
 		9E8BA26C1BEFEAE30039F790 /* Transaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Transaction.m; sourceTree = "<group>"; };
 		9E9CB1491BE7DB7C00AC03A0 /* TransactionTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransactionTableViewController.h; sourceTree = "<group>"; };
@@ -164,6 +174,8 @@
 		9EB66B151BD2EA8B001D5416 /* ItemConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemConnection.m; sourceTree = "<group>"; };
 		9EBDCA991BF9313C0006013C /* CategoryDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryDetailTableViewController.h; sourceTree = "<group>"; };
 		9EBDCA9A1BF9313C0006013C /* CategoryDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryDetailTableViewController.m; sourceTree = "<group>"; };
+		9EC219941C0ACE330004F426 /* GMDCircleLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMDCircleLoader.h; sourceTree = "<group>"; };
+		9EC219951C0ACE330004F426 /* GMDCircleLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMDCircleLoader.m; sourceTree = "<group>"; };
 		9EE687401BC037C80030BC8F /* ProxiFinal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProxiFinal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EE687441BC037C80030BC8F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		9EE687461BC037C80030BC8F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -178,8 +190,6 @@
 		9EE6876A1BC037C80030BC8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9EF4C4231BC9CE8D00F4ED38 /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
 		9EF4C4241BC9CE8D00F4ED38 /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
-		9EF4C4261BC9CF5600F4ED38 /* PostItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostItemViewController.h; sourceTree = "<group>"; };
-		9EF4C4271BC9CF5600F4ED38 /* PostItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostItemViewController.m; sourceTree = "<group>"; };
 		9EF4C42B1BC9CFE600F4ED38 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		9EF4C42C1BC9CFE600F4ED38 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		9EF4C4301BC9D05E00F4ED38 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
@@ -245,8 +255,6 @@
 				9EB66AF61BCF2282001D5416 /* PersonTableViewController.m */,
 				9E2D37BE1BD6DC05005BE36A /* PersonDetailTableViewController.h */,
 				9E2D37BF1BD6DC05005BE36A /* PersonDetailTableViewController.m */,
-				9E9CB1491BE7DB7C00AC03A0 /* TransactionTableViewController.h */,
-				9E9CB14A1BE7DB7C00AC03A0 /* TransactionTableViewController.m */,
 			);
 			name = PersonController;
 			sourceTree = "<group>";
@@ -316,14 +324,14 @@
 			isa = PBXGroup;
 			children = (
 				9EF4C4761BCDA15B00F4ED38 /* Cells */,
+				9EC219941C0ACE330004F426 /* GMDCircleLoader.h */,
+				9EC219951C0ACE330004F426 /* GMDCircleLoader.m */,
 				9EB66B091BD08A7D001D5416 /* HHAlertView.h */,
 				9EB66B0A1BD08A7D001D5416 /* HHAlertView.m */,
 				9EB66AB71BCE944F001D5416 /* JAMValidatingTextField.h */,
 				9EB66AB81BCE944F001D5416 /* JAMValidatingTextField.m */,
 				9EF4C4521BCB251700F4ED38 /* ABCIntroView.h */,
 				9EF4C4531BCB251700F4ED38 /* ABCIntroView.m */,
-				9EF4C4591BCB2B0E00F4ED38 /* HomePageSlideView.h */,
-				9EF4C45A1BCB2B0E00F4ED38 /* HomePageSlideView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -399,6 +407,10 @@
 				9E27119F1BE5C60A0034D68E /* OrderConfirmationTableViewController.h */,
 				9E2711A01BE5C60A0034D68E /* OrderConfirmationTableViewController.m */,
 				9E2D37B01BD6BF67005BE36A /* ItemDetailViewController.xib */,
+				9E7620361C06B3BC00248250 /* OrderDetailTableViewController.h */,
+				9E7620371C06B3BC00248250 /* OrderDetailTableViewController.m */,
+				9E9CB1491BE7DB7C00AC03A0 /* TransactionTableViewController.h */,
+				9E9CB14A1BE7DB7C00AC03A0 /* TransactionTableViewController.m */,
 			);
 			name = DetailController;
 			sourceTree = "<group>";
@@ -435,6 +447,7 @@
 				9EB66B051BD07A5F001D5416 /* Username.png */,
 				9EB66B031BD079A4001D5416 /* Proxi Logo.png */,
 				9EF4C4721BCC91CA00F4ED38 /* Images.xcassets */,
+				9E7620391C06C78900248250 /* icons.xcassets */,
 				9EB66AEF1BCED597001D5416 /* image.xcassets */,
 				9E0ECF441BC991F700D6B749 /* Controllers */,
 				9E0ECF431BC991ED00D6B749 /* Views */,
@@ -489,8 +502,9 @@
 			children = (
 				9E0ECF701BC9A45300D6B749 /* CameraViewController.h */,
 				9E0ECF711BC9A45300D6B749 /* CameraViewController.m */,
-				9EF4C4261BC9CF5600F4ED38 /* PostItemViewController.h */,
-				9EF4C4271BC9CF5600F4ED38 /* PostItemViewController.m */,
+				9E76203B1C07C5BD00248250 /* PostItemDetailViewController.h */,
+				9E76203C1C07C5BD00248250 /* PostItemDetailViewController.m */,
+				9E76203D1C07C5BD00248250 /* PostItemDetailViewController.xib */,
 			);
 			name = CameraController;
 			sourceTree = "<group>";
@@ -531,6 +545,8 @@
 		9EF4C47F1BCDA41B00F4ED38 /* HomeCells */ = {
 			isa = PBXGroup;
 			children = (
+				9EF4C4591BCB2B0E00F4ED38 /* HomePageSlideView.h */,
+				9EF4C45A1BCB2B0E00F4ED38 /* HomePageSlideView.m */,
 				9E0ECF571BC993D400D6B749 /* ItemCollectionViewCell.h */,
 				9E0ECF581BC993D400D6B749 /* ItemCollectionViewCell.m */,
 				9E0ECF591BC993D400D6B749 /* ItemCollectionViewCell.xib */,
@@ -682,10 +698,12 @@
 				9E2D37B21BD6BF67005BE36A /* ItemDetailViewController.xib in Resources */,
 				9EF4C47B1BCDA19E00F4ED38 /* ItemBigCollectionViewCell.xib in Resources */,
 				9EB66ABE1BCE9523001D5416 /* JAMMainViewController.xib in Resources */,
+				9E76203F1C07C5BD00248250 /* PostItemDetailViewController.xib in Resources */,
 				9E2D37BD1BD6DA42005BE36A /* MyTableViewCell.xib in Resources */,
 				9E6DE3601BC0718200C68E45 /* Main.storyboard in Resources */,
 				9E0ECF5B1BC993D400D6B749 /* ItemCollectionViewCell.xib in Resources */,
 				9EF4C4341BC9D05E00F4ED38 /* RegisterViewController.xib in Resources */,
+				9E76203A1C06C78900248250 /* icons.xcassets in Resources */,
 				9EB66B081BD07A6A001D5416 /* Lock Icon.png in Resources */,
 				9EE687531BC037C80030BC8F /* LaunchScreen.storyboard in Resources */,
 				9EB66B061BD07A5F001D5416 /* Username.png in Resources */,
@@ -768,8 +786,8 @@
 				9EF4C4331BC9D05E00F4ED38 /* RegisterViewController.m in Sources */,
 				9E0ECF911BC9A6E500D6B749 /* CameraSessionView.m in Sources */,
 				9EF4C47A1BCDA19E00F4ED38 /* ItemBigCollectionViewCell.m in Sources */,
+				9E76203E1C07C5BD00248250 /* PostItemDetailViewController.m in Sources */,
 				9E0ECF8A1BC9A68B00D6B749 /* CameraToggleButton.m in Sources */,
-				9EF4C4291BC9CF5600F4ED38 /* PostItemViewController.m in Sources */,
 				9E0ECF8E1BC9A69300D6B749 /* CameraStyleKitClass.m in Sources */,
 				9EF4C44B1BCA0F9800F4ED38 /* ItemTableViewCell.m in Sources */,
 				9E0ECF5A1BC993D400D6B749 /* ItemCollectionViewCell.m in Sources */,
@@ -781,10 +799,12 @@
 				9EB66B0B1BD08A7D001D5416 /* HHAlertView.m in Sources */,
 				9EF4C4251BC9CE8D00F4ED38 /* MasterViewController.m in Sources */,
 				9E2D37BC1BD6DA42005BE36A /* MyTableViewCell.m in Sources */,
+				9EC219961C0ACE330004F426 /* GMDCircleLoader.m in Sources */,
 				9EB66AB91BCE944F001D5416 /* JAMValidatingTextField.m in Sources */,
 				9EF4C4471BC9EB3200F4ED38 /* CategoryTableViewCell.m in Sources */,
 				9EE687481BC037C80030BC8F /* AppDelegate.m in Sources */,
 				9E8BA26D1BEFEAE30039F790 /* Transaction.m in Sources */,
+				9E7620381C06B3BC00248250 /* OrderDetailTableViewController.m in Sources */,
 				9E0ECF871BC9A68B00D6B749 /* CameraFlashButton.m in Sources */,
 				9EB66AF71BCF2282001D5416 /* PersonTableViewController.m in Sources */,
 				9EE687451BC037C80030BC8F /* main.m in Sources */,
@@ -925,7 +945,9 @@
 			baseConfigurationReference = F891546BD2B9D60EE2A0D494 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = ProxiFinal/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.proximarketplace.proxifinal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -937,7 +959,9 @@
 			baseConfigurationReference = 561203EA6118C9FE506683AC /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				INFOPLIST_FILE = ProxiFinal/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.proximarketplace.proxifinal;
 				PRODUCT_NAME = "$(TARGET_NAME)";

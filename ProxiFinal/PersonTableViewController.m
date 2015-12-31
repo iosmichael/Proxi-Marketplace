@@ -91,6 +91,7 @@
             NSString *fullName = [capitalizedFirstName stringByAppendingString:[@" " stringByAppendingString:capitalizedLastName]];
             NSAttributedString *nameAttrStr = [[NSAttributedString alloc]initWithString:fullName attributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Medium" size:20]}];
             cell.textLabel.attributedText = nameAttrStr;
+#warning text-alignment center
             cell.textLabel.textAlignment = NSTextAlignmentCenter;
             NSAttributedString *detailAttrStr = [[NSAttributedString alloc]initWithString:usernameString attributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:15]}];
             cell.detailTextLabel.attributedText = detailAttrStr;

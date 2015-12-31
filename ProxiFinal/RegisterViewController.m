@@ -68,6 +68,7 @@
     self.registerButton.enabled = NO;
     self.refresher.hidden = NO;
     [connection registeredUserInfo:user];
+    NSLog(@"register button pressed");
     
     
 }
@@ -156,7 +157,7 @@
         if (self.month.text.length==0) {
             return JAMValidatingTextFieldStatusIndeterminate;
         }
-        if (![self isInteger:self.month.text]||[self.year.text integerValue]>0||[self.year.text integerValue]<13) {
+        if (!([self isInteger:self.month.text])||!([self.month.text integerValue]>0)||!([self.month.text integerValue]<13)) {
             return JAMValidatingTextFieldStatusInvalid;
         }
         if (!(self.month.text.length==2)) {
@@ -169,7 +170,7 @@
         if (self.day.text.length==0) {
             return JAMValidatingTextFieldStatusIndeterminate;
         }
-        if (![self isInteger:self.day.text]||[self.year.text integerValue]>0||[self.year.text integerValue]<32) {
+        if (!([self isInteger:self.day.text])||!([self.day.text integerValue]>0)||!([self.day.text integerValue]<32)) {
             return JAMValidatingTextFieldStatusInvalid;
         }
         if (!(self.day.text.length==2)) {
@@ -200,7 +201,7 @@
         self.year.validationStatus==JAMValidatingTextFieldStatusValid&&
         self.month.validationStatus==JAMValidatingTextFieldStatusValid&&
         self.day.validationStatus==JAMValidatingTextFieldStatusValid&&
-        agreeTerms) {
+        agreeTerms&&self.venmoPhone.validationStatus) {
             self.registerButton.enabled=YES;
             [self.registerButton setBackgroundColor:highlight_color];
             [self.registerAlertLabel setTextColor:[UIColor clearColor]];

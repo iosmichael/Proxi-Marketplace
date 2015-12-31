@@ -41,7 +41,9 @@
     [self.navigationController.navigationBar
      setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     self.navigationController.navigationBar.barTintColor =[UIColor colorWithRed:87/255.0 green:183/255.0 blue:182/255.0 alpha:1.0];
-    self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    if ([self.detailCategory isEqualToString:@"My Items"]) {
+     self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    }
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
     [self filterDetailCategory];
@@ -84,18 +86,13 @@
             NSString *item_id = item.item_id;
             [self.itemConnection drop:item_id detail_category:self.detailCategory];
             [GMDCircleLoader setOnView:self.view withTitle:@"Loading..." animated:YES];
-        }else if ([[self.itemContainer.container objectAtIndex:indexPath.row]isKindOfClass:[Order class]]){
-            if ([self.detailCategory isEqualToString:@"My Orders"]) {
-                Order *order = [self.itemContainer.container objectAtIndex:indexPath.row];
-                NSString *item_id = order.item_id;
-                [self.itemConnection drop:item_id detail_category:self.detailCategory];
-            }else if ([self.detailCategory isEqualToString:@"My Sells"]){
+        }
+        else{
                 return;
             }
         }
         NSLog(@"%@",[self.detailCategory description]);
     
-    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -111,7 +108,7 @@
         }else{
             [cell.cellImageView setImage:[UIImage imageWithData: item.image]];
         }
-    
+        cell.cellStatus.text = @"";
         cell.cellPrice.text = [@"$" stringByAppendingString:item.price_current];
         NSString *dateStr= [self stringToDate:item.date];
         cell.cellDescription.text = dateStr;
@@ -121,6 +118,12 @@
     }else if ([[self.itemContainer.container objectAtIndex:indexPath.row]isKindOfClass:[Order class]]){
         Order *order = [self.itemContainer.container objectAtIndex:indexPath.row];
         cell.cellPrice.text = [@"$" stringByAppendingString:order.order_price];
+        if ([order.order_status isEqualToString:@"held"]) {
+            cell.cellStatus.text = @"Ready";
+        }else{
+            cell.cellStatus.text = @"Payment Pending";
+            cell.cellStatus.textColor = [UIColor redColor];
+        }
         cell.cellTitle.text = order.item_title;
         NSString *dateStr = [self stringToDate:order.order_date];
         cell.cellDescription.text = dateStr;
@@ -135,7 +138,13 @@
     }else if([[self.itemContainer.container objectAtIndex:indexPath.row]isKindOfClass:[Transaction class]]){
         Transaction *transaction = [self.itemContainer.container objectAtIndex:indexPath.row];
         cell.cellPrice.text = [@"$" stringByAppendingString:transaction.item_price];
+        cell.cellStatus.text = @"";
         cell.cellTitle.text = transaction.item_title;
+        if ([transaction.transaction_status isEqualToString:@"purchased"]) {
+            [cell.cellImageView setImage:[UIImage imageNamed:@"Sold"]];
+        }else{
+            [cell.cellImageView setImage:[UIImage imageNamed:@"refund"]];
+        }
         NSString *dateStr = [self stringToDate:transaction.bought_date];
         cell.cellDescription.text= dateStr;
         return cell;
@@ -160,6 +169,7 @@
         self.connectionMethod = @"mySells";
     }else if([self.detailCategory isEqualToString:@"My History"]){
         self.connectionMethod = @"myTransactions";
+        self.tableView.allowsSelection = NO;
     }else{
         return;
     }
@@ -220,8 +230,9 @@
         NSString *item_img_url = dic[@"item_img_url"];
         NSString *item_title = dic[@"item_title"];
         NSString *item_description = dic[@"item_description"];
+        NSString *order_status = dic[@"order_status"];
         NSDictionary *user_info = dic[@"user_info"];
-        Order *order = [[Order alloc]initWithItem:item_id user:user_id orderID:order_id orderDate:order_date orderPrice:order_price item_img_url:item_img_url item_title:item_title item_description:item_description user_info:user_info];
+        Order *order = [[Order alloc]initWithItem:item_id user:user_id orderID:order_id orderDate:order_date orderPrice:order_price item_img_url:item_img_url item_title:item_title item_description:item_description user_info:user_info order_status:order_status];
         [array addObject:order];
     }
     
@@ -237,9 +248,10 @@
     for (NSDictionary *dic in json) {
         NSString *item_title = dic[@"item_title"];
 #warning dic[@"item_price"] is null from database; my history;
-        NSString *item_price = @"No Price Data";
-        NSString *bought_date = dic[@"bought_date"];
-        Transaction *transaction = [[Transaction alloc]initWith:item_title date:bought_date price:item_price];
+        NSString *item_price = dic[@"item_price"];
+        NSString *bought_date = dic[@"sold_date"];
+        NSString *transaction_status = dic[@"transaction_status"];
+        Transaction *transaction = [[Transaction alloc]initWith:item_title date:bought_date price:item_price status:transaction_status];
         [array addObject:transaction];
     }
     self.itemContainer.container = array;

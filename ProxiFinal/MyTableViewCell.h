@@ -13,5 +13,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *cellPrice;
 @property (weak, nonatomic) IBOutlet UILabel *cellDescription;
 @property (weak, nonatomic) IBOutlet UILabel *cellTitle;
+@property (weak, nonatomic) IBOutlet UILabel *cellStatus;
 
 @end

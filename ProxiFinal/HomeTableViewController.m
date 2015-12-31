@@ -61,9 +61,11 @@
 
 }
 
+
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
+    [self viewMoreButtonTapped];
 }
 
 
@@ -337,7 +339,7 @@
 }
 
 -(void)viewMoreButtonTapped{
-    [GMDCircleLoader setOnView:self.view withTitle:@"Loading..." animated:YES];
+    [GMDCircleLoader setOnView:self.tableView withTitle:@"Loading..." animated:YES];
     [self.itemConnection fetchItemFromIndex:0 amount:[self.itemContainer.container count]+i];
     [self.itemContainer.container removeAllObjects];
     self.viewMoreButton.enabled = NO;

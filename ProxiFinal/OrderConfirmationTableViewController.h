@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Braintree/Braintree.h>
 #import "Item.h"
 
 @interface OrderConfirmationTableViewController : UITableViewController
 @property (strong,nonatomic) Item *orderItem;
+@property (strong,nonatomic) Braintree *braintree;
 @end

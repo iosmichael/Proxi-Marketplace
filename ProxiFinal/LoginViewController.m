@@ -32,6 +32,8 @@
     [self.userTextview.layer setCornerRadius:10];
     self.username.autocorrectionType= UITextAutocorrectionTypeNo;
     self.password.secureTextEntry = YES;
+    self.username.delegate=self;
+    self.password.delegate=self;
     [self.passwordTextview.layer setCornerRadius:10];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginPass:) name:@"LoginPassNotification" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginError) name:@"LoginErrorNotification" object:nil];
@@ -67,6 +69,8 @@
     [self presentViewController:registerViewController animated:YES completion:nil];
 }
 
+
+
 -(void)loginPass:(NSNotification *)noti{
     BOOL success = [[noti object]isEqualToString:LoginSuccessProtocol];
     if (success) {
@@ -99,6 +103,10 @@
     self.password.text =@"";
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return NO;
+}
 
 /*
 #pragma mark - Navigation

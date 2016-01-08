@@ -39,6 +39,7 @@
      setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     self.navigationController.navigationBar.barTintColor =[UIColor colorWithRed:87/255.0 green:183/255.0 blue:182/255.0 alpha:1.0];
     self.navigationController.navigationBar.translucent = YES;
+    [[HHAlertView shared]setDelegate:self];
     [self setupElements];
     
 }

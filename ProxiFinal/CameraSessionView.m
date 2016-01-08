@@ -144,7 +144,7 @@
         
         //Button Visual attribution
         _cameraShutter.frame = (CGRect){0,0, shutterButtonSize};
-        _cameraShutter.center = CGPointMake(self.center.x, self.center.y*1.55);
+        _cameraShutter.center = CGPointMake(self.center.x, self.center.y*1.65);
         _cameraShutter.tag = ShutterButtonTag;
         _cameraShutter.backgroundColor = [UIColor clearColor];
         

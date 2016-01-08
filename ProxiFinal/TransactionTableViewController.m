@@ -7,12 +7,13 @@
 //
 
 #import "TransactionTableViewController.h"
-#import "HHAlertView.h"
 #import "OrderConnection.h"
+#import "ChatViewController.h"
 #import "Order.h"
+#define Screen_width [[UIScreen mainScreen]bounds].size.width
 
 
-@interface TransactionTableViewController ()<HHAlertViewDelegate>
+@interface TransactionTableViewController ()
 
 @end
 
@@ -22,18 +23,20 @@
     UITextView *thankyouNote;
     UILabel *item_price;
     UIButton *completeTransaction;
+    UIView *personDetailView;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"regularCell"];
     self.navigationItem.title = @"Transaction";
+    self.tableView.allowsSelection = NO;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     [self.navigationController.navigationBar
      setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     self.navigationController.navigationBar.barTintColor =[UIColor colorWithRed:87/255.0 green:183/255.0 blue:182/255.0 alpha:1.0];
-    [[HHAlertView shared]setDelegate:self];
     [self setupElements];
+    [self setupPersonInfo];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -45,7 +48,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 
-    return 6;
+    return 4;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -67,9 +70,7 @@
         case 3:
             return 110;
             break;
-        case 4:
-            return 70;
-            break;
+        
         default:
             return 0;
             break;
@@ -84,7 +85,7 @@
             return @"Term & Policy";
             break;
         case 3:
-            return @"Write a Thank you Note";
+            return @"Buyer Information";
             break;
         default:
             return nil;
@@ -104,11 +105,9 @@
         case 2:
             [cell.contentView addSubview:policy];
             break;
+        
         case 3:
-            [cell.contentView addSubview:thankyouNote];
-            break;
-        case 4:
-            [cell.contentView addSubview:completeTransaction];
+            [cell.contentView addSubview:personDetailView];
             break;
         default:
             break;
@@ -128,44 +127,55 @@
     thankyouNote = [[UITextView alloc]initWithFrame:CGRectMake(10, 0, screen_width-20, 100)];
     item_price = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, screen_width-20, 50)];
     item_price.text = [@"Item Price:  $" stringByAppendingString:self.order.order_price];
-    completeTransaction = [[UIButton alloc]initWithFrame:CGRectMake(10, 0, screen_width-20, 70)];
-    [completeTransaction addTarget:self action:@selector(completeTransactionButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-    [completeTransaction setTitle:@"Check Out" forState:UIControlStateNormal];
-    completeTransaction.backgroundColor = [UIColor colorWithRed:251/255.0 green:176/255.0 blue:87/255.0 alpha:1];
-    completeTransaction.layer.cornerRadius = 15;
+}
+
+-(void)setupPersonInfo{
+    personDetailView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Screen_width, 100)];
+    UIButton *personButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, Screen_width, 100)];
+    [personButton addTarget:self action:@selector(personButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+    UIImageView *personIcon = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 40, 40)];
+    [personIcon setImage:[UIImage imageNamed:@"userIcon"]];
+    UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(75, 15, Screen_width-75, 17)];
+    UILabel *emailLabel = [[UILabel alloc]initWithFrame:CGRectMake(75, 36, Screen_width - 75, 17)];
+    UILabel *phoneLabel = [[UILabel alloc]initWithFrame:CGRectMake(75, 60, Screen_width - 75, 17)];
+    NSAttributedString *nameStr =[[NSAttributedString alloc]initWithString:[self profileName:self.order.user_info[@"user_email"]] attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:14]}];
+    nameLabel.attributedText = nameStr;
+    NSAttributedString *emailStr =[[NSAttributedString alloc]initWithString:self.order.user_info[@"user_email"] attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:14]}];
+    emailLabel.attributedText = emailStr;
+    NSAttributedString *phoneStr =[[NSAttributedString alloc]initWithString:self.order.user_info[@"user_phone"] attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:14]}];
+    phoneLabel.attributedText = phoneStr;
+    [personDetailView addSubview:personIcon];
+    [personDetailView addSubview:nameLabel];
+    [personDetailView addSubview:emailLabel];
+    [personDetailView addSubview:phoneLabel];
+    [personDetailView addSubview:personButton];
     
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(checkoutPostSuccess:) name:@"FinishCheckoutNotification" object:nil];
-    
-    if (![self.order.order_status isEqualToString:@"held"]) {
-        completeTransaction.enabled = NO;
-        completeTransaction.backgroundColor = [UIColor grayColor];
-        [completeTransaction setTitle:@"Payment Pending..." forState:UIControlStateNormal];
-    }
     
 }
 
--(void)completeTransactionButtonTapped{
-    OrderConnection *orderConnection = [[OrderConnection alloc]init];
-    [orderConnection finishCheckOut:self.order.item_id];
-    NSLog(@"%@",[self.order description]);
-   // [HHAlertView showAlertWithStyle:HHAlertStyleDefault inView:self.view Title:@"Are Your Sure?" detail:@"Confirm transaction after you received money" cancelButton:@"Not now" Okbutton:@"Yes"];
+-(void)personButtonTapped{
+    ChatViewController *chatViewController = [[ChatViewController alloc]init];
+    chatViewController.title = [self profileName:self.order.user_info[@"user_email"]];
+    chatViewController.seller_email = self.order.user_info[@"user_email"];
+    [self.navigationController pushViewController:chatViewController animated:YES];
 }
 
--(void)checkoutPostSuccess:(NSNotification *)noti{
-    NSString *protocal = [noti object];
-    NSLog(@"protocal: %@",[protocal description]);
-    if ([protocal isEqualToString:@"success"]) {
-        [HHAlertView showAlertWithStyle:HHAlertStyleOk inView:self.view Title:@"Success" detail:@"Thank you for using our App!" cancelButton:nil Okbutton:@"OK"];
-    }else{
-        [HHAlertView showAlertWithStyle:HHAlertStyleError inView:self.view Title:@"Error" detail:@"Please check your WIFI connection" cancelButton:nil Okbutton:@"OK"];
-    }
-}
-
--(void)didClickButtonAnIndex:(HHAlertButton)button{
-    if (button==HHAlertStyleOk) {
-        OrderConnection *orderConnection = [[OrderConnection alloc]init];
-        [orderConnection finishCheckOut:self.order.item_id];
-    }
+-(NSString *)profileName:(NSString *)email{
+    NSString *usernameString = email;
+    NSArray *components = [usernameString componentsSeparatedByString:@"@"];
+    NSString *nameString = [components objectAtIndex:0];
+    NSArray *nameComponents = [nameString componentsSeparatedByString:@"."];
+    NSString *firstName = [nameComponents objectAtIndex:0];
+    
+    NSString *capitalizedFirstName = [firstName stringByReplacingCharactersInRange:NSMakeRange(0,1)
+                                                                        withString:[[firstName substringToIndex:1] capitalizedString]];
+    NSString *lastName = [nameComponents objectAtIndex:1];
+    NSString *capitalizedLastName = [lastName stringByReplacingCharactersInRange:NSMakeRange(0,1)
+                                                                      withString:[[lastName substringToIndex:1] capitalizedString]];
+    
+    NSString *fullName = [capitalizedFirstName stringByAppendingString:[@" " stringByAppendingString:capitalizedLastName]];
+    return fullName;
+    
 }
 
 @end

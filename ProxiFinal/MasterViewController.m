@@ -13,11 +13,13 @@
 
 @interface MasterViewController ()<ABCIntroViewDelegate>
 @property ABCIntroView *introView;
+@property (strong,nonatomic) UIButton *centerButton;
 @end
 
 @implementation MasterViewController
 #define CENTERBUTTONSIZE_WIDTH 55
 #define CENTERBUTTONSIZE_HEIGHT 45
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -41,7 +43,8 @@
         center.y = center.y - heightDifference/2.0;
         centerButton.center = center;
     }
-    [self.view addSubview:centerButton];
+    self.centerButton = centerButton;
+    [self.view addSubview:self.centerButton];
     
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -118,6 +121,13 @@
 }
 
 
+-(void)toggleButton{
+    if (self.centerButton.hidden) {
+        self.centerButton.hidden = NO;
+    }else{
+        self.centerButton.hidden = YES;
+    }
+}
 
 -(void)switchTab{
     [self setSelectedIndex:2];

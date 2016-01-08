@@ -7,6 +7,8 @@
 //
 #import "OrderConnection.h"
 #import "OrderDetailTableViewController.h"
+#import "HHAlertView.h"
+#import "ChatViewController.h"
 #define Screen_width [[UIScreen mainScreen]bounds].size.width
 
 @interface OrderDetailTableViewController ()
@@ -70,8 +72,13 @@
         case 3:
             [cell.contentView addSubview:personDetailView];
             break;
-        default:
+        case 5:
             [cell.contentView addSubview:self.orderButton];
+            break;
+        case 4:
+            [cell.contentView addSubview:self.confirmButton];
+            break;
+        default:
             break;
     }
     
@@ -104,7 +111,7 @@
     return 1;
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 5;
+    return 6;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -218,8 +225,21 @@
     [self.orderButton setTitle:@"Refund" forState:UIControlStateNormal];
     [self.orderButton setTitle:@"Payment Pending..." forState:UIControlStateDisabled];
     
+    
+    
+    self.confirmButton = [[UIButton alloc]initWithFrame:CGRectMake(Screen_width*0.05, 5, Screen_width*0.9, 50)];
+    [self.confirmButton addTarget:self action:@selector(confirmButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+    [self.confirmButton.layer setCornerRadius:25];
+    self.confirmButton.backgroundColor = [UIColor colorWithRed:251/255.0f green:176/255.0f blue:87/255.0f alpha:1];
+    [self.confirmButton setTitle:@"Confirm Transaction" forState:UIControlStateNormal];
+    [self.confirmButton setTitle:@"Payment Pending..." forState:UIControlStateDisabled];
+
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(checkoutPostSuccess:) name:@"FinishCheckoutNotification" object:nil];
+    
     if (![self.order.order_status isEqualToString:@"held"]) {
         self.orderButton.backgroundColor = [UIColor grayColor];
+        self.confirmButton.backgroundColor = [UIColor grayColor];
+        self.confirmButton.enabled = YES;
         self.orderButton.enabled = NO;
     }
     
@@ -230,18 +250,44 @@
     }
 }
 
+-(void)checkoutPostSuccess:(NSNotification *)noti{
+    NSString *protocal = [noti object];
+    NSLog(@"protocal: %@",[protocal description]);
+    if ([protocal isEqualToString:@"success"]) {
+        [HHAlertView showAlertWithStyle:HHAlertStyleOk inView:self.view Title:@"Success" detail:@"Thank you!" cancelButton:nil Okbutton:@"OK"];
+    }else{
+        [HHAlertView showAlertWithStyle:HHAlertStyleError inView:self.view Title:@"Error" detail:@"Please contact us" cancelButton:nil Okbutton:@"OK"];
+    }
+}
+
 -(void)orderButtonTapped{
     OrderConnection *orderConnection = [[OrderConnection alloc]init];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(finish:) name:@"RefundNotification" object:nil];
     [orderConnection refund:self.order.item_id];
 }
 
+-(void)confirmButtonTapped{
+        OrderConnection *orderConnection = [[OrderConnection alloc]init];
+        [orderConnection finishCheckOut:self.order.item_id];
+        NSLog(@"%@",[self.order description]);
+        // [HHAlertView showAlertWithStyle:HHAlertStyleDefault inView:self.view Title:@"Are Your Sure?" detail:@"Confirm transaction after you received money" cancelButton:@"Not now" Okbutton:@"Yes"];
+}
+
 -(void)finish:(NSNotification *)noti{
+    NSString *protocal = [noti object];
+    NSLog(@"protocal: %@",[protocal description]);
+    if ([protocal isEqualToString:@"success"]) {
+        [HHAlertView showAlertWithStyle:HHAlertStyleOk inView:self.view Title:@"Success" detail:@"Thank you" cancelButton:nil Okbutton:@"OK"];
+    }else{
+        [HHAlertView showAlertWithStyle:HHAlertStyleError inView:self.view Title:@"Error" detail:@"Please contact with Proxi" cancelButton:nil Okbutton:@"Cancel"];
+    }
     
 }
 
 -(void)setupPersonInfo{
     personDetailView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Screen_width, 100)];
+    UIButton *personButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, Screen_width, 100)];
+    [personButton addTarget:self action:@selector(personButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     UIImageView *personIcon = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 40, 40)];
     [personIcon setImage:[UIImage imageNamed:@"userIcon"]];
     UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(75, 15, Screen_width-75, 17)];
@@ -257,10 +303,16 @@
     [personDetailView addSubview:nameLabel];
     [personDetailView addSubview:emailLabel];
     [personDetailView addSubview:phoneLabel];
+    [personDetailView addSubview:personButton];
     
     
 }
-
+-(void)personButtonTapped{
+    ChatViewController *chatViewController = [[ChatViewController alloc]init];
+    chatViewController.title = [self profileName:self.order.user_info[@"seller_email"]];
+    chatViewController.seller_email = self.order.user_info[@"seller_email"];
+    [self.navigationController pushViewController:chatViewController animated:YES];
+}
 
 - (UIImage *)resizeImage:(UIImage *)image toSize:(CGSize)resize
 

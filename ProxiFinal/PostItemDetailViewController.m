@@ -40,7 +40,7 @@
     numberOfArray = 3;
     categoryClicked = NO;
     textViewEdited = NO;
-    self.imageView = [[UIImageView alloc]initWithFrame:CGRectMake(27, 53+10, Screen_width-54, Screen_width-54)];
+    self.imageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 53+10, Screen_width-20, Screen_width-20)];
     if (self.image) {
         [self.imageView setImage:self.image];
     }else{

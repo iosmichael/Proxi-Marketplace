@@ -74,6 +74,32 @@
                         <color key="textColor" red="0.4039215686" green="0.71372549019999998" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CCB-qN-AMq">
+                        <rect key="frame" x="273" y="39" width="22" height="24"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="badge" translatesAutoresizingMaskIntoConstraints="NO" id="bFw-QQ-8XC">
+                                <rect key="frame" x="0.0" y="1" width="22" height="22"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mLu-NA-Ywh">
+                                <rect key="frame" x="4" y="2" width="14" height="21"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="bFw-QQ-8XC" firstAttribute="leading" secondItem="CCB-qN-AMq" secondAttribute="leading" id="6Xw-Mn-ccH"/>
+                            <constraint firstItem="bFw-QQ-8XC" firstAttribute="centerY" secondItem="mLu-NA-Ywh" secondAttribute="centerY" id="HIw-TQ-kfx"/>
+                            <constraint firstItem="bFw-QQ-8XC" firstAttribute="bottom" secondItem="mLu-NA-Ywh" secondAttribute="bottom" id="KDq-Qq-0E9"/>
+                            <constraint firstAttribute="height" constant="24" id="U7C-ei-JFh"/>
+                            <constraint firstItem="bFw-QQ-8XC" firstAttribute="top" secondItem="CCB-qN-AMq" secondAttribute="top" constant="1" id="cIm-Z4-vgP"/>
+                            <constraint firstAttribute="trailing" secondItem="bFw-QQ-8XC" secondAttribute="trailing" id="hcV-ba-HuL"/>
+                            <constraint firstItem="bFw-QQ-8XC" firstAttribute="centerX" secondItem="mLu-NA-Ywh" secondAttribute="centerX" id="kg4-Yw-OPK"/>
+                            <constraint firstAttribute="width" constant="22" id="pjZ-NB-G1X"/>
+                            <constraint firstItem="bFw-QQ-8XC" firstAttribute="centerY" secondItem="CCB-qN-AMq" secondAttribute="centerY" id="ut6-fc-LaQ"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="DOG-Rh-JfH" firstAttribute="baseline" secondItem="80N-mj-Wbx" secondAttribute="baseline" id="0OR-u1-TH6"/>
@@ -88,24 +114,30 @@
                     <constraint firstItem="PnJ-za-obr" firstAttribute="leading" secondItem="BeR-dG-wQ2" secondAttribute="trailing" id="TlA-Iv-Eav"/>
                     <constraint firstItem="DOG-Rh-JfH" firstAttribute="leading" secondItem="80N-mj-Wbx" secondAttribute="trailing" constant="8" symbolic="YES" id="Wzq-Li-1PZ"/>
                     <constraint firstItem="80N-mj-Wbx" firstAttribute="top" secondItem="PnJ-za-obr" secondAttribute="bottom" constant="2" id="YlN-e4-QES"/>
+                    <constraint firstItem="cYI-lM-drQ" firstAttribute="leading" secondItem="CCB-qN-AMq" secondAttribute="trailing" constant="6" id="bd5-qT-Ra8"/>
                     <constraint firstItem="2eL-ba-O5r" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="bmP-GT-dST"/>
                     <constraint firstItem="BeR-dG-wQ2" firstAttribute="top" secondItem="Ro4-5A-EJi" secondAttribute="bottom" constant="2" id="c6P-Ql-bi9"/>
+                    <constraint firstItem="CCB-qN-AMq" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="dOc-8L-RLi"/>
                     <constraint firstItem="80N-mj-Wbx" firstAttribute="top" secondItem="BeR-dG-wQ2" secondAttribute="bottom" constant="2" id="iYO-Z2-ftP"/>
                     <constraint firstItem="80N-mj-Wbx" firstAttribute="leading" secondItem="2eL-ba-O5r" secondAttribute="trailing" constant="8" id="ttA-kG-xvn"/>
                     <constraint firstItem="cYI-lM-drQ" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="yES-8S-hxS"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="badge" destination="bFw-QQ-8XC" id="01a-PE-mef"/>
+                <outlet property="badgeNum" destination="mLu-NA-Ywh" id="eTC-w1-FAY"/>
                 <outlet property="cellDescription" destination="80N-mj-Wbx" id="I9G-5X-7Cy"/>
                 <outlet property="cellImageView" destination="2eL-ba-O5r" id="12u-PE-S6C"/>
                 <outlet property="cellPrice" destination="PnJ-za-obr" id="cQw-wb-NSf"/>
                 <outlet property="cellStatus" destination="DOG-Rh-JfH" id="DvZ-RY-tIP"/>
                 <outlet property="cellTitle" destination="Ro4-5A-EJi" id="Fsi-Wb-tgc"/>
+                <outlet property="pointer" destination="cYI-lM-drQ" id="T95-uy-Zu2"/>
             </connections>
             <point key="canvasLocation" x="193" y="271.5"/>
         </tableViewCell>
     </objects>
     <resources>
+        <image name="badge" width="43" height="43"/>
         <image name="pointer" width="26" height="40"/>
     </resources>
 </document>

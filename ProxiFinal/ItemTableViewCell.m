@@ -31,10 +31,11 @@
         return nil;
     }
     
-
+    CGRect rect = [[UIScreen mainScreen]bounds];
+    CGFloat screenWidth = rect.size.width;
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
     layout.sectionInset = UIEdgeInsetsMake(15,5,15,5);
-    layout.itemSize = CGSizeMake(147,185);
+    layout.itemSize = CGSizeMake(screenWidth*0.5-10,screenWidth*0.5*182.0/147.0);
     self.collectionView = [[ItemCollectionView alloc]initWithFrame:CGRectZero collectionViewLayout:layout];
     self.layout = layout;
     [self.collectionView registerClass:[ItemCollectionViewCell class] forCellWithReuseIdentifier:@"ItemCollectionCell"];

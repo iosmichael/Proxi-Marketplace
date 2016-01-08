@@ -52,8 +52,7 @@
         HomeTableViewController *parentVC = (HomeTableViewController *)self.parentViewController;
         [parentVC updateViewController];
     }else if ([self.parentViewController isKindOfClass:[SearchTableViewController class]]){
-        SearchTableViewController *parentVC = (SearchTableViewController *)self.parentViewController;
-        [parentVC updateViewController];
+
     }else{
         
     }
@@ -250,6 +249,8 @@
     UIGraphicsEndImageContext();
     return reSizeImage;
 }
+
+
 /*
 #pragma mark - Navigation
 

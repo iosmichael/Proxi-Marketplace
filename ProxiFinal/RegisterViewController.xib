@@ -15,7 +15,7 @@
                 <outlet property="firstPage" destination="aS4-ae-Gmt" id="4pW-Jr-e1K"/>
                 <outlet property="month" destination="BhB-0P-Ay1" id="y7B-Vj-2QV"/>
                 <outlet property="page" destination="aN6-rQ-mpW" id="Hdx-sS-8b8"/>
-                <outlet property="password" destination="043-Ry-wH5" id="cmq-WF-nnJ"/>
+                <outlet property="password" destination="r0w-XG-SYO" id="MVh-Sk-isC"/>
                 <outlet property="phone" destination="D9u-nb-MsL" id="occ-vQ-Z6A"/>
                 <outlet property="recheckPassword" destination="043-Ry-wH5" id="VVk-ag-oiJ"/>
                 <outlet property="refresher" destination="ASf-MP-wC3" id="ptk-v2-jKE"/>
@@ -634,12 +634,12 @@
                         </mask>
                     </variation>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Venmo Phone Number: " textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="BQW-Xg-0hb">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Phone Number:" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="BQW-Xg-0hb">
                     <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="28" id="21i-mS-Z99"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                     <variation key="default">
@@ -653,7 +653,7 @@
                         </mask>
                     </variation>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Can be same as your current phone number" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="bmD-rS-CiJ">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="From your current Venmo account" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="bmD-rS-CiJ">
                     <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="10"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -665,7 +665,7 @@
                         <constraint firstAttribute="height" constant="61" id="c9u-Hf-c9n"/>
                     </constraints>
                     <string key="text">In order to provide secure transaction, we strongly suggest you to register venmo account before using Proxi mobile app.
-Notice: If you don't fill out this section, you will not be able to receive money from Proxi. (For sellers)</string>
+Notice: If you don't fill out this section, you will not be able to receive money from Proxi. </string>
                     <fontDescription key="fontDescription" type="system" pointSize="9"/>
                     <color key="textColor" red="0.14901960780000001" green="0.30588235289999999" blue="0.43137254899999999" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -774,13 +774,14 @@ Notice: If you don't fill out this section, you will not be able to receive mone
                     <constraints>
                         <constraint firstAttribute="height" constant="26" id="Uys-QL-hDW"/>
                     </constraints>
-                    <state key="normal" title="proximarketplace.com/terms.html"/>
+                    <state key="normal" title="Proxi Service Agreement"/>
                     <variation key="default">
                         <mask key="constraints">
                             <exclude reference="Uys-QL-hDW"/>
                         </mask>
                     </variation>
-                    <variation key="widthClass=compact">
+                    <variation key="widthClass=compact" misplaced="YES">
+                        <rect key="frame" x="8" y="123" width="384" height="30"/>
                         <mask key="constraints">
                             <include reference="Uys-QL-hDW"/>
                         </mask>
@@ -794,13 +795,14 @@ Notice: If you don't fill out this section, you will not be able to receive mone
                     <constraints>
                         <constraint firstAttribute="height" constant="26" id="rV9-69-lod"/>
                     </constraints>
-                    <state key="normal" title="braintreepaymentsliability.com"/>
+                    <state key="normal" title="Braintree Service Agreement"/>
                     <variation key="default">
                         <mask key="constraints">
                             <exclude reference="rV9-69-lod"/>
                         </mask>
                     </variation>
-                    <variation key="widthClass=compact">
+                    <variation key="widthClass=compact" misplaced="YES">
+                        <rect key="frame" x="8" y="54" width="384" height="30"/>
                         <mask key="constraints">
                             <include reference="rV9-69-lod"/>
                         </mask>

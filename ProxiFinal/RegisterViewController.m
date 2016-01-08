@@ -104,7 +104,7 @@
     
 }
 - (IBAction)braintreeliabilityLink:(id)sender {
-    [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"braintreepaymentsliability.com"]];
+    [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"https://www.braintreepayments.com/legal/payment-services-agreement"]];
 }
 #warning terms and liability
 - (IBAction)proxiliabilityLink:(id)sender {
@@ -134,9 +134,9 @@
                 return JAMValidatingTextFieldStatusValid;
             }
             return JAMValidatingTextFieldStatusInvalid;
-        }else{
-            return JAMValidatingTextFieldStatusInvalid;
         }
+        return JAMValidatingTextFieldStatusInvalid;
+
     };
     self.venmoPhone.validationType= JAMValidatingTextFieldTypePhone;
     self.year.validationBlock = ^{

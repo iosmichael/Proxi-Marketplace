@@ -16,16 +16,21 @@
 
 #define PageNumber 4
 #define ScrollViewChangeTimeInterval 4.0
+#define banner_url @"https://www.proximarketplace.com/database/images/event/event"
 @implementation HomePageSlideView
 -  (instancetype)initWithFrame:(CGRect)frame{
     // Initialization code
     self = [super initWithFrame:frame];
     if (self) {
         if (!self.images) {
-            UIImage *image = [UIImage imageNamed:@"banner"];
             self.images = [[NSMutableArray alloc]init];
             for (int i= 0; i<PageNumber; i++) {
-                
+                NSString *str = [NSString stringWithFormat:@"%i",i];
+                NSData *image_data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[[banner_url stringByAppendingString:str]stringByAppendingString:@".jpg"]]];
+                UIImage *image = [UIImage imageWithData:image_data];
+                if (!image) {
+                    image = [UIImage imageNamed:@"banner"];
+                }
                 [self.images addObject:image];
             }
         }

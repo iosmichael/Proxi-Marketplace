@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Firebase/Firebase.h>
 
 @interface PersonDetailTableViewController : UITableViewController
 @property (strong,nonatomic)NSString *detailCategory;
+@property (strong,nonatomic) Firebase *firebase;
+
+
 @end

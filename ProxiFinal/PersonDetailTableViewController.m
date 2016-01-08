@@ -10,6 +10,7 @@
 #import "MyTableViewCell.h"
 #import "TransactionTableViewController.h"
 #import "OrderDetailTableViewController.h"
+#import "ChatViewController.h"
 #import "ItemConnection.h"
 #import "ItemContainer.h"
 #import "HHAlertView.h"
@@ -25,6 +26,7 @@
 @property (strong,nonatomic) ItemContainer *itemContainer;
 @property (strong,nonatomic) NSArray *datasourceArray;
 @property (nonatomic,strong) NSString *connectionMethod;
+
 @end
 
 @implementation PersonDetailTableViewController{
@@ -45,14 +47,14 @@
      self.navigationItem.rightBarButtonItem = self.editButtonItem;
     }
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-
+    self.firebase = [[[[[Firebase alloc]initWithUrl:@"https://luminous-inferno-5888.firebaseio.com"]childByAppendingPath:@"users"]childByAppendingPath:@"WheatonCollege"]childByAppendingPath:[self profileName:[[NSUserDefaults standardUserDefaults]objectForKey:@"username"] withSpace:NO]];
     [self filterDetailCategory];
-    
 }
 #warning viewDidDisappear added
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
     [[NSNotificationCenter defaultCenter]removeObserver:self];
+    [self.firebase removeAllObservers];
     [GMDCircleLoader hideFromView:self.view animated:YES];
 }
 
@@ -113,13 +115,22 @@
         NSString *dateStr= [self stringToDate:item.date];
         cell.cellDescription.text = dateStr;
         cell.cellTitle.text = item.item_title;
+        [cell.pointer setImage:nil];
+        cell.badge.hidden = YES;
+        cell.badgeNum.hidden = YES;
+        
         return cell;
         
     }else if ([[self.itemContainer.container objectAtIndex:indexPath.row]isKindOfClass:[Order class]]){
         Order *order = [self.itemContainer.container objectAtIndex:indexPath.row];
         cell.cellPrice.text = [@"$" stringByAppendingString:order.order_price];
         if ([order.order_status isEqualToString:@"held"]) {
-            cell.cellStatus.text = @"Ready";
+            if ([self.detailCategory isEqualToString:@"My Sells"]) {
+                cell.cellStatus.text = @"Waiting for Delivery";
+            }else{
+            
+                cell.cellStatus.text = @"Ready";
+            }
         }else{
             cell.cellStatus.text = @"Payment Pending";
             cell.cellStatus.textColor = [UIColor redColor];
@@ -127,7 +138,15 @@
         cell.cellTitle.text = order.item_title;
         NSString *dateStr = [self stringToDate:order.order_date];
         cell.cellDescription.text = dateStr;
-        
+        if(!order.message_number||[order.message_number isEqualToString:@"0"]){
+            cell.badge.hidden = YES;
+            cell.badgeNum.hidden= YES;
+        }else {
+            cell.badge.hidden = NO;
+            cell.badgeNum.hidden = NO;
+            [cell.badgeNum setText:order.message_number];
+            NSLog(@"badgeNum: %@",cell.badgeNum.text);
+        }
         if (!order.img_data) {
             UIImage *item_img= [UIImage imageNamed:@"manshoes"];
             [cell.cellImageView setImage:item_img];
@@ -145,8 +164,11 @@
         }else{
             [cell.cellImageView setImage:[UIImage imageNamed:@"refund"]];
         }
+        [cell.pointer setImage:nil];
         NSString *dateStr = [self stringToDate:transaction.bought_date];
         cell.cellDescription.text= dateStr;
+        cell.badge.hidden = YES;
+        cell.badgeNum.hidden = YES;
         return cell;
     }else{
         return cell;
@@ -217,7 +239,6 @@
 
 
 
-
 -(void)refreshTableOrder:(NSNotification *)noti{
     NSArray *json = [noti object];
     NSMutableArray *array = [[NSMutableArray alloc]init];
@@ -232,16 +253,22 @@
         NSString *item_description = dic[@"item_description"];
         NSString *order_status = dic[@"order_status"];
         NSDictionary *user_info = dic[@"user_info"];
+//Firebase Method here!
         Order *order = [[Order alloc]initWithItem:item_id user:user_id orderID:order_id orderDate:order_date orderPrice:order_price item_img_url:item_img_url item_title:item_title item_description:item_description user_info:user_info order_status:order_status];
+        if (user_info[@"seller_email"]) {
+            [self badgeUpdater:user_info[@"seller_email"] order:order];
+        }else{
+            [self badgeUpdater:user_info[@"user_email"] order:order];
+        }
         [array addObject:order];
     }
     
     self.itemContainer.container = array;
     self.datasourceArray = array;
-    NSLog(@"%@",[self.itemContainer.container description]);
     [self.tableView reloadData];
     [GMDCircleLoader hideFromView:self.view animated:YES];
 }
+
 -(void)refreshTableHistory:(NSNotification *)noti{
     NSArray *json = [noti object];
     NSMutableArray *array = [[NSMutableArray alloc]init];
@@ -286,10 +313,18 @@
     if ([[self.datasourceArray objectAtIndex:indexPath.row]isKindOfClass:[Item class]]) {
         
     }else if ([[self.datasourceArray objectAtIndex:indexPath.row]isKindOfClass:[Order class]]&&[self.detailCategory isEqualToString:@"My Sells"]){
-        TransactionTableViewController *ttvc = [[TransactionTableViewController alloc]init];
+        /*TransactionTableViewController *ttvc = [[TransactionTableViewController alloc]init];
         Order *order = [self.datasourceArray objectAtIndex:indexPath.row];
         ttvc.order = order;
         [self.navigationController pushViewController:ttvc animated:YES];
+         */
+        Order *order = [self.datasourceArray objectAtIndex:indexPath.row];
+        ChatViewController *chatViewController = [[ChatViewController alloc]init];
+        chatViewController.title = [@"Buyer: " stringByAppendingString:[self profileName:order.user_info[@"user_email"]withSpace:YES]];
+        chatViewController.seller_email = order.user_info[@"user_email"];
+        [self.navigationController pushViewController:chatViewController animated:YES];
+        
+        
     }else if([[self.datasourceArray objectAtIndex:indexPath.row]isKindOfClass:[Order class]]&&[self.detailCategory isEqualToString:@"My Orders"]){
         OrderDetailTableViewController *odtvc = [[OrderDetailTableViewController alloc]init];
         Order *order = [self.datasourceArray objectAtIndex:indexPath.row];
@@ -309,6 +344,48 @@
     dateFormatter.dateStyle = NSDateFormatterMediumStyle;
     NSString *dateStr=[dateFormatter stringFromDate:nwdate];
     return dateStr;
+}
+
+
+-(NSString *)profileName:(NSString *)email withSpace:(BOOL)space{
+    NSString *usernameString = email;
+    NSArray *components = [usernameString componentsSeparatedByString:@"@"];
+    NSString *nameString = [components objectAtIndex:0];
+    NSArray *nameComponents = [nameString componentsSeparatedByString:@"."];
+    NSString *firstName = [nameComponents objectAtIndex:0];
+    
+    NSString *capitalizedFirstName = [firstName stringByReplacingCharactersInRange:NSMakeRange(0,1)
+                                                                        withString:[[firstName substringToIndex:1] capitalizedString]];
+    NSString *lastName = [nameComponents objectAtIndex:1];
+    NSString *capitalizedLastName = [lastName stringByReplacingCharactersInRange:NSMakeRange(0,1)
+                                                                      withString:[[lastName substringToIndex:1] capitalizedString]];
+    NSString *fullName;
+    if (space) {
+        fullName = [capitalizedFirstName stringByAppendingString:[@" " stringByAppendingString:capitalizedLastName]];
+    }else{
+        fullName = [capitalizedFirstName stringByAppendingString:capitalizedLastName];
+    }
+    
+    return fullName;
+    
+}
+
+-(void)badgeUpdater:(NSString *)email order:(Order *)order{
+
+    [[[self.firebase queryOrderedByChild:@"sender"]queryEqualToValue:[self profileName:email withSpace:NO]] observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
+        if ([snapshot.value[@"read"]isEqualToString:@"yes"]) {
+            return;
+        }
+        if (!order.badge_number) {
+            order.badge_number = 1;
+        }else{
+            order.badge_number+=1;
+        }
+        NSString *messages = [NSString stringWithFormat:@"%i",order.badge_number];
+        order.message_number = messages;
+        NSLog(@"child badge added");
+        [self.tableView reloadData];
+    }];
 }
 
 @end

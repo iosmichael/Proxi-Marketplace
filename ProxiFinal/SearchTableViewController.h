@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Event.h"
+#import "EventConnection.h"
 
 @interface SearchTableViewController : UITableViewController
--(void)updateViewController;
+
 @end

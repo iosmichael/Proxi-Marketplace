@@ -24,6 +24,7 @@
         self.item_description = item_description;
         self.user_info = user_info;
         self.order_status = status;
+
         if (self.item_img_url) {
             
             dispatch_async(dispatch_get_global_queue(0,0), ^{

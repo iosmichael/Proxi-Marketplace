@@ -56,7 +56,7 @@
     [view addSubview:hud];
     float height = [[UIScreen mainScreen] bounds].size.height;
     float width = [[UIScreen mainScreen] bounds].size.width;
-    CGPoint center = CGPointMake(width/2, height/2);
+    CGPoint center = CGPointMake(width/2, height/2*0.8);
     hud.center = center;
     return hud;
 }

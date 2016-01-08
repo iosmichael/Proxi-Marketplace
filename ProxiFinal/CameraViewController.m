@@ -94,7 +94,7 @@
     // Center the crop area
 
 #warning change the width and the height and change the 20 
-    CGRect clippedRect = CGRectMake(0, (screen_height-screen_width)/2+10, screen_width, screen_width);
+    CGRect clippedRect = CGRectMake(0, (screen_height-screen_width)/2, screen_width, screen_width);
     
     // Crop logic
     CGImageRef imageRef = CGImageCreateWithImageInRect([resizedImage CGImage], clippedRect);

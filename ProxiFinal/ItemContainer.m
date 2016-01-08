@@ -38,7 +38,9 @@
         NSString *date = dic[@"item_date"];
         NSString *image_url = dic[@"item_img_url"];
         Item *newItem = [[Item alloc]initWithTitle:itemName description:itemDescription userID:sellerID image:nil date:date itemID:itemID price:itemAmount image_url:image_url];
-        [self addItem:newItem];
+        if ([dic[@"item_status"]isEqualToString:@"unordered "]) {
+                 [self addItem:newItem];
+        }
     }
 }
 

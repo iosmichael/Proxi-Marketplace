@@ -14,7 +14,7 @@
 #import "ItemConnection.h"
 #import "ItemDetailViewController.h"
 #import "CategoryDetailTableViewController.h"
-#import "GMDCircleLoader.h"
+
 
 #define CategoryNum 10
 #define Image_url_prefix @"http://proximarketplace.com/database/images/"
@@ -44,10 +44,10 @@
     self.categoryImagesArray = @[@"Book",@"Ride",@"Clothing",@"Service",@"Furniture",@"Other"];
 
     self.itemConnection = [[ItemConnection alloc]init];
-    [self.itemConnection fetchItemFromIndex:0 amount:10];
     [self setupTestingSources];
     self.itemContainer = [[ItemContainer alloc]init];
     [self.navigationController setNavigationBarHidden:YES];
+    
     i = 10;
     
     UINib *nibForScrollViewCell = [UINib nibWithNibName:@"HomePageTableViewCell" bundle:nil];
@@ -65,6 +65,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
+    
     [self viewMoreButtonTapped];
 }
 
@@ -218,16 +219,19 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    CGRect rect = [[UIScreen mainScreen]bounds];
+    CGFloat screenWidth = rect.size.width;
+    CGFloat rowHeight = screenWidth *0.5*182.0/147.0f;
     
     if (indexPath.section ==0) {
         return 120;
     }else if(indexPath.section ==1){
         
         if ([self.datasourceItemArray count]%2==1) {
-            return [self.datasourceItemArray count]*120+120;
+            return [self.datasourceItemArray count]*(rowHeight/2+7.5)+rowHeight/2+7.5+15;
         }
         else{
-            return [self.datasourceItemArray count]*120;
+            return [self.datasourceItemArray count]*(rowHeight/2+7.5)+15;
         }
         
     }else{
@@ -257,7 +261,7 @@
             sectionName = @"Category";
             break;
         case 1:
-            sectionName = @"What's Hot";
+            sectionName = @"Newest Items";
             break;
             // ...
         default:
@@ -328,7 +332,7 @@
 -(void)refreshTable:(NSNotification *)noti{
     [self.itemContainer addItemsFromJSONDictionaries:[noti object]];
     [self updateTable];
-    [GMDCircleLoader hideFromView:self.view animated:YES];
+    
 }
 
 -(void)updateTable{
@@ -339,7 +343,7 @@
 }
 
 -(void)viewMoreButtonTapped{
-    [GMDCircleLoader setOnView:self.tableView withTitle:@"Loading..." animated:YES];
+    
     [self.itemConnection fetchItemFromIndex:0 amount:[self.itemContainer.container count]+i];
     [self.itemContainer.container removeAllObjects];
     self.viewMoreButton.enabled = NO;

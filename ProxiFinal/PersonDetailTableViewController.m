@@ -8,7 +8,7 @@
 
 #import "PersonDetailTableViewController.h"
 #import "MyTableViewCell.h"
-#import "TransactionTableViewController.h"
+
 #import "OrderDetailTableViewController.h"
 #import "ChatViewController.h"
 #import "ItemConnection.h"
@@ -42,15 +42,15 @@
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     [self.navigationController.navigationBar
      setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
-    self.navigationController.navigationBar.barTintColor =[UIColor colorWithRed:87/255.0 green:183/255.0 blue:182/255.0 alpha:1.0];
+    self.navigationController.navigationBar.barTintColor =[UIColor colorWithRed:36/255.0 green:104/255.0 blue:156/255.0 alpha:1.0];
     if ([self.detailCategory isEqualToString:@"My Items"]) {
-     self.navigationItem.rightBarButtonItem = self.editButtonItem;
+        self.navigationItem.rightBarButtonItem = self.editButtonItem;
     }
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.firebase = [[[[[Firebase alloc]initWithUrl:@"https://luminous-inferno-5888.firebaseio.com"]childByAppendingPath:@"users"]childByAppendingPath:@"WheatonCollege"]childByAppendingPath:[self profileName:[[NSUserDefaults standardUserDefaults]objectForKey:@"username"] withSpace:NO]];
     [self filterDetailCategory];
 }
-#warning viewDidDisappear added
+
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
     [[NSNotificationCenter defaultCenter]removeObserver:self];
@@ -117,7 +117,6 @@
         cell.cellTitle.text = item.item_title;
         [cell.pointer setImage:nil];
         cell.badge.hidden = YES;
-        cell.badgeNum.hidden = YES;
         
         return cell;
         
@@ -140,12 +139,8 @@
         cell.cellDescription.text = dateStr;
         if(!order.message_number||[order.message_number isEqualToString:@"0"]){
             cell.badge.hidden = YES;
-            cell.badgeNum.hidden= YES;
         }else {
             cell.badge.hidden = NO;
-            cell.badgeNum.hidden = NO;
-            [cell.badgeNum setText:order.message_number];
-            NSLog(@"badgeNum: %@",cell.badgeNum.text);
         }
         if (!order.img_data) {
             UIImage *item_img= [UIImage imageNamed:@"manshoes"];
@@ -168,7 +163,6 @@
         NSString *dateStr = [self stringToDate:transaction.bought_date];
         cell.cellDescription.text= dateStr;
         cell.badge.hidden = YES;
-        cell.badgeNum.hidden = YES;
         return cell;
     }else{
         return cell;
@@ -222,7 +216,7 @@
         [self.itemConnection mySells:[[NSUserDefaults standardUserDefaults]objectForKey:@"username"] detail_category:detailCategory];
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshTableOrder:) name:@"MySellNotification" object:nil];
     }else if([self.detailCategory isEqualToString:@"My History"]){
-#warning myHistory or transaction
+
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshTableHistory:) name:@"MyHistoryNotification" object:nil];
         [self.itemConnection myTransactions:[[NSUserDefaults standardUserDefaults]objectForKey:@"username"] detail_category:detailCategory];
         
@@ -274,7 +268,7 @@
     NSMutableArray *array = [[NSMutableArray alloc]init];
     for (NSDictionary *dic in json) {
         NSString *item_title = dic[@"item_title"];
-#warning dic[@"item_price"] is null from database; my history;
+
         NSString *item_price = dic[@"item_price"];
         NSString *bought_date = dic[@"sold_date"];
         NSString *transaction_status = dic[@"transaction_status"];

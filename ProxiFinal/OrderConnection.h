@@ -11,9 +11,10 @@
 #import "Item.h"
 
 @interface OrderConnection : NSObject
--(void)postOrder:(NSString *)user_email item:(Item *)item messageToSeller:(NSString *)message paymentMethodNonce:(NSString *)paymentMethodNonce;
+-(void)postOrder:(NSString *)user_email item:(Item *)item paymentMethodNonce:(NSString *)paymentMethodNonce;
 -(void)dropOrder:(NSString *)item_id;
 -(void)finishCheckOut:(NSString *)item_id;
--(void)refund:(NSString *)item_id;
+-(void)refund:(NSString *)item_id refundCode:(NSString *)refund_code;
+-(void)retrieveRefundCode:(NSString *)item_id;
 
 @end

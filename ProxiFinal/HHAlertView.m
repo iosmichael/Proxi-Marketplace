@@ -7,7 +7,7 @@
 #import "HHAlertView.h"
 
 
-#define OKBUTTON_BACKGROUND_COLOR [UIColor colorWithRed:158/255.0 green:214/255.0 blue:243/255.0 alpha:1]
+#define OKBUTTON_BACKGROUND_COLOR [UIColor colorWithRed:36/255.0 green:104/255.0 blue:156/255.0 alpha:1]
 #define CANCELBUTTON_BACKGROUND_COLOR [UIColor colorWithRed:255/255.0 green:20/255.0 blue:20/255.0 alpha:1]
 
 
@@ -16,8 +16,8 @@ NSInteger const HHAlertview_SIZE_HEIGHT = 250;
 NSInteger const Simble_SIZE      = 60;
 NSInteger const Simble_TOP      = 20;
 
-NSInteger const Button_SIZE_WIDTH        = 100;
-NSInteger const Buutton_SIZE_HEIGHT      = 30;
+NSInteger const Button_SIZE_WIDTH        = 120;
+NSInteger const Buutton_SIZE_HEIGHT      = 50;
 
 
 
@@ -185,8 +185,9 @@ static selectButton STAblock;
         }
         
         [_OkButton setTitle:ok forState:UIControlStateNormal];
+        
         [_OkButton setBackgroundColor:OKBUTTON_BACKGROUND_COLOR];
-        [[_OkButton layer] setCornerRadius:5];
+        [[_OkButton layer] setCornerRadius:25];
      
         [_OkButton addTarget:self action:@selector(dismissWithOk) forControlEvents:UIControlEventTouchUpInside];
 
@@ -373,7 +374,7 @@ static selectButton STAblock;
     
     CAShapeLayer *layer = [[CAShapeLayer alloc] init];
     layer.fillColor = [UIColor clearColor].CGColor;
-    layer.strokeColor = [UIColor greenColor].CGColor;
+    layer.strokeColor = [UIColor colorWithRed:73/255.0 green:143/255.0 blue:157/255.0 alpha:1].CGColor;
     layer.lineWidth = 5;
     layer.path = path.CGPath;
     

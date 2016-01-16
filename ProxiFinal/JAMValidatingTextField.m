@@ -69,11 +69,11 @@ static const CGFloat kTextEdgeInset = 6;
             self.rightView = self.imageViewForIndeterminateStatus;
             break;
         case JAMValidatingTextFieldStatusInvalid:
-            self.layer.borderColor = self.invalidColor.CGColor;
+            self.layer.borderColor = self.indeterminateColor.CGColor;
             self.rightView = self.imageViewForInvalidStatus;
             break;
         case JAMValidatingTextFieldStatusValid:
-            self.layer.borderColor = self.validColor.CGColor;
+            self.layer.borderColor = self.indeterminateColor.CGColor;
             self.rightView = self.imageViewForValidStatus;
             break;
     }
@@ -95,6 +95,9 @@ static const CGFloat kTextEdgeInset = 6;
             break;
         case JAMValidatingTextFieldTypeZIP:
             [self applyZIPValidation];
+            break;
+        case JAMValidatingTextFieldTypeVenmoEmail:
+            [self applyVenmoEmailValidation];
             break;
         default:
             [self clearAllValidationMethods];
@@ -141,6 +144,27 @@ static const CGFloat kTextEdgeInset = 6;
                     
                 return JAMValidatingTextFieldStatusValid;
                 }
+            }
+        }
+        return JAMValidatingTextFieldStatusInvalid;
+    };
+    [self validate];
+}
+
+- (void)applyVenmoEmailValidation
+{
+    [self clearAllValidationMethods];
+    __weak JAMValidatingTextField *weakSelf = self;
+    self.validationBlock = ^{
+        if (weakSelf.text.length == 0 && !weakSelf.isRequired) {
+            return JAMValidatingTextFieldStatusIndeterminate;
+        }
+        NSDataDetector *detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:NULL];
+        NSArray *matches = [detector matchesInString:weakSelf.text options:0 range:NSMakeRange(0, weakSelf.text.length)];
+        for (NSTextCheckingResult *match in matches) {
+            if (match.resultType == NSTextCheckingTypeLink &&
+                [match.URL.absoluteString rangeOfString:@"mailto:"].location != NSNotFound) {
+                    return JAMValidatingTextFieldStatusValid;
             }
         }
         return JAMValidatingTextFieldStatusInvalid;

@@ -57,7 +57,9 @@
     UIView *footerView = [self setupFooterView];
     
     self.tableView.tableFooterView = footerView;
+    
     self.tableView.backgroundColor = [UIColor colorWithRed:153.0f/255.0f green:226.0f/255.0f blue:225.0f/255.0f alpha:1];
+    [self viewMoreButtonTapped];
 
 }
 
@@ -66,7 +68,7 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
     
-    [self viewMoreButtonTapped];
+//    [self viewMoreButtonTapped];
 }
 
 
@@ -78,7 +80,6 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
     return 2;
 }
 
@@ -107,7 +108,7 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
+
         return 1;
 }
 
@@ -127,8 +128,6 @@
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath  {
-    
-    NSLog(@"%i",indexPath.item);
     if ([collectionView isKindOfClass:[ItemCollectionView class]]) {
         Item *item = [self.datasourceItemArray objectAtIndex:indexPath.item];
         ItemDetailViewController *itemDetailController = [[ItemDetailViewController alloc]initWithNibName:@"ItemDetailViewController" bundle:nil];
@@ -313,10 +312,13 @@
     self.viewMoreButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width*0.05, 0, self.view.frame.size.width*0.9, 50)];
 
     [self.viewMoreButton setTitle:@"View More" forState:UIControlStateNormal];
-    [self.viewMoreButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.viewMoreButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    self.viewMoreButton.layer.borderColor = [UIColor colorWithRed:1/255.0 green:175/255.0 blue:178/255.0 alpha:1].CGColor;
+    self.viewMoreButton.layer.borderWidth = 3;
     [self.viewMoreButton.layer setCornerRadius:25];
+    [self.viewMoreButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:22.0]];
     [footerButtonView addSubview:self.viewMoreButton];
-    self.viewMoreButton.backgroundColor = [UIColor colorWithRed:251.0f/255.0f green:176.0f/255.0f blue:87.0f/255.0f alpha:1];
+    self.viewMoreButton.backgroundColor = [UIColor whiteColor];
     [self.viewMoreButton addTarget:self action:@selector(viewMoreButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     
     return footerButtonView;
@@ -327,6 +329,7 @@
 -(void)setupDatabase{
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshTable:) name:@"FetchItemNotification" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateTable) name:@"updateTable" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateTableOnce) name:@"UpdateTableNotification" object:nil];
 }
 
 -(void)refreshTable:(NSNotification *)noti{
@@ -341,11 +344,17 @@
     [self.tableView reloadData];
     self.viewMoreButton.enabled = YES;
 }
-
+-(void)updateTableOnce{
+    NSInteger containerNum = [self.itemContainer.container count];
+    [self.itemContainer.container removeAllObjects];
+    [self.itemConnection fetchItemFromIndex:0 amount:containerNum];
+    self.viewMoreButton.enabled = NO;
+}
 -(void)viewMoreButtonTapped{
     
-    [self.itemConnection fetchItemFromIndex:0 amount:[self.itemContainer.container count]+i];
+    NSInteger containerNum = [self.itemContainer.container count];
     [self.itemContainer.container removeAllObjects];
+    [self.itemConnection fetchItemFromIndex:0 amount:containerNum+i];
     self.viewMoreButton.enabled = NO;
     //Refresh indicator show
     

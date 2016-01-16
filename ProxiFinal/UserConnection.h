@@ -17,8 +17,8 @@
 -(instancetype)init;
 
 
--(void)registeredUserInfo: (User *)user image:(NSData *)userImage;
 -(void)registeredUserInfo:(User *)user;
 -(void)loginUserInfo:(User *)user;
 -(void)fetchSellerInfo: (NSString *)sellerEmail;
+-(void)retrievePassword: (NSString *)userEmail phone:(NSString *)userPhone;
 @end

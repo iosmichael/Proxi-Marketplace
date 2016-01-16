@@ -60,8 +60,8 @@
     
     self.searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x, self.searchController.searchBar.frame.origin.y, self.searchController.searchBar.frame.size.width, 50.0);
     
-    [self.searchController.searchBar setBarTintColor:[UIColor colorWithRed:87/255.0 green:183/255.0 blue:182/255.0 alpha:1.0]];
-    [self.searchController.searchBar setTintColor:[UIColor colorWithRed:251/255.0 green:176/255.0 blue:81/255.0 alpha:1.0]];
+    [self.searchController.searchBar setBarTintColor:[UIColor colorWithRed:36/255.0 green:104/255.0 blue:156/255.0 alpha:1.0]];
+    [self.searchController.searchBar setTintColor:[UIColor whiteColor]];
     [self.searchController.searchBar setPlaceholder:@"Search"];
 
     [self.searchController.searchBar.layer setBorderColor:[UIColor clearColor].CGColor];
@@ -211,7 +211,7 @@
     
    if(indexPath.section ==0){
         
-        return [self.eventArray count]*([[UIScreen mainScreen]bounds].size.height*0.4-20+15)+10;
+        return [self.eventArray count]*([[UIScreen mainScreen]bounds].size.height*0.4-20+15);
         
     }else{
         return 0;
@@ -278,8 +278,11 @@
 
 
 -(void)updateSearch:(NSNotification *)noti{
+
     [self.searchContainer.container removeAllObjects];
+    NSLog(@"%@",[noti object]);
     [self.searchContainer addItemsFromJSONDictionaries:[noti object]];
+
     if (self.searchController.searchResultsController) {
         UINavigationController *navController = (UINavigationController *)self.searchController.searchResultsController;
         SearchResultsTableViewController *vc = (SearchResultsTableViewController *)navController.topViewController;

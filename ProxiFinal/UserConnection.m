@@ -28,7 +28,7 @@
                            @"firstName":user.firstName,
                            @"lastName":user.lastName,
                            @"phone":user.phone,
-                           @"venmoPhone":user.venmoPhoneNumber,
+                           @"venmoEmail":user.venmoEmail,
                            @"dateOfBirth":user.dateOfBirth
                            };
     NSLog(@"%@",[param description]);
@@ -52,33 +52,7 @@
 }
 
 
--(void)registeredUserInfo:(User *)user image:(NSData *)userImage{
-    NSDictionary *param =@{
-                           @"email":user.email,
-                           @"password":user.password,
-                           @"phone":user.phone
-                           };
-    NSDictionary *param2 = @{
-                             @"object":@"User",
-                             @"method":@"register",
-                             @"data":param
-                             };
-    [self.manager POST:address parameters:param2 constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-        [formData appendPartWithFileData:userImage name:@"user_image" fileName:@"user_image" mimeType:@"image/jpg/file"];
-    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSData *response = responseObject;
-        NSString *responseString = [[NSString alloc]initWithData:response encoding:NSUTF8StringEncoding];
-        NSLog(@"%@",[responseString description]);
-        
 
-        
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"RegisterPassNotification" object:responseString];
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"%@",[error description]);
-    }];
-    
-}
 
 -(void)loginUserInfo:(User *)user{
     NSDictionary *param =@{
@@ -121,7 +95,24 @@
     }];
 }
 
-
+-(void)retrievePassword:(NSString *)userEmail phone:(NSString *)userPhone{
+    NSDictionary *param = @{
+                            @"email":userEmail,
+                            @"phone":userPhone
+                            };
+    NSDictionary *param2 = @{
+                             @"object":@"User",
+                        @"method":@"retrievePassword",
+                             @"data":param
+                             };
+    [self.manager POST:address parameters:param2 constructingBodyWithBlock:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSData *responseData = responseObject;
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:nil];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"RetrievePasswordNotification" object:json];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",[error description]);
+    }];
+}
 
 
 

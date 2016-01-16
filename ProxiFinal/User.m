@@ -11,14 +11,14 @@
 @implementation User
 
 
--(instancetype)initWithEmail:(NSString *)email firstName:(NSString *)firstName lastName:(NSString *)lastName password:(NSString *)password phone:(NSString *)phone dateOfBirth:(NSString *)dateOfBirth venmoPhoneNumber:(NSString *)venmoPhoneNumber{
+-(instancetype)initWithEmail:(NSString *)email firstName:(NSString *)firstName lastName:(NSString *)lastName password:(NSString *)password phone:(NSString *)phone dateOfBirth:(NSString *)dateOfBirth venmoEmail:(NSString *)venmoEmail{
     self = [super init];
     if (self) {
         self.email = email;
         self.password = password;
         self.phone = phone;
         self.dateOfBirth = dateOfBirth;
-        self.venmoPhoneNumber = venmoPhoneNumber;
+        self.venmoEmail = venmoEmail;
         self.firstName = firstName;
         self.lastName =lastName;
     }

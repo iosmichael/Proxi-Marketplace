@@ -16,11 +16,14 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:36/255.0 green:104/255.0 blue:156/255.0 alpha:1.0];
     [self.navigationController setNavigationBarHidden:YES];
-    
 }
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
+    self.tabBarController.tabBar.hidden = NO;
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
     [self launchCamera];
 }
 -(void)viewDidDisappear:(BOOL)animated{
@@ -32,8 +35,6 @@
     
     //Set white status bar
     [self setNeedsStatusBarAppearanceUpdate];
-
-    
     //Instantiate the camera view & assign its frame
     _cameraView = [[CameraSessionView alloc] initWithFrame:self.view.frame];
     
@@ -71,8 +72,8 @@
     PostItemDetailViewController *postItemViewController = [[PostItemDetailViewController alloc]init];
     
     postItemViewController.image = self.captureImage;
-        [self presentViewController:postItemViewController animated:YES completion:nil];
-    //[self.navigationController pushViewController:postItemViewController animated:YES];
+//        [self presentViewController:postItemViewController animated:YES completion:nil];
+    [self.navigationController pushViewController:postItemViewController animated:YES];
     }
 
    // [self.cameraView removeFromSuperview];
@@ -92,7 +93,7 @@
     
     UIImage *resizedImage = [self resizeImage:image width:screen_width  height:screen_height];
     // Center the crop area
-
+    
 #warning change the width and the height and change the 20 
     CGRect clippedRect = CGRectMake(0, (screen_height-screen_width)/2, screen_width, screen_width);
     
@@ -110,5 +111,8 @@
     UIGraphicsEndImageContext();
     return resizedImage;
 }
+
+
+
 
 @end

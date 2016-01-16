@@ -7,26 +7,30 @@
 //
 
 #import "RegisterViewController.h"
+#import "HHAlertView.h"
+#import "LoginMainViewController.h"
 #import "UserConnection.h"
 #import "User.h"
 
 #define Screen_width [[UIScreen mainScreen]bounds].size.width
 #define Screen_height [[UIScreen mainScreen]bounds].size.height
-#define highlight_color [UIColor colorWithRed:255/255.0 green:186/255.0 blue:89/255.0 alpha:1]
+#define highlight_color [UIColor colorWithRed:36/255.0 green:104/255.0 blue:156/255.0 alpha:1.0]
 #define gray [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1]
 
 #define RegisterPassProtocol @"successfully create user"
 
-@interface RegisterViewController ()<UITextFieldDelegate,UIScrollViewDelegate>
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleHeight;
+@interface RegisterViewController ()<UITextFieldDelegate,UIScrollViewDelegate,HHAlertViewDelegate   >
 @property (strong,nonatomic) NSString *capitalizedFirstName;
 @property (strong,nonatomic) NSString *capitalizedLastName;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topDistance;
 
 
 @end
+#warning Email registeration for Venmo
 
 @implementation RegisterViewController{
     BOOL agreeTerms;
+    BOOL registerSuccess;
 }
 
 
@@ -35,6 +39,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     agreeTerms = NO;
+    [self.agreeButton.layer setCornerRadius:5];
+    [self.registerButton.layer setCornerRadius:5];
+    [[HHAlertView shared]setDelegate:self];
     // Do any additional setup after loading the view from its nib.
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(registerPass:) name:@"RegisterPassNotification" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(registerFail) name:@"RegisterFailNotification" object:nil];
@@ -52,10 +59,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (IBAction)cancelRegister:(id)sender {
-    [[NSNotificationCenter defaultCenter]removeObserver:self];
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
+
 - (IBAction)registerButtonTapped:(id)sender {
     [self checkAllValidation];
     if (!self.registerButton.enabled) {
@@ -63,7 +67,7 @@
     }
     NSString *dOB =[[[[self.year.text stringByAppendingString:@"-"] stringByAppendingString:self.month.text]stringByAppendingString:@"-"]stringByAppendingString:self.day.text];
     [self namesWithEmail:self.email.text];
-    User *user = [[User alloc]initWithEmail:self.email.text firstName:self.capitalizedFirstName lastName:self.capitalizedLastName password:self.password.text phone:self.phone.text dateOfBirth:dOB venmoPhoneNumber:self.venmoPhone.text];
+    User *user = [[User alloc]initWithEmail:self.email.text firstName:self.capitalizedFirstName lastName:self.capitalizedLastName password:self.password.text phone:self.phone.text dateOfBirth:dOB venmoEmail:self.venmoEmail.text];
     UserConnection *connection = [[UserConnection alloc]init];
     self.registerButton.enabled = NO;
     self.refresher.hidden = NO;
@@ -86,22 +90,54 @@
 -(void)registerPass:(NSNotification *)noti{
     BOOL success = [[noti object]isEqualToString:RegisterPassProtocol];
     if (success) {
-        self.refresher.hidden = YES;
-        //successAlertView
-        [[NSNotificationCenter defaultCenter]removeObserver:self];
-        [self dismissViewControllerAnimated:YES completion:nil];
+        UIAlertController * alertYes=   [UIAlertController
+                                         alertControllerWithTitle:@"Success"
+                                         message:@"Registered Your Proxi Account"
+                                         preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction* yesButton = [UIAlertAction
+                                    actionWithTitle:@"OK"
+                                    style:UIAlertActionStyleDefault
+                                    handler:^(UIAlertAction * action)
+                                    {
+                                        //Handel your yes please button action here
+                                        [alertYes dismissViewControllerAnimated:YES completion:nil];
+                                        if ([self.parentViewController isKindOfClass:[LoginMainViewController class]]) {
+                                            LoginMainViewController *mainController = (LoginMainViewController *)self.parentViewController;
+                                            mainController.switchViewControllers.selectedSegmentIndex=1;
+                                            [mainController cycleFromViewController:self toViewController:[mainController.controllers objectAtIndex:mainController.switchViewControllers.selectedSegmentIndex] direction:YES];
+                                            
+                                        }
+                                        [self clearAll];
+                                        [self checkAllValidation];
+                                    }];
+        
+        [alertYes addAction:yesButton];
+        [self presentViewController:alertYes animated:YES completion:nil];
     }else{
-        self.refresher.hidden = YES;
-        //errorAlertView
-        self.password.text = @"";
-        [self.scrollView scrollRectToVisible:CGRectMake(0, 0, Screen_width, Screen_height) animated:YES];
+        UIAlertController * alertNo=   [UIAlertController
+                                        alertControllerWithTitle:@"Error"
+                                        message:@"Invalid Account Information"
+                                        preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction* noButton = [UIAlertAction
+                                   actionWithTitle:@"Cancel"
+                                   style:UIAlertActionStyleDefault
+                                   handler:^(UIAlertAction * action)
+                                   {
+                                       //Handel your yes please button action here
+                                       [alertNo dismissViewControllerAnimated:YES completion:nil];
+                                       [self clearAll];
+                                   }];
+        
+        [alertNo addAction:noButton];
+        [self presentViewController:alertNo animated:YES completion:nil];
     }
 }
 
 
 -(void)registerFail{
     self.refresher.hidden = YES;
-    
 }
 - (IBAction)braintreeliabilityLink:(id)sender {
     [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"https://www.braintreepayments.com/legal/payment-services-agreement"]];
@@ -111,11 +147,31 @@
     
 }
 
-
+-(void)clearAll{
+    self.password.text =@"";
+    self.email.text = @"";
+    self.recheckPassword.text=@"";
+    self.phone.text =@"";
+    self.month.text=@"";
+    self.day.text=@"";
+    self.year.text=@"";
+    self.venmoEmail.text = @"";
+    
+    [self.password validate];
+    [self.email validate];
+    [self.recheckPassword validate];
+    [self.phone validate];
+    [self.month validate];
+    [self.day validate];
+    [self.year validate];
+    [self.venmoEmail validate];
+    
+}
 
 -(void)setupTextfieldSettings{
     self.email.validationType = JAMValidatingTextFieldTypeEmail;
     self.phone.validationType = JAMValidatingTextFieldTypePhone;
+    self.venmoEmail.validationType=JAMValidatingTextFieldTypeVenmoEmail;
     self.password.validationBlock = ^{
         if (self.password.text.length == 0) {
             return JAMValidatingTextFieldStatusIndeterminate;
@@ -138,7 +194,6 @@
         return JAMValidatingTextFieldStatusInvalid;
 
     };
-    self.venmoPhone.validationType= JAMValidatingTextFieldTypePhone;
     self.year.validationBlock = ^{
         if (self.year.text.length==0) {
             return JAMValidatingTextFieldStatusIndeterminate;
@@ -191,7 +246,7 @@
     self.year.delegate = self;
     self.month.delegate = self;
     self.day.delegate = self;
-    self.venmoPhone.delegate = self;
+    self.venmoEmail.delegate = self;
 }
 
 -(void)checkAllValidation{
@@ -201,7 +256,7 @@
         self.year.validationStatus==JAMValidatingTextFieldStatusValid&&
         self.month.validationStatus==JAMValidatingTextFieldStatusValid&&
         self.day.validationStatus==JAMValidatingTextFieldStatusValid&&
-        agreeTerms&&self.venmoPhone.validationStatus) {
+        agreeTerms&&self.venmoEmail.validationStatus) {
             self.registerButton.enabled=YES;
             [self.registerButton setBackgroundColor:highlight_color];
             [self.registerAlertLabel setTextColor:[UIColor clearColor]];
@@ -214,11 +269,8 @@
 #pragma mark- Textfield Delegate
 -(void)textFieldDidEndEditing:(UITextField *)textField{
     [self checkAllValidation];
-    self.titleHeight.constant = 30;
 }
--(void)textFieldDidBeginEditing:(UITextField *)textField{
-    self.titleHeight.constant = 0;
-}
+
 #pragma mark- ScrollView Delegate
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     int page = floor((self.scrollView.contentOffset.x - Screen_width/2)/Screen_width)+1;
@@ -246,6 +298,8 @@
     self.capitalizedLastName = [lastName stringByReplacingCharactersInRange:NSMakeRange(0,1)
                                                                       withString:[[lastName substringToIndex:1] capitalizedString]];
 }
+
+
 
 /*
 #pragma mark - Navigation

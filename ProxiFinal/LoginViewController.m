@@ -7,9 +7,10 @@
 //
 
 #import "LoginViewController.h"
+#import "LoginMainViewController.h"
+#import "MasterViewController.h"
 #import "User.h"
 #import "UserConnection.h"
-#import "HHAlertView.h"
 #import "RegisterViewController.h"
 
 
@@ -28,13 +29,13 @@
     self.navigationController.navigationBarHidden = YES;
     self.refresher.hidden = YES;
     [self.loginButton.layer setCornerRadius:10];
-    [self.registerButton.layer setCornerRadius:10];
-    [self.userTextview.layer setCornerRadius:10];
+
+
     self.username.autocorrectionType= UITextAutocorrectionTypeNo;
     self.password.secureTextEntry = YES;
     self.username.delegate=self;
     self.password.delegate=self;
-    [self.passwordTextview.layer setCornerRadius:10];
+
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginPass:) name:@"LoginPassNotification" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginError) name:@"LoginErrorNotification" object:nil];
 }
@@ -55,18 +56,16 @@
         self.username.text = @"";
         self.password.text = @"";
     }else{
-    User *user = [[User alloc]initWithEmail:self.username.text password:self.password.text];
-    UserConnection *loginCon = [[UserConnection alloc]init];
-    [loginCon loginUserInfo:user];
-    self.refresher.hidden =NO;
-    [self.refresher startAnimating];
+        User *user = [[User alloc]initWithEmail:self.username.text password:self.password.text];
+        UserConnection *loginCon = [[UserConnection alloc]init];
+        [loginCon loginUserInfo:user];
+        self.refresher.hidden =NO;
+        [self.refresher startAnimating];
     }
 }
 
-- (IBAction)registerButton:(id)sender {
-    NSLog(@"Show Register Page");
-    RegisterViewController *registerViewController = [[RegisterViewController alloc]init];
-    [self presentViewController:registerViewController animated:YES completion:nil];
+- (IBAction)passwordRetrieve:(id)sender {
+    
 }
 
 
@@ -81,16 +80,30 @@
         
         [[NSUserDefaults standardUserDefaults]setObject:self.username.text forKey:@"username"];
         [[NSUserDefaults standardUserDefaults]setObject:self.password.text forKey:@"password"];
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"RefreshTable" object:nil];
         [[NSNotificationCenter defaultCenter]removeObserver:self];
-        [self.navigationController popToRootViewControllerAnimated:YES];
+        [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
+        
     }else{
         self.refresher.hidden = YES;
         [self.refresher stopAnimating];
-        [HHAlertView showAlertWithStyle:HHAlertStyleError inView:self.view Title:@"Login Error" detail:@"pleace check your username and password" cancelButton:nil Okbutton:@"OK"];
+        UIAlertController * alertNo=   [UIAlertController
+                                        alertControllerWithTitle:@"Error"
+                                        message:@"Invalid Account Information"
+                                        preferredStyle:UIAlertControllerStyleAlert];
         
-        self.username.text = @"";
-        self.password.text = @"";
+        UIAlertAction* noButton = [UIAlertAction
+                                   actionWithTitle:@"Cancel"
+                                   style:UIAlertActionStyleDefault
+                                   handler:^(UIAlertAction * action)
+                                   {
+                                       //Handel your yes please button action here
+                                       [alertNo dismissViewControllerAnimated:YES completion:nil];
+                                       self.username.text = @"";
+                                       self.password.text = @"";
+                                   }];
+        
+        [alertNo addAction:noButton];
+        [self presentViewController:alertNo animated:YES completion:nil];
     }
 }
 
@@ -98,24 +111,22 @@
     
     self.refresher.hidden = YES;
     [self.refresher stopAnimating];
-    [HHAlertView showAlertWithStyle:HHAlertStyleError inView:self.view Title:@"Login Error" detail:@"Cannot communicate with the server" cancelButton:nil Okbutton:@"Contact Us"];
     self.username.text =@"";
     self.password.text =@"";
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    
     [textField resignFirstResponder];
     return NO;
 }
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    
 }
-*/
 
 @end

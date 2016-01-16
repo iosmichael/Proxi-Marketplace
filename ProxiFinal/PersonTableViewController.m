@@ -8,7 +8,7 @@
 
 #import "PersonTableViewController.h"
 #import "PersonDetailTableViewController.h"
-#import "LoginViewController.h"
+
 
 
 @interface PersonTableViewController ()
@@ -27,20 +27,12 @@
      @{NSForegroundColorAttributeName:[UIColor whiteColor],
        NSFontAttributeName:[UIFont fontWithName:@"Helvetica" size:20]}];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"RegularTableViewCell"];
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"ListCell"];
  
     [self setupArray];
     
 }
 
--(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    if (![[NSUserDefaults standardUserDefaults]objectForKey:@"username"]) {
-        UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        LoginViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginID"];
-        [self.navigationController pushViewController:loginViewController animated:YES];
-    }
-
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -100,7 +92,7 @@
         return cell;
     }
     else if(indexPath.section ==1) {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RegularTableViewCell" forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ListCell" forIndexPath:indexPath];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.textLabel.attributedText = [self.attrArray objectAtIndex:indexPath.row];
     [cell.imageView setImage:[self.imageArray objectAtIndex:indexPath.row]];

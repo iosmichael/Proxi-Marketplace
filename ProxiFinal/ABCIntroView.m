@@ -17,16 +17,12 @@
     self = [super initWithFrame:frame];
     if(self){
         
-        UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:self.frame];
-        backgroundImageView.image = [UIImage imageNamed:@"Intro_Screen_Background"];
-        [self addSubview:backgroundImageView];
-        
         self.scrollView = [[UIScrollView alloc] initWithFrame:self.frame];
         self.scrollView.pagingEnabled = YES;
         [self addSubview:self.scrollView];
         
         self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, self.frame.size.height*.8, self.frame.size.width, 10)];
-        self.pageControl.currentPageIndicatorTintColor = [UIColor colorWithRed:0.153 green:0.533 blue:0.796 alpha:1.000];
+       
         [self addSubview:self.pageControl];
     
         [self createViewOne];
@@ -36,21 +32,22 @@
         
         
         //Done Button
-        self.doneButton = [[UIButton alloc] initWithFrame:CGRectMake(self.frame.size.width*.1, self.frame.size.height*.85, self.frame.size.width*.8, 60)];
-        [self.doneButton setTintColor:[UIColor whiteColor]];
-        [self.doneButton setTitle:@"Get Started!" forState:UIControlStateNormal];
-        [self.doneButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Thin" size:18.0]];
-        self.doneButton.backgroundColor = [UIColor colorWithRed:0.153 green:0.533 blue:0.796 alpha:1.000];
-        self.doneButton.layer.borderColor = [UIColor colorWithRed:0.153 green:0.533 blue:0.796 alpha:1.000].CGColor;
-        [self.doneButton addTarget:self action:@selector(onFinishedIntroButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        self.doneButton.layer.borderWidth =.5;
-        self.doneButton.layer.cornerRadius = 25;
-        [self addSubview:self.doneButton];
+        
             
         
         self.pageControl.numberOfPages = 4;
         self.scrollView.contentSize = CGSizeMake(self.frame.size.width*4, self.scrollView.frame.size.height);
         
+        self.doneButton = [[UIButton alloc] initWithFrame:CGRectMake(self.frame.size.width*3.1, self.frame.size.height*.85, self.frame.size.width*.8, 60)];
+        [self.doneButton setTitle:@"Get Started" forState:UIControlStateNormal];
+        [self.doneButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:22.0]];
+        [self.doneButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        self.doneButton.backgroundColor = [UIColor whiteColor];
+        self.doneButton.layer.borderColor = [UIColor whiteColor].CGColor;
+        [self.doneButton addTarget:self action:@selector(onFinishedIntroButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        self.doneButton.layer.borderWidth =.5;
+        self.doneButton.layer.cornerRadius = 25;
+        [self.scrollView addSubview:self.doneButton];
         //This is the starting point of the ScrollView
         CGPoint scrollPoint = CGPointMake(0, 0);
         [self.scrollView setContentOffset:scrollPoint animated:YES];
@@ -74,33 +71,11 @@
 -(void)createViewOne{
     
     UIView *view = [[UIView alloc] initWithFrame:self.frame];
-    
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, self.frame.size.height*.05, self.frame.size.width*.8, 60)];
-    titleLabel.center = CGPointMake(self.center.x, self.frame.size.height*.1);
-    titleLabel.text = [NSString stringWithFormat:@"Proxi Inc"];
-    titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:40.0];
-    titleLabel.textColor = [UIColor whiteColor];
-    titleLabel.textAlignment =  NSTextAlignmentCenter;
-    titleLabel.numberOfLines = 0;
-    [view addSubview:titleLabel];
-    
-    UIImageView *imageview = [[UIImageView alloc] initWithFrame:CGRectMake(self.frame.size.width*.1, self.frame.size.height*.1, self.frame.size.width*.8, self.frame.size.width)];
+    UIImageView *imageview = [[UIImageView alloc] initWithFrame:self.frame];
+    view.backgroundColor = [UIColor whiteColor];
     imageview.contentMode = UIViewContentModeScaleAspectFit;
     imageview.image = [UIImage imageNamed:@"Intro_Screen_One"];
     [view addSubview:imageview];
-    
-    UILabel *descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width*.1, self.frame.size.height*.7, self.frame.size.width*.8, 60)];
-    descriptionLabel.text = [NSString stringWithFormat:@"Proxi Marketplace is Here!"];
-    descriptionLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:18.0];
-    descriptionLabel.textColor = [UIColor whiteColor];
-    descriptionLabel.textAlignment =  NSTextAlignmentCenter;
-    descriptionLabel.numberOfLines = 0;
-    [descriptionLabel sizeToFit];
-    [view addSubview:descriptionLabel];
-    
-    CGPoint labelCenter = CGPointMake(self.center.x, self.frame.size.height*.7);
-    descriptionLabel.center = labelCenter;
-    
     self.scrollView.delegate = self;
     [self.scrollView addSubview:view];
     
@@ -113,36 +88,13 @@
     CGFloat originHeight = self.frame.size.height;
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(originWidth, 0, originWidth, originHeight)];
-    
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, self.frame.size.height*.05, self.frame.size.width*.8, 60)];
-    titleLabel.center = CGPointMake(self.center.x, self.frame.size.height*.1);
-    titleLabel.text = [NSString stringWithFormat:@"Hello"];
-    titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:40.0];
-    titleLabel.textColor = [UIColor whiteColor];
-    titleLabel.textAlignment =  NSTextAlignmentCenter;
-    titleLabel.numberOfLines = 0;
-    [view addSubview:titleLabel];
-    
-    UIImageView *imageview = [[UIImageView alloc] initWithFrame:CGRectMake(self.frame.size.width*.1, self.frame.size.height*.1, self.frame.size.width*.8, self.frame.size.width)];
+    view.backgroundColor = [UIColor whiteColor];
+    UIImageView *imageview = [[UIImageView alloc] initWithFrame:self.frame];
     imageview.contentMode = UIViewContentModeScaleAspectFit;
     imageview.image = [UIImage imageNamed:@"Intro_Screen_Two"];
     [view addSubview:imageview];
-    
-    UILabel *descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width*.1, self.frame.size.height*.7, self.frame.size.width*.8, 60)];
-    descriptionLabel.text = [NSString stringWithFormat:@"Check Us Out!"];
-    descriptionLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:18.0];
-    descriptionLabel.textColor = [UIColor whiteColor];
-    descriptionLabel.textAlignment =  NSTextAlignmentCenter;
-    descriptionLabel.numberOfLines = 0;
-    [descriptionLabel sizeToFit];
-    [view addSubview:descriptionLabel];
-    
-    CGPoint labelCenter = CGPointMake(self.center.x, self.frame.size.height*.7);
-    descriptionLabel.center = labelCenter;
-    
     self.scrollView.delegate = self;
     [self.scrollView addSubview:view];
-    
 }
 
 -(void)createViewThree{
@@ -151,37 +103,11 @@
     CGFloat originHeight = self.frame.size.height;
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(originWidth*2, 0, originWidth, originHeight)];
-    
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, self.frame.size.height*.05, self.frame.size.width*.8, 60)];
-    titleLabel.center = CGPointMake(self.center.x, self.frame.size.height*.1);
-    titleLabel.text = [NSString stringWithFormat:@"Love"];
-    titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:40.0];
-    titleLabel.textColor = [UIColor whiteColor];
-    titleLabel.textAlignment =  NSTextAlignmentCenter;
-    titleLabel.numberOfLines = 0;
-    [view addSubview:titleLabel];
-    
-    UIImageView *imageview = [[UIImageView alloc] initWithFrame:CGRectMake(self.frame.size.width*.1, self.frame.size.height*.1, self.frame.size.width*.8, self.frame.size.width)];
-    imageview.contentMode = UIViewContentModeScaleAspectFit;
-    imageview.image = [UIImage imageNamed:@"Intro_Screen_Two"];
-    [view addSubview:imageview];
+    view.backgroundColor = [UIColor whiteColor];
+    UIImageView *imageview = [[UIImageView alloc] initWithFrame:self.frame];
     imageview.contentMode = UIViewContentModeScaleAspectFit;
     imageview.image = [UIImage imageNamed:@"Intro_Screen_Three"];
     [view addSubview:imageview];
-    
-    
-    UILabel *descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width*.1, self.frame.size.height*.7, self.frame.size.width*.8, 60)];
-    descriptionLabel.text = [NSString stringWithFormat:@"Receiving From The Community"];
-    descriptionLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:18.0];
-    descriptionLabel.textColor = [UIColor whiteColor];
-    descriptionLabel.textAlignment =  NSTextAlignmentCenter;
-    descriptionLabel.numberOfLines = 0;
-    [descriptionLabel sizeToFit];
-    [view addSubview:descriptionLabel];
-    
-    CGPoint labelCenter = CGPointMake(self.center.x, self.frame.size.height*.7);
-    descriptionLabel.center = labelCenter;
-    
     self.scrollView.delegate = self;
     [self.scrollView addSubview:view];
     
@@ -195,35 +121,11 @@
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(originWidth*3, 0, originWidth, originHeight)];
     
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, self.frame.size.height*.05, self.frame.size.width*.8, 60)];
-    titleLabel.center = CGPointMake(self.center.x, self.frame.size.height*.1);
-    titleLabel.text = [NSString stringWithFormat:@"Blessings"];
-    titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:40.0];
-    titleLabel.textColor = [UIColor whiteColor];
-    titleLabel.textAlignment =  NSTextAlignmentCenter;
-    titleLabel.numberOfLines = 0;
-    [view addSubview:titleLabel];
-    
-    UIImageView *imageview = [[UIImageView alloc] initWithFrame:CGRectMake(self.frame.size.width*.1, self.frame.size.height*.1, self.frame.size.width*.8, self.frame.size.width)];
-    imageview.contentMode = UIViewContentModeScaleAspectFit;
-    imageview.image = [UIImage imageNamed:@"Intro_Screen_Two"];
-    [view addSubview:imageview];
+    view.backgroundColor = [UIColor whiteColor];
+    UIImageView *imageview = [[UIImageView alloc] initWithFrame:self.frame];
     imageview.contentMode = UIViewContentModeScaleAspectFit;
     imageview.image = [UIImage imageNamed:@"Intro_Screen_Four"];
     [view addSubview:imageview];
-    
-    UILabel *descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width*.1, self.frame.size.height*.7, self.frame.size.width*.8, 60)];
-    descriptionLabel.text = [NSString stringWithFormat:@"Giving To The Community"];
-    descriptionLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:18.0];
-    descriptionLabel.textColor = [UIColor whiteColor];
-    descriptionLabel.textAlignment =  NSTextAlignmentCenter;
-    descriptionLabel.numberOfLines = 0;
-    [descriptionLabel sizeToFit];
-    [view addSubview:descriptionLabel];
-    
-    CGPoint labelCenter = CGPointMake(self.center.x, self.frame.size.height*.7);
-    descriptionLabel.center = labelCenter;
-    
     self.scrollView.delegate = self;
     [self.scrollView addSubview:view];
     

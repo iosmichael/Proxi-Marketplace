@@ -72,8 +72,8 @@
 	if (kAllowsMedia)
 	{
 		// set up the image and button frame
-		UIImage* image = [UIImage imageNamed:@"PhotoIcon"];
-		CGRect frame = CGRectMake(4, 0, image.size.width, image.size.height);
+		UIImage* image = [UIImage imageNamed:@"PhotoIcon.png"];
+		CGRect frame = CGRectMake(4+5, 0, image.size.width-10, image.size.height-10);
 		CGFloat yHeight = (INPUT_HEIGHT - frame.size.height) / 2.0f;
 		frame.origin.y = yHeight;
 		

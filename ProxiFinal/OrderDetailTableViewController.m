@@ -8,19 +8,22 @@
 #import "OrderConnection.h"
 #import "OrderDetailTableViewController.h"
 #import "HHAlertView.h"
+#import "RefundViewController.h"
 #import "ChatViewController.h"
 #define Screen_width [[UIScreen mainScreen]bounds].size.width
 
-@interface OrderDetailTableViewController ()
+@interface OrderDetailTableViewController ()<HHAlertViewDelegate>
 
 @end
 
 @implementation OrderDetailTableViewController{
+    NSInteger numbersOfOrderDaysBeforeRefund;
     UIView *titleView;
     UIView *priceTitleView;
     CGSize descSize;
     UIView *personDetailView;
     UIView *descView;
+    NSDate *order_date;
 }
 
 - (void)viewDidLoad {
@@ -31,8 +34,11 @@
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.allowsSelection = NO;
+    numbersOfOrderDaysBeforeRefund = 10;
     [self.tableView setBackgroundView:nil];
+    [[HHAlertView shared]setDelegate:self];
     [self setupElements];
+    [self refundButtonEligibility];
     
 }
 -(void)viewWillAppear:(BOOL)animated{
@@ -70,13 +76,8 @@
             [cell.contentView addSubview:descView];
             break;
         case 3:
-            [cell.contentView addSubview:personDetailView];
-            break;
-        case 5:
-            [cell.contentView addSubview:self.orderButton];
-            break;
-        case 4:
             [cell.contentView addSubview:self.confirmButton];
+            [cell.contentView addSubview:self.orderButton];
             break;
         default:
             break;
@@ -96,9 +97,6 @@
         case 2:
             return descSize.height+50;
             break;
-        case 3:
-            return 100;
-            break;
         default:
             return 70;
             break;
@@ -111,22 +109,22 @@
     return 1;
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 6;
+    return 4;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     switch (section) {
+        case 0:
+            return 70;
+            break;
         case 1:
             return 35;
             break;
         case 2:
-            return 10;
+            return 2;
             break;
         case 3:
-            return 10;
-            break;
-        case 4:
-            return 10;
+            return 2;
             break;
         default:
             return 0;
@@ -134,8 +132,11 @@
     }
 }
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    if (section==1) {
+    if (section==0){
+        return personDetailView;
+    }else if(section==1) {
         UIView *dateView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Screen_width, 33)];
+        dateView.backgroundColor = [UIColor whiteColor];
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(Screen_width-158, 5, 33, 33)];
         [imageView setImage:[UIImage imageNamed:@"Time"]];
         [dateView addSubview:imageView];
@@ -157,7 +158,7 @@
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     [self.navigationController.navigationBar
      setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
-    self.navigationController.navigationBar.barTintColor =[UIColor colorWithRed:87/255.0 green:183/255.0 blue:182/255.0 alpha:1.0];
+    self.navigationController.navigationBar.barTintColor =[UIColor colorWithRed:36/255.0 green:104/255.0 blue:156/255.0 alpha:1.0];
     [self setupTime];
     [self setupItemInfo];
     [self setupPersonInfo];
@@ -169,6 +170,7 @@
     NSDateFormatter *dateFormatter=[[NSDateFormatter alloc]init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSDate *date=[dateFormatter dateFromString:self.order.order_date];
+    order_date = date;
     NSLocale *usLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
     [dateFormatter setLocale:usLocale];
     dateFormatter.timeStyle = NSDateFormatterNoStyle;
@@ -179,7 +181,9 @@
 -(void)setupItemInfo{
     UIImageView *titleIcon = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 40, 40)];
     self.item_title = [[UILabel alloc]initWithFrame:CGRectMake(75, 20, Screen_width-15, 25)];
-    NSAttributedString *titleStr =[[NSAttributedString alloc]initWithString:self.order.item_title attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:20]}];
+    self.item_title.numberOfLines = 0;
+    self.item_title.adjustsFontSizeToFitWidth = YES;
+    NSAttributedString *titleStr =[[NSAttributedString alloc]initWithString:self.order.item_title attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:18]}];
     self.item_title.attributedText = titleStr;
     [titleIcon setImage:[UIImage imageNamed:@"gift"]];
     UIImageView *priceIcon = [[UIImageView alloc]initWithFrame:CGRectMake(15, 65, 40, 40)];
@@ -187,13 +191,27 @@
     self.item_current_price = [[UILabel alloc]initWithFrame:CGRectMake(75, 70, Screen_width-15, 25)];
     NSAttributedString *priceStr =[[NSAttributedString alloc]initWithString:[@"$ " stringByAppendingString:self.order.order_price] attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:19]}];
     self.item_current_price.attributedText = priceStr;
-
+    UIButton *refundButton = [[UIButton alloc]initWithFrame:CGRectMake(Screen_width-15-116, 70, 116, 22)];
+    [refundButton setImage:[UIImage imageNamed:@"refundCode"] forState:UIControlStateDisabled];
+    [refundButton setImage:[UIImage imageNamed:@"refundCode_active"] forState:UIControlStateNormal];
+    [refundButton addTarget:self action:@selector(retrieveRefundCode) forControlEvents:UIControlEventTouchUpInside];
+    UILabel *refundButtonDesc = [[UILabel alloc]initWithFrame:CGRectMake(Screen_width-15-116, 95, 116, 15)];
+    NSAttributedString *refundLabelDesc =[[NSAttributedString alloc]initWithString:@"You can only access the refund code 10 days after your initial order" attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:6.5]}];
+    refundButtonDesc.attributedText = refundLabelDesc;
+    refundButtonDesc.numberOfLines = 0;
+    refundButtonDesc.lineBreakMode = NSLineBreakByWordWrapping;
+    refundButtonDesc.textColor = [UIColor redColor];
+    self.refundButton = refundButton;
+    self.refundLabel = refundButtonDesc;
     
     priceTitleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0,Screen_width, 120)];
+    
     [priceTitleView addSubview:self.item_title];
     [priceTitleView addSubview:titleIcon];
     [priceTitleView addSubview:self.item_current_price];
     [priceTitleView addSubview:priceIcon];
+    [priceTitleView addSubview:self.refundButton];
+    [priceTitleView addSubview:self.refundLabel];
     
     UIImageView *descIcon = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 40, 40)];
     [descIcon setImage:[UIImage imageNamed:@"note"]];
@@ -218,20 +236,21 @@
     
     self.item_image = [[UIImageView alloc]initWithFrame:CGRectMake(Screen_width*0.05, 10, Screen_width*0.9,Screen_width*0.9)];
     
-    self.orderButton = [[UIButton alloc]initWithFrame:CGRectMake(Screen_width*0.05, 5, Screen_width*0.9, 50)];
+    self.orderButton = [[UIButton alloc]initWithFrame:CGRectMake(Screen_width*0.05, 5, Screen_width*0.4, 50)];
     [self.orderButton addTarget:self action:@selector(orderButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-    [self.orderButton.layer setCornerRadius:25];
+    [self.orderButton.layer setCornerRadius:15];
     self.orderButton.backgroundColor = [UIColor colorWithRed:251/255.0f green:176/255.0f blue:87/255.0f alpha:1];
     [self.orderButton setTitle:@"Refund" forState:UIControlStateNormal];
     [self.orderButton setTitle:@"Payment Pending..." forState:UIControlStateDisabled];
+    self.orderButton.titleLabel.adjustsFontSizeToFitWidth = YES;
     
     
     
-    self.confirmButton = [[UIButton alloc]initWithFrame:CGRectMake(Screen_width*0.05, 5, Screen_width*0.9, 50)];
+    self.confirmButton = [[UIButton alloc]initWithFrame:CGRectMake(Screen_width*0.5, 5, Screen_width*0.45, 50)];
     [self.confirmButton addTarget:self action:@selector(confirmButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-    [self.confirmButton.layer setCornerRadius:25];
+    [self.confirmButton.layer setCornerRadius:15];
     self.confirmButton.backgroundColor = [UIColor colorWithRed:251/255.0f green:176/255.0f blue:87/255.0f alpha:1];
-    [self.confirmButton setTitle:@"Confirm Transaction" forState:UIControlStateNormal];
+    [self.confirmButton setTitle:@"Item Received" forState:UIControlStateNormal];
     [self.confirmButton setTitle:@"Payment Pending..." forState:UIControlStateDisabled];
 
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(checkoutPostSuccess:) name:@"FinishCheckoutNotification" object:nil];
@@ -256,54 +275,50 @@
     if ([protocal isEqualToString:@"success"]) {
         [HHAlertView showAlertWithStyle:HHAlertStyleOk inView:self.view Title:@"Success" detail:@"Thank you!" cancelButton:nil Okbutton:@"OK"];
     }else{
-        [HHAlertView showAlertWithStyle:HHAlertStyleError inView:self.view Title:@"Error" detail:@"Please contact us" cancelButton:nil Okbutton:@"OK"];
+        [HHAlertView showAlertWithStyle:HHAlertStyleError inView:self.view Title:@"Error" detail:@"Please Contact Us" cancelButton:@"Cancel" Okbutton:@"Move Back"];
     }
 }
 
 -(void)orderButtonTapped{
-    OrderConnection *orderConnection = [[OrderConnection alloc]init];
+   /* OrderConnection *orderConnection = [[OrderConnection alloc]init];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(finish:) name:@"RefundNotification" object:nil];
     [orderConnection refund:self.order.item_id];
+    */
+    RefundViewController *refundViewController = [[RefundViewController alloc]initWithNibName:@"RefundViewController" bundle:nil];
+    [self.navigationController pushViewController:refundViewController animated:YES];
+    refundViewController.order = self.order;
 }
 
 -(void)confirmButtonTapped{
-        OrderConnection *orderConnection = [[OrderConnection alloc]init];
-        [orderConnection finishCheckOut:self.order.item_id];
-        NSLog(@"%@",[self.order description]);
-        // [HHAlertView showAlertWithStyle:HHAlertStyleDefault inView:self.view Title:@"Are Your Sure?" detail:@"Confirm transaction after you received money" cancelButton:@"Not now" Okbutton:@"Yes"];
+
+    /*
+         */
+    self.confirm_status = @"Confirm Status";
+    [HHAlertView showAlertWithStyle:HHAlertStyleWraning inView:self.view Title:@"Are Your Sure?" detail:@"This action cannot be undone" cancelButton:@"Cancel" Okbutton:@"Yes"];
 }
 
--(void)finish:(NSNotification *)noti{
-    NSString *protocal = [noti object];
-    NSLog(@"protocal: %@",[protocal description]);
-    if ([protocal isEqualToString:@"success"]) {
-        [HHAlertView showAlertWithStyle:HHAlertStyleOk inView:self.view Title:@"Success" detail:@"Thank you" cancelButton:nil Okbutton:@"OK"];
-    }else{
-        [HHAlertView showAlertWithStyle:HHAlertStyleError inView:self.view Title:@"Error" detail:@"Please contact with Proxi" cancelButton:nil Okbutton:@"Cancel"];
-    }
-    
-}
 
 -(void)setupPersonInfo{
-    personDetailView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Screen_width, 100)];
-    UIButton *personButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, Screen_width, 100)];
+    personDetailView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Screen_width, 70)];
+    personDetailView.backgroundColor = [UIColor whiteColor];
+    UIButton *personButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, Screen_width, 70)];
     [personButton addTarget:self action:@selector(personButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     UIImageView *personIcon = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 40, 40)];
     [personIcon setImage:[UIImage imageNamed:@"userIcon"]];
     UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(75, 15, Screen_width-75, 17)];
     UILabel *emailLabel = [[UILabel alloc]initWithFrame:CGRectMake(75, 36, Screen_width - 75, 17)];
-    UILabel *phoneLabel = [[UILabel alloc]initWithFrame:CGRectMake(75, 60, Screen_width - 75, 17)];
+    UIImageView *detailPointer = [[UIImageView alloc]initWithFrame:CGRectMake(Screen_width-30-15, 20, 30, 30)];
+    [detailPointer setImage:[UIImage imageNamed:@"detail"]];
     NSAttributedString *nameStr =[[NSAttributedString alloc]initWithString:[self profileName:self.order.user_info[@"seller_email"]] attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:14]}];
     nameLabel.attributedText = nameStr;
     NSAttributedString *emailStr =[[NSAttributedString alloc]initWithString:self.order.user_info[@"seller_email"] attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:14]}];
     emailLabel.attributedText = emailStr;
-    NSAttributedString *phoneStr =[[NSAttributedString alloc]initWithString:self.order.user_info[@"seller_phone"] attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:14]}];
-    phoneLabel.attributedText = phoneStr;
     [personDetailView addSubview:personIcon];
     [personDetailView addSubview:nameLabel];
     [personDetailView addSubview:emailLabel];
-    [personDetailView addSubview:phoneLabel];
+    [personDetailView addSubview:detailPointer];
     [personDetailView addSubview:personButton];
+
     
     
 }
@@ -342,5 +357,47 @@
 
 }
 
+-(void)retrieveRefundCode{
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refundCode:) name:@"RefundCodeNotification" object:nil];
+    OrderConnection *connection = [[OrderConnection alloc]init];
+    [connection retrieveRefundCode:self.order.item_id];
+}
+
+-(void)refundCode:(NSNotification *)noti{
+    self.confirm_status = @"Refund Code";
+    NSString *code = [noti object];
+    [HHAlertView showAlertWithStyle:HHAlertStyleDefault inView:self.view Title:@"Refund Code" detail:code cancelButton:nil Okbutton:@"Cancel"];
+}
+
+-(void)refundButtonEligibility{
+    NSDate *now = [NSDate date];
+    NSDate *tenDaysBefore = [now dateByAddingTimeInterval:-60*60*24*numbersOfOrderDaysBeforeRefund];
+    if ([order_date compare:tenDaysBefore]==NSOrderedAscending) {
+        self.refundButton.enabled = YES;
+        self.refundLabel.hidden = YES;
+    }else{
+        self.refundButton.enabled = NO;
+        self.refundLabel.hidden = NO;
+    }
+}
+
+-(void)didClickButtonAnIndex:(HHAlertButton)button{
+    if ([self.confirm_status isEqualToString:@"Confirm Status"]) {
+        if (button==HHAlertButtonOk) {
+            self.confirm_status = @"Process";
+            OrderConnection *orderConnection = [[OrderConnection alloc]init];
+            [orderConnection finishCheckOut:self.order.item_id];
+            NSLog(@"%@",[self.order description]);
+        }
+    }else if ([self.confirm_status isEqualToString:@"Process"]){
+        if (button==HHAlertButtonCancel) {
+            self.confirm_status=@"Confirm Status";
+        }else if (button==HHAlertButtonOk){
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }
+    }else if ([self.confirm_status isEqualToString:@"Refund Code"]){
+        
+    }
+}
 
 @end

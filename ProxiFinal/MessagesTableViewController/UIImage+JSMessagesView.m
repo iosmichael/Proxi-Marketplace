@@ -204,12 +204,12 @@
 #pragma mark - Outgoing message bubbles
 + (UIImage *)bubbleDefaultOutgoing
 {
-    return [[UIImage imageNamed:@"bubble-default-outgoing"] makeStretchableDefaultOutgoing];
+    return [[UIImage imageNamed:@"bubble-flat-outgoing"] makeStretchableDefaultOutgoing];
 }
 
 + (UIImage *)bubbleDefaultOutgoingSelected
 {
-    return [[UIImage imageNamed:@"bubble-default-outgoing-selected"] makeStretchableDefaultOutgoing];
+    return [[UIImage imageNamed:@"bubble-flat-outgoing-selected"] makeStretchableDefaultOutgoing];
 }
 
 + (UIImage *)bubbleDefaultOutgoingGreen

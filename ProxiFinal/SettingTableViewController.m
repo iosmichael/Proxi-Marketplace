@@ -7,7 +7,8 @@
 //
 
 #import "SettingTableViewController.h"
-#import "BraintreePaymentViewController.h"
+#import "LoginMainViewController.h"
+
 
 @interface SettingTableViewController ()
 
@@ -55,9 +56,10 @@
 }
 
 -(void)logoutTapped{
+    LoginMainViewController *loginController = [self.storyboard instantiateViewControllerWithIdentifier:@"loginMain"];
     [[NSUserDefaults standardUserDefaults]setObject:nil forKey:@"username"];
     [[NSUserDefaults standardUserDefaults]setObject:nil forKey:@"password"];
-    NSLog(@"logged out");
+    [self presentViewController:loginController animated:YES completion:nil];
 }
 /*
 // Override to support conditional editing of the table view.

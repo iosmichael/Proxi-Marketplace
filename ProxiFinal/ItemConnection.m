@@ -15,7 +15,6 @@
 -(void)postItemData: (Item *)newItem
 {
     NSDictionary *param = @{
-#warning need to change Item_high_price
                             @"item_title":newItem.item_title,
                             @"item_description":newItem.item_description,
                             @"item_high_price":newItem.price_current,
@@ -40,7 +39,6 @@
         NSData *response = responseObject;
         NSString *responseString = [[NSString alloc]initWithData:response encoding:NSUTF8StringEncoding];
         NSLog(@"%@",responseString);
-#warning Notification established
         
         [[NSNotificationCenter defaultCenter]postNotificationName:@"PostItemNotification" object:responseString];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -166,8 +164,7 @@
         NSArray *json  = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
         [[NSNotificationCenter defaultCenter]postNotificationName:@"FetchItemByCategoryNotification" object:json];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"this is an Error");
-        NSLog(@"%@", [error description]);
+        NSLog(@"this is an Error:%@", [error description]);
     }];
     
 }

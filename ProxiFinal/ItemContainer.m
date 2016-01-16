@@ -39,7 +39,8 @@
         NSString *image_url = dic[@"item_img_url"];
         Item *newItem = [[Item alloc]initWithTitle:itemName description:itemDescription userID:sellerID image:nil date:date itemID:itemID price:itemAmount image_url:image_url];
         if ([dic[@"item_status"]isEqualToString:@"unordered "]) {
-                 [self addItem:newItem];
+            [self addItem:newItem];
+            NSLog(@"searchItem added");
         }
     }
 }
@@ -57,11 +58,6 @@
     ItemConnection *connection = [[ItemConnection alloc]init];
     [connection fetchItemsByCategory:categoryName amount:numberOfItems];
     
-}
-
--(void)addItemImageFromDatabase:(Item *)item{
-    ItemConnection *connection = [[ItemConnection alloc]init];
-    [connection fetchItemImageWithItem:item];
 }
 
 

@@ -14,7 +14,7 @@
 @property (strong, nonatomic) IBOutlet UIControl *firstPage;
 @property (strong, nonatomic) IBOutlet UIControl *secondPage;
 
-@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
+
 @property (weak, nonatomic) IBOutlet UILabel *registerAlertLabel;
 @property (weak, nonatomic) IBOutlet UIButton *registerButton;
 @property (weak, nonatomic) IBOutlet UIButton *agreeButton;
@@ -31,7 +31,7 @@
 @property (weak, nonatomic) IBOutlet JAMValidatingTextField *month;
 @property (weak, nonatomic) IBOutlet JAMValidatingTextField *day;
 
-@property (weak, nonatomic) IBOutlet JAMValidatingTextField *venmoPhone;
+@property (weak, nonatomic) IBOutlet JAMValidatingTextField *venmoEmail;
 
 
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *refresher;

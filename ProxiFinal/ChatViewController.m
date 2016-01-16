@@ -34,7 +34,7 @@
     self.delegate = self;
     self.dataSource = self;
     self.navigationController.navigationBar.hidden = NO;
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:87/255.0 green:183/255.0 blue:182/255.0 alpha:1.0];
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:36/255.0 green:104/255.0 blue:156/255.0 alpha:1.0];
     self.navigationItem.title = self.title;
     self.messageArray = [NSMutableArray array];
     self.timestamps = [NSMutableArray array];
@@ -47,6 +47,7 @@
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
     [self.firebase removeAllObservers];
+    
 }
 
 

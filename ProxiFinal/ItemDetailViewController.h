@@ -10,6 +10,7 @@
 #import "Item.h"
 #import "HomeTableViewController.h"
 #import "SearchTableViewController.h"
+#import <Braintree/Braintree.h>
 @interface ItemDetailViewController : UIViewController
 @property (strong,nonatomic) Item *item;
 
@@ -21,5 +22,6 @@
 @property (strong, nonatomic) UILabel *item_current_price;
 @property (strong, nonatomic) UILabel *owner_info;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong,nonatomic) Braintree *braintree;
 
 @end

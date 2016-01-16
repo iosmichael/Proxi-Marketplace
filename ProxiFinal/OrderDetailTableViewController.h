@@ -20,5 +20,7 @@
 @property (strong, nonatomic) UIButton *confirmButton;
 @property (strong, nonatomic) UILabel *item_current_price;
 @property (strong, nonatomic) UILabel *owner_info;
-
+@property (strong,nonatomic) UIButton *refundButton;
+@property (strong,nonatomic) UILabel *refundLabel;
+@property (strong,nonatomic) NSString *confirm_status;
 @end

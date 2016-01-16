@@ -15,7 +15,8 @@
 #define Screen_height [[UIScreen mainScreen]bounds].size.height
 #define PostItemSuccessProtocol @"success"
 #define gray [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1]
-#define hightlight_color [UIColor colorWithRed:255/255.0 green:227/255.0 blue:184/255.0 alpha:1]
+#define hightlight_color [UIColor colorWithRed:245/255.0 green:166/255.0 blue:35/255.0 alpha:1]
+#define theme_color [UIColor colorWithRed:73/255.0 green:143/255.0 blue:157/255.0 alpha:1]
 
 
 @interface PostItemDetailViewController ()<UIScrollViewDelegate,HHAlertViewDelegate, UITextViewDelegate,UITextFieldDelegate>
@@ -40,7 +41,12 @@
     numberOfArray = 3;
     categoryClicked = NO;
     textViewEdited = NO;
-    self.imageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 53+10, Screen_width-20, Screen_width-20)];
+    [self setKeyboardTheme];
+    /*[self.buttons.layer setCornerRadius:5];
+    self.buttons.layer.borderWidth=3;
+    [self.buttons.layer setBorderColor:[UIColor colorWithRed:73/255.0 green:143/255.0 blue:157/255.0 alpha:1].CGColor];
+     */
+    self.imageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, Screen_width-20, Screen_width-20)];
     if (self.image) {
         [self.imageView setImage:self.image];
     }else{
@@ -61,10 +67,16 @@
     // Do any additional setup after loading the view from its nib.
     self.titleTextField.delegate = self;
     self.descriptionTextView.delegate = self;
-    [self.postButton setBackgroundColor:gray];
     self.postButton.enabled = NO;
     [self.view addSubview:self.scrollView];
-
+    UIImage *image = [self resizeImage:[UIImage imageNamed:@"Proxi Logo.png"] toSize:CGSizeMake(90, 35)];
+    UIImageView *imageView = [[UIImageView alloc]initWithImage:image];
+    self.navigationItem.titleView = imageView;
+    [self.tabBarController.tabBar setHidden:YES];
+}
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -79,10 +91,12 @@
 }
 -(void)clearCategoryButtons{
     self.category = @"";
-    for (int i=1; i<7; i++) {
-        UIButton *categoryButton = [self.scrollView viewWithTag:i+100];
-        [categoryButton setBackgroundColor:gray];
-    }
+    [self.other setImage:[UIImage imageNamed:@"other_icon_inactive.png"] forState:UIControlStateNormal];
+    [self.clothing setImage:[UIImage imageNamed:@"cloth_icon_inactive.png"] forState:UIControlStateNormal];
+    [self.ride setImage:[UIImage imageNamed:@"ride_icon_inactive.png"] forState:UIControlStateNormal];
+    [self.book setImage:[UIImage imageNamed:@"book_icon_inactive.png"] forState:UIControlStateNormal];
+    [self.service setImage:[UIImage imageNamed:@"service_icon_inactive.png"] forState:UIControlStateNormal];
+    [self.furniture setImage:[UIImage imageNamed:@"furniture_icon_inactive.png"] forState:UIControlStateNormal];
 }
 -(void)renewNumber{
     int number = [self.numberArray count];
@@ -119,8 +133,9 @@
 #pragma mark- Button Control Methods
 
 - (IBAction)retakeImageButtonTapped:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
-    //[self.navigationController popToRootViewControllerAnimated:YES];
+    //[self dismissViewControllerAnimated:YES completion:nil];
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (IBAction)numberPadTapped:(id)sender {
@@ -148,17 +163,16 @@
         }
     }
     [self renewNumber];
+    [self checkAllValidation];
     
     
 }
 - (IBAction)postItemButtonTapped:(id)sender {
     NSData *img = UIImageJPEGRepresentation(self.imageView.image, 0.7);
-#warning  highPrice entered only
-#warning NSUserDefaults is invalid
     NSLog( @"%@",[self.titleTextField.text description]);
     NSArray *priceComponents = [self.priceLabel.text componentsSeparatedByString:@"$"];
     NSString *price = [priceComponents objectAtIndex:1];
-    Item *item = [[Item alloc]initWithTitle:self.titleTextField.text
+    Item *item = [[Item alloc]initWithTitle: [self capitalizeFirstLetter:self.titleTextField.text]
                                 description:self.descriptionTextView.text
                                   userEmail:[[NSUserDefaults standardUserDefaults]objectForKey:@"username"]
                                       image:img date:nil itemID:nil price:price
@@ -174,8 +188,37 @@
     categoryClicked = YES;
     UIButton *buttonTapped = sender;
     [self clearCategoryButtons];
-    self.category = buttonTapped.titleLabel.text;
-    [buttonTapped setBackgroundColor:hightlight_color];
+    
+    switch (buttonTapped.tag) {
+        case 101: //book
+            self.category=@"Book";
+            [self.book setImage:[UIImage imageNamed:@"book_icon.png"] forState:UIControlStateNormal];
+            break;
+        case 102: //ride
+            self.category=@"Ride";
+            [self.ride setImage:[UIImage imageNamed:@"rides_icon.png"] forState:UIControlStateNormal];
+            break;
+        case 103: //furniture
+            self.category=@"Furniture";
+            [self.furniture setImage:[UIImage imageNamed:@"furniture_icon.png"] forState:UIControlStateNormal];
+            break;
+        case 104: //service
+            self.category=@"Service";
+            [self.service setImage:[UIImage imageNamed:@"service_icon.png"] forState:UIControlStateNormal];
+            break;
+        case 105: //cloth
+            self.category=@"Clothing";
+            [self.clothing setImage:[UIImage imageNamed:@"cloth_icon.png"] forState:UIControlStateNormal];
+            break;
+        case 106: //other
+            self.category=@"Other";
+            [self.other setImage:[UIImage imageNamed:@"other_icon.png"] forState:UIControlStateNormal];
+            break;
+        default:
+            break;
+    }
+    
+
     [self checkAllValidation];
 }
 
@@ -191,7 +234,7 @@
     //Success Alert View
     BOOL success = [[noti object]isEqualToString:PostItemSuccessProtocol];
     if (success) {
-        [HHAlertView showAlertWithStyle:HHAlertStyleOk inView:self.view Title:@"Congrats!" detail:@"Successfully Posted Item" cancelButton:nil Okbutton:@"Gotcha!"];
+        [HHAlertView showAlertWithStyle:HHAlertStyleOk inView:self.view Title:@"Congrats!" detail:@"Successfully Posted Item" cancelButton:nil Okbutton:@"OK"];
         
     }else{
         [HHAlertView showAlertWithStyle:HHAlertStyleError inView:self.view Title:@"Sorry" detail:@"Item Didn't Post Successfully" cancelButton:nil Okbutton:@"Please Contact Us"];
@@ -203,7 +246,7 @@
     [self.refresher stopAnimating];
     self.refresher.hidden = YES;
     //Error Alert View
-    [HHAlertView showAlertWithStyle:HHAlertStyleError inView:self.view Title:@"Sorry" detail:@"Item Didn't Post Successfully" cancelButton:nil Okbutton:@"Please Contact Us"];
+    [HHAlertView showAlertWithStyle:HHAlertStyleError inView:self.view Title:@"Sorry" detail:@"Please Check Wifi Connection" cancelButton:nil Okbutton:@"Please Contact Us"];
     self.postButton.enabled = YES;
 }
 
@@ -211,7 +254,7 @@
 -(void)didClickButtonAnIndex:(HHAlertButton)button{
     if (button ==HHAlertButtonOk) {
         [[NSNotificationCenter defaultCenter]removeObserver:self];
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }
 -(void)setupElements{
@@ -254,19 +297,65 @@
     return NO;
 }
 -(void)checkAllValidation{
+    NSArray *priceComponents = [self.priceLabel.text componentsSeparatedByString:@"$"];
+    NSString *price = [priceComponents objectAtIndex:1];
+    
     if (self.image&&
         self.titleTextField.text.length!=0&&
         self.descriptionTextView.text.length!=0&&
-        categoryClicked&&
-        ![self.priceLabel.text isEqualToString:@"0.00"]) {
+        categoryClicked&&[price doubleValue]>5.0) {
         self.postAlertLabel.textColor = [UIColor clearColor];
+        
         self.postButton.enabled = YES;
-        [self.postButton setBackgroundColor:hightlight_color];
+        [self.postButton setImage:[UIImage imageNamed:@"post_icon.png"] forState:UIControlStateNormal];
+        
     }else{
         self.postAlertLabel.textColor = [UIColor redColor];
         self.postButton.enabled = NO;
-        [self.postButton setBackgroundColor:gray];
+        [self.postButton setImage:[UIImage imageNamed:@"post_inactive_icon.png"] forState:UIControlStateNormal];
     }
+}
+- (UIImage *)resizeImage:(UIImage *)image toSize:(CGSize)resize
+
+{
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(resize.width, resize.height), NO, [UIScreen mainScreen].scale);
+    [image drawInRect:CGRectMake(0, 0, resize.width, resize.height)];
+    UIImage *reSizeImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return reSizeImage;
+}
+
+
+-(NSString *)capitalizeFirstLetter:(NSString *)str{
+    NSString *strNew = [str stringByReplacingCharactersInRange:NSMakeRange(0,1)
+                                 withString:[[str substringToIndex:1] capitalizedString]];
+    return strNew;
+}
+
+-(void)setKeyboardTheme{
+    [self changeButtonTheme:self.button0];
+    [self changeButtonTheme:self.button1];
+    [self changeButtonTheme:self.button2];
+    [self changeButtonTheme:self.button3];
+    [self changeButtonTheme:self.button4];
+    [self changeButtonTheme:self.button5];
+    [self changeButtonTheme:self.button6];
+    [self changeButtonTheme:self.button7];
+    [self changeButtonTheme:self.button8];
+    [self changeButtonTheme:self.button9];
+    [self.deleteButton.layer setCornerRadius:5];
+    [self.clearButton.layer setCornerRadius:5];
+    [self.imagePageRetakeButton.layer setCornerRadius:25];
+    self.imagePageRetakeButton.layer.borderWidth=3;
+    [self.imagePageRetakeButton.layer setBorderColor:theme_color.CGColor];
+    
+
+    
+}
+-(void)changeButtonTheme:(UIButton *)button{
+    [button.layer setCornerRadius:5];
+    button.layer.borderWidth=3;
+    [button.layer setBorderColor:theme_color.CGColor];
 }
 
 /*

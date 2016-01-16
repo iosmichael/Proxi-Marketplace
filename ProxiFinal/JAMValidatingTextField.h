@@ -20,7 +20,8 @@ typedef NS_ENUM(NSUInteger, JAMValidatingTextFieldType) {
     JAMValidatingTextFieldTypeEmail,
     JAMValidatingTextFieldTypeURL,
     JAMValidatingTextFieldTypePhone,
-    JAMValidatingTextFieldTypeZIP
+    JAMValidatingTextFieldTypeZIP,
+    JAMValidatingTextFieldTypeVenmoEmail
 };
 
 /** The delegate is used for validation if it is assigned. */
@@ -68,4 +69,5 @@ typedef NS_ENUM(NSUInteger, JAMValidatingTextFieldType) {
 @property (nonatomic, weak) id <JAMValidatingTextFieldValidationDelegate> validationDelegate;
 - (instancetype)initWithFrame:(CGRect)frame;
 -(instancetype)init;
+- (void)validate;
 @end

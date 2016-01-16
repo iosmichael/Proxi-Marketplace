@@ -16,6 +16,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *cellStatus;
 @property (weak, nonatomic) IBOutlet UIImageView *pointer;
 @property (weak, nonatomic) IBOutlet UIImageView *badge;
-@property (weak, nonatomic) IBOutlet UILabel *badgeNum;
+
 
 @end

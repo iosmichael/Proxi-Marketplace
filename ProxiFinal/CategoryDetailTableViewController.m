@@ -170,6 +170,7 @@
 -(void)setupDatabase{
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshTable:) name:@"FetchItemByCategoryNotification" object:nil];
     self.itemContainer = [[ItemContainer alloc]init];
+    self.datasourceArray = [[NSMutableArray alloc]init];
     self.connection = [[ItemConnection alloc]init];
     i = 10;
     self.navigationController.navigationBarHidden = NO;
@@ -177,7 +178,7 @@
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     [self.navigationController.navigationBar
      setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
-    self.navigationController.navigationBar.barTintColor =[UIColor colorWithRed:87/255.0 green:183/255.0 blue:182/255.0 alpha:1.0];
+    self.navigationController.navigationBar.barTintColor =[UIColor colorWithRed:36/255.0 green:104/255.0 blue:156/255.0 alpha:1.0];
 
     self.navigationItem.title = self.categoryName;
     [self.itemContainer fetchItemsFromDatabaseWithCategoryName:self.categoryName number:i];

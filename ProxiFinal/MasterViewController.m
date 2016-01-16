@@ -8,7 +8,7 @@
 
 #import "MasterViewController.h"
 #import "PersonTableViewController.h"
-#import "LoginViewController.h"
+#import "LoginMainViewController.h"
 #import "ABCIntroView.h"
 
 @interface MasterViewController ()<ABCIntroViewDelegate>
@@ -24,39 +24,17 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self setupWithTabbarTheme];
-    
-    UIButton *centerButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    
-    
-    centerButton.frame = CGRectMake(0, 0, CENTERBUTTONSIZE_WIDTH, CENTERBUTTONSIZE_HEIGHT);
-    
-    UIImage *buttonImage = [[UIImage imageNamed:@"Camera"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    UIImage *buttonSelectedImage = [[UIImage imageNamed:@"Camera_highlighted"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    [centerButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
-    [centerButton setBackgroundImage:buttonSelectedImage forState:UIControlStateHighlighted];
-    [centerButton addTarget:self action:@selector(switchTab) forControlEvents:UIControlEventTouchUpInside];
-    CGFloat heightDifference =buttonImage.size.height -self.tabBar.frame.size.height;
-    if (heightDifference<0) {
-        centerButton.center = self.tabBar.center;
-    }else{
-        CGPoint center = self.tabBar.center;
-        center.y = center.y - heightDifference/2.0;
-        centerButton.center = center;
-    }
-    self.centerButton = centerButton;
-    [self.view addSubview:self.centerButton];
-    
-    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if (![defaults objectForKey:@"intro_screen_viewed"]) {
         self.introView = [[ABCIntroView alloc] initWithFrame:self.view.frame];
         self.introView.delegate = self;
-        self.introView.backgroundColor = [UIColor greenColor];
+        self.introView.backgroundColor = [UIColor colorWithRed:22/255.0 green:61/255.0 blue:91/255.0 alpha:1];
         [self.view addSubview:self.introView];
     }
-    
 
 }
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -101,6 +79,7 @@
     
     UITabBarItem *tabBarItem1 = [self.tabBar.items objectAtIndex:0];
     UITabBarItem *tabBarItem2 = [self.tabBar.items objectAtIndex:1];
+    UITabBarItem *tabBarItem3 = [self.tabBar.items objectAtIndex:2];
     UITabBarItem *tabBarItem4 = [self.tabBar.items objectAtIndex:3];
     UITabBarItem *tabBarItem5 = [self.tabBar.items objectAtIndex:4];
     
@@ -112,12 +91,25 @@
     tabBarItem2.selectedImage = [[UIImage imageNamed:@"Search_highlighted"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     tabBarItem2.imageInsets= UIEdgeInsetsMake(5, 0, -5, 0);
     
+    tabBarItem3.image = [[UIImage imageNamed:@"Camera"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    tabBarItem3.selectedImage = [[UIImage imageNamed:@"Camera_highlighted"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    tabBarItem3.imageInsets= UIEdgeInsetsMake(5, 0, -5, 0);
+    
     tabBarItem4.image = [[UIImage imageNamed:@"User"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     tabBarItem4.selectedImage = [[UIImage imageNamed:@"User_highlighted"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     tabBarItem4.imageInsets= UIEdgeInsetsMake(5, 0, -5, 0);
+    
     tabBarItem5.image =[[UIImage imageNamed:@"More"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     tabBarItem5.selectedImage = [[UIImage imageNamed:@"More_highlighted"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     tabBarItem5.imageInsets= UIEdgeInsetsMake(5, 0, -5, 0);
+}
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    if (![[NSUserDefaults standardUserDefaults]objectForKey:@"username"]||![[NSUserDefaults standardUserDefaults]objectForKey:@"password"]) {
+        LoginMainViewController *loginMainViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"loginMain"];
+        [self presentViewController:loginMainViewController animated:YES completion:nil];
+    }
+
 }
 
 
@@ -129,9 +121,6 @@
     }
 }
 
--(void)switchTab{
-    [self setSelectedIndex:2];
-    
-}
+
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CCBottomRefreshControl/UIScrollView+BottomRefreshControl.h>
 
 @interface CategoryDetailTableViewController : UITableViewController<UICollectionViewDataSource,UICollectionViewDelegate>
 #warning add view more button. limit the downloads numbers

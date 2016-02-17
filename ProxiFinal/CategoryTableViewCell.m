@@ -28,8 +28,8 @@
         return nil;
     }
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
-    layout.sectionInset = UIEdgeInsetsMake(10, 10, 10, 10);
-    layout.itemSize = CGSizeMake(100, 100);
+    layout.sectionInset = UIEdgeInsetsMake(10, 10, 10, 0);
+    layout.itemSize = CGSizeMake(85, 100);
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     self.collectionView = [[CategoryCollectionView alloc]initWithFrame:CGRectZero collectionViewLayout:layout];
     [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:CollectionViewCellIdentifier];

@@ -50,7 +50,7 @@
 #pragma mark - Setup Page Index
 -(void)setupPageIndex{
     if (!self.pageIndex) {
-        self.pageIndex = [[UIPageControl alloc]initWithFrame:CGRectMake(0, self.scrollView.frame.size.height*0.8, self.scrollView.frame.size.width, 20)];
+        self.pageIndex = [[UIPageControl alloc]initWithFrame:CGRectMake(0, self.scrollView.frame.size.height*0.8, self.scrollView.frame.size.width/2, 20)];
     }
     [self.pageIndex setTintColor:[UIColor grayColor]];
     self.pageIndex.currentPageIndicatorTintColor = [UIColor whiteColor];

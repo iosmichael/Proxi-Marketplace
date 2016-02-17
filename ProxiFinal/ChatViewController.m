@@ -34,7 +34,9 @@
     self.delegate = self;
     self.dataSource = self;
     self.navigationController.navigationBar.hidden = NO;
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:36/255.0 green:104/255.0 blue:156/255.0 alpha:1.0];
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:50/255.0 green:144/255.0 blue:148/255.0 alpha:1.0];
+    self.navigationController.navigationBar.backItem.backBarButtonItem.title = @"";
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationItem.title = self.title;
     self.messageArray = [NSMutableArray array];
     self.timestamps = [NSMutableArray array];

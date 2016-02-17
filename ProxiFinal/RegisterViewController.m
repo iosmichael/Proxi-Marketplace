@@ -12,6 +12,8 @@
 #import "UserConnection.h"
 #import "User.h"
 
+#define kOFFSET_FOR_KEYBOARD 182.0
+
 #define Screen_width [[UIScreen mainScreen]bounds].size.width
 #define Screen_height [[UIScreen mainScreen]bounds].size.height
 #define highlight_color [UIColor colorWithRed:36/255.0 green:104/255.0 blue:156/255.0 alpha:1.0]
@@ -19,7 +21,7 @@
 
 #define RegisterPassProtocol @"successfully create user"
 
-@interface RegisterViewController ()<UITextFieldDelegate,UIScrollViewDelegate,HHAlertViewDelegate   >
+@interface RegisterViewController ()<UITextFieldDelegate,UIScrollViewDelegate,HHAlertViewDelegate>
 @property (strong,nonatomic) NSString *capitalizedFirstName;
 @property (strong,nonatomic) NSString *capitalizedLastName;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topDistance;
@@ -31,6 +33,7 @@
 @implementation RegisterViewController{
     BOOL agreeTerms;
     BOOL registerSuccess;
+    BOOL keyboardHasShown;
 }
 
 
@@ -43,8 +46,6 @@
     [self.registerButton.layer setCornerRadius:5];
     [[HHAlertView shared]setDelegate:self];
     // Do any additional setup after loading the view from its nib.
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(registerPass:) name:@"RegisterPassNotification" object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(registerFail) name:@"RegisterFailNotification" object:nil];
     self.firstPage.frame = CGRectMake(0, 0, Screen_width, Screen_height);
     self.secondPage.frame = CGRectMake(Screen_width, 0, Screen_width, Screen_height);
     [self.scrollView setContentSize:CGSizeMake(Screen_width*2, 0)];
@@ -52,12 +53,60 @@
     [self.scrollView addSubview:self.secondPage];
     self.scrollView.delegate = self;
     [self setupTextfieldSettings];
+    [self setupGestureRecognizer];
     
+    
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(registerPass:) name:@"RegisterPassNotification" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(registerFail) name:@"RegisterFailNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+    
+    
+}
+-(void)keyboardWillHide{
+    if (!keyboardHasShown) {
+        return;
+    }
+    LoginMainViewController *container = (LoginMainViewController *)self.parentViewController;
+    [UIView animateWithDuration:0.5
+                     animations:^{
+                         container.headerHeight.constant +=kOFFSET_FOR_KEYBOARD;
+                     }];
+    keyboardHasShown=NO;
+}
+
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)keyboardWillShow{
+    if (keyboardHasShown) {
+        return;
+    }
+    LoginMainViewController *container = (LoginMainViewController *)self.parentViewController;
+    [UIView animateWithDuration:0.5
+                     animations:^{
+                         container.headerHeight.constant -=kOFFSET_FOR_KEYBOARD;
+    }];
+    keyboardHasShown = YES;
 }
 
 - (IBAction)registerButtonTapped:(id)sender {
@@ -67,7 +116,7 @@
     }
     NSString *dOB =[[[[self.year.text stringByAppendingString:@"-"] stringByAppendingString:self.month.text]stringByAppendingString:@"-"]stringByAppendingString:self.day.text];
     [self namesWithEmail:self.email.text];
-    User *user = [[User alloc]initWithEmail:self.email.text firstName:self.capitalizedFirstName lastName:self.capitalizedLastName password:self.password.text phone:self.phone.text dateOfBirth:dOB venmoEmail:self.venmoEmail.text];
+    User *user = [[User alloc]initWithEmail:self.email.text firstName:self.capitalizedFirstName lastName:self.capitalizedLastName password:self.password.text phone:self.phone.text dateOfBirth:dOB];
     UserConnection *connection = [[UserConnection alloc]init];
     self.registerButton.enabled = NO;
     self.refresher.hidden = NO;
@@ -88,11 +137,11 @@
 }
 
 -(void)registerPass:(NSNotification *)noti{
-    BOOL success = [[noti object]isEqualToString:RegisterPassProtocol];
-    if (success) {
+    
+    if ([[noti object]isEqualToString:RegisterPassProtocol]) {
         UIAlertController * alertYes=   [UIAlertController
                                          alertControllerWithTitle:@"Success"
-                                         message:@"Registered Your Proxi Account"
+                                         message:@"Registered Your Proxi Account. Please Check Your Email to Activate Account."
                                          preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction* yesButton = [UIAlertAction
@@ -114,7 +163,8 @@
         
         [alertYes addAction:yesButton];
         [self presentViewController:alertYes animated:YES completion:nil];
-    }else{
+    }
+    else{
         UIAlertController * alertNo=   [UIAlertController
                                         alertControllerWithTitle:@"Error"
                                         message:@"Invalid Account Information"
@@ -155,7 +205,6 @@
     self.month.text=@"";
     self.day.text=@"";
     self.year.text=@"";
-    self.venmoEmail.text = @"";
     
     [self.password validate];
     [self.email validate];
@@ -164,14 +213,12 @@
     [self.month validate];
     [self.day validate];
     [self.year validate];
-    [self.venmoEmail validate];
     
 }
 
 -(void)setupTextfieldSettings{
     self.email.validationType = JAMValidatingTextFieldTypeEmail;
     self.phone.validationType = JAMValidatingTextFieldTypePhone;
-    self.venmoEmail.validationType=JAMValidatingTextFieldTypeVenmoEmail;
     self.password.validationBlock = ^{
         if (self.password.text.length == 0) {
             return JAMValidatingTextFieldStatusIndeterminate;
@@ -246,7 +293,6 @@
     self.year.delegate = self;
     self.month.delegate = self;
     self.day.delegate = self;
-    self.venmoEmail.delegate = self;
 }
 
 -(void)checkAllValidation{
@@ -256,7 +302,7 @@
         self.year.validationStatus==JAMValidatingTextFieldStatusValid&&
         self.month.validationStatus==JAMValidatingTextFieldStatusValid&&
         self.day.validationStatus==JAMValidatingTextFieldStatusValid&&
-        agreeTerms&&self.venmoEmail.validationStatus) {
+        agreeTerms) {
             self.registerButton.enabled=YES;
             [self.registerButton setBackgroundColor:highlight_color];
             [self.registerAlertLabel setTextColor:[UIColor clearColor]];
@@ -297,6 +343,26 @@
     NSString *lastName = [nameComponents objectAtIndex:1];
     self.capitalizedLastName = [lastName stringByReplacingCharactersInRange:NSMakeRange(0,1)
                                                                       withString:[[lastName substringToIndex:1] capitalizedString]];
+}
+
+-(void)setupGestureRecognizer{
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
+                                   initWithTarget:self
+                                   action:@selector(dismissKeyboard)];
+    
+    [self.view addGestureRecognizer:tap];
+}
+
+-(void)dismissKeyboard{
+    
+    [self.email resignFirstResponder];
+    [self.password resignFirstResponder];
+    [self.recheckPassword resignFirstResponder];
+    [self.phone resignFirstResponder];
+    [self.year resignFirstResponder];
+    [self.month resignFirstResponder];
+    [self.day resignFirstResponder];
+    [self checkAllValidation];
 }
 
 

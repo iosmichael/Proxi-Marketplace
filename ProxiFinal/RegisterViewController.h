@@ -30,10 +30,6 @@
 @property (weak, nonatomic) IBOutlet JAMValidatingTextField *year;
 @property (weak, nonatomic) IBOutlet JAMValidatingTextField *month;
 @property (weak, nonatomic) IBOutlet JAMValidatingTextField *day;
-
-@property (weak, nonatomic) IBOutlet JAMValidatingTextField *venmoEmail;
-
-
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *refresher;
 
 @end

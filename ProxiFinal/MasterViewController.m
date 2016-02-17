@@ -7,7 +7,6 @@
 //
 
 #import "MasterViewController.h"
-#import "PersonTableViewController.h"
 #import "LoginMainViewController.h"
 #import "ABCIntroView.h"
 
@@ -25,11 +24,12 @@
     // Do any additional setup after loading the view.
     [self setupWithTabbarTheme];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if (![defaults objectForKey:@"intro_screen_viewed"]) {
+    if (![defaults objectForKey:@"intro_viewed"]) {
         self.introView = [[ABCIntroView alloc] initWithFrame:self.view.frame];
         self.introView.delegate = self;
         self.introView.backgroundColor = [UIColor colorWithRed:22/255.0 green:61/255.0 blue:91/255.0 alpha:1];
         [self.view addSubview:self.introView];
+        [defaults setValue:@"Yes" forKey:@"intro_viewed"];
     }
 
 }

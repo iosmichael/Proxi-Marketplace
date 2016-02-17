@@ -163,11 +163,41 @@
         NSData *data = responseObject;
         NSArray *json  = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
         [[NSNotificationCenter defaultCenter]postNotificationName:@"FetchItemByCategoryNotification" object:json];
+        NSLog(@"Category Search: %@",[json description]);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"this is an Error:%@", [error description]);
     }];
     
 }
+
+-(void)fetchItemsByCategory:(NSString *)searchCategory titleSearch:(NSString *)searchText amount:(NSInteger)numberOfItems{
+    AFHTTPRequestOperationManager *manager= [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = nil;
+    
+    NSString *numberOfItemString = [NSString stringWithFormat:@"%ld",(long)numberOfItems];
+    NSDictionary *param = @{
+                            @"number":numberOfItemString,
+                            @"category_name":searchCategory,
+                            @"searchText":searchText
+                            };
+    NSDictionary *param2 = @{@"object":@"Search",
+                             @"method":@"searchItemCategoryTitle",
+                             @"data":param
+                             };
+    [manager POST:address parameters:param2 constructingBodyWithBlock:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSData *data = responseObject;
+        NSArray *json  = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+        NSLog(@"Category Title Search: %@",[json description]);
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"FetchItemByCategoryNotification" object:json];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"this is an Error:%@", [error description]);
+    }];
+    
+}
+
 
 
 -(void)myItems:(NSString *)user_email FromIndex:(NSInteger)indexOfItems amount:(NSInteger)numberOfItems detail_category:(NSString *)detail_category{
@@ -335,10 +365,57 @@
             NSLog(@"%@",[error description]);
         }];
         
-    }else{
-        
     }
 }
+-(void)hideTransaction:(NSString *)transaction_id{
+    AFHTTPRequestOperationManager *manager= [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = nil;
+    
+    NSDictionary *param = @{
+                            @"transaction_id": transaction_id
+                                };
+    NSDictionary *param2 = @{@"object":@"Transaction_Test",
+                             @"method":@"hideTransaction",
+                             @"data":param
+                             };
+    [manager POST:address parameters:param2 constructingBodyWithBlock:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSData *data = responseObject;
+        NSString *dataDescription  = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"%@",[dataDescription description]);
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"HideTransactionNotification" object:dataDescription];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"this is an Error");
+        NSLog(@"%@", [error description]);
+    }];
+}
 
+-(void)fulfillDelivery:(NSString *)item_id order:(NSString *)order_id{
+    AFHTTPRequestOperationManager *manager= [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = nil;
+    
+    NSDictionary *param = @{
+                            @"order_id": order_id,
+                            @"item_id": item_id
+                            };
+    NSDictionary *param2 = @{@"object":@"Transaction_Test",
+                             @"method":@"fulfillDelivery",
+                             @"data":param
+                             };
+    [manager POST:address parameters:param2 constructingBodyWithBlock:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSData *data = responseObject;
+        NSString *dataDescription  = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"%@",[dataDescription description]);
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"FulfillDeliveryNotification" object:dataDescription];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"this is an Error");
+        NSLog(@"%@", [error description]);
+    }];
+}
 
 @end

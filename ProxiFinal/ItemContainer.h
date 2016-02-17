@@ -21,6 +21,4 @@
 -(void)fetchItemsFromDatabase:(NSInteger)numberOfItems offset:(NSInteger)offset;
 -(void)fetchItemsFromDatabaseWithCategoryName:(NSString *)categoryName number:(NSInteger)numberOfItems;
 
--(void)addItemImageFromDatabase:(Item *)item;
-
 @end

@@ -10,8 +10,9 @@
 #import "LoginViewController.h"
 #import "RegisterViewController.h"
 #import "MasterViewController.h"
-
+#define LoginSuccessProtocol @"success login"
 @interface LoginMainViewController ()
+@property (strong,nonatomic) LoginViewController *loginViewController;
 
 @end
 
@@ -23,6 +24,7 @@
     [super viewDidLoad];
     RegisterViewController *registerVC = [[RegisterViewController alloc]initWithNibName:@"RegisterViewController" bundle:nil];
     LoginViewController *loginVC = [self.storyboard instantiateViewControllerWithIdentifier:@"LoginID"];
+    self.loginViewController = loginVC;
     
     //instantiate all view controllers
     self.controllers = [[NSArray alloc] initWithObjects:registerVC,loginVC, nil];
@@ -50,6 +52,60 @@
     return image;
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginPass:) name:@"LoginPassNotification" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginError) name:@"LoginErrorNotification" object:nil];
+}
+
+
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
+
+-(void)loginPass:(NSNotification *)noti{
+    BOOL success = [[noti object]isEqualToString:LoginSuccessProtocol];
+    if (success) {
+        //Success AlertView
+        self.loginViewController.refresher.hidden = YES;
+        [self.loginViewController.refresher stopAnimating];
+        NSLog(@"success");
+        [[NSUserDefaults standardUserDefaults]setObject:self.loginViewController.username.text forKey:@"username"];
+        [[NSUserDefaults standardUserDefaults]setObject:self.loginViewController.password.text forKey:@"password"];
+        [self dismissViewControllerAnimated:YES completion:nil];
+        
+    }else{
+
+        UIAlertController * alertNo=   [UIAlertController
+                                        alertControllerWithTitle:@"Error"
+                                        message:@"Invalid Account Information"
+                                        preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction* noButton = [UIAlertAction
+                                   actionWithTitle:@"Cancel"
+                                   style:UIAlertActionStyleDefault
+                                   handler:^(UIAlertAction * action)
+                                   {
+                                       //Handel your yes please button action here
+                                       [alertNo dismissViewControllerAnimated:YES completion:nil];
+                                       self.loginViewController.username.text = @"";
+                                       self.loginViewController.password.text = @"";
+                                   }];
+        
+        [alertNo addAction:noButton];
+        [self presentViewController:alertNo animated:YES completion:nil];
+    }
+}
+
+-(void)loginError{
+    
+    self.loginViewController.refresher.hidden = YES;
+    [self.loginViewController.refresher stopAnimating];
+    self.loginViewController.username.text =@"";
+    self.loginViewController.password.text =@"";
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

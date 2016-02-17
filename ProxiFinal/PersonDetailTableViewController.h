@@ -12,6 +12,5 @@
 @interface PersonDetailTableViewController : UITableViewController
 @property (strong,nonatomic)NSString *detailCategory;
 @property (strong,nonatomic) Firebase *firebase;
-
-
+-(void)refreshControlRefresh;
 @end

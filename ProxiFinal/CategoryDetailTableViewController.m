@@ -17,12 +17,14 @@
 #define Image_url_prefix @"http://proximarketplace.com/database/images/"
 #define Screen_width [[UIScreen mainScreen]bounds].size.width
 
-@interface CategoryDetailTableViewController ()
+@interface CategoryDetailTableViewController()<UISearchBarDelegate>
 @property (strong,nonatomic)NSArray *datasourceArray;
 @property (strong,nonatomic)ItemConnection *connection;
 @property (strong,nonatomic)ItemContainer  *itemContainer;
-@property (strong,nonatomic)UIButton *viewMoreButton;
 @property (strong,nonatomic) UICollectionView *collectionView;
+@property (strong,nonatomic) UISearchBar *searchBar;
+@property (strong,nonatomic) UIRefreshControl *bottomRefresher;
+@property (strong,nonatomic)NSString *searchText;
 
 @end
 
@@ -35,15 +37,30 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupDatabase];
-    self.tableView.backgroundColor = [UIColor colorWithRed:245/255.0f green:245/255.0f blue:241/255.0f alpha:1];
+
+    self.tableView.backgroundColor = [UIColor whiteColor];
+    i = 10;
+    self.searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 0, Screen_width, 44)];
+    self.searchText = @"";
+    self.searchBar.delegate = self;
+    self.searchBar.barTintColor = [UIColor colorWithRed:50/255.0 green:144/255.0 blue:148/255.0 alpha:1.0];
+    self.searchBar.tintColor = [UIColor whiteColor];
+    self.searchBar.placeholder = @"Search Name";
+    self.bottomRefresher = [UIRefreshControl new];
+    self.bottomRefresher.triggerVerticalOffset = 100.;
+    [self.bottomRefresher addTarget:self action:@selector(viewMoreButtonTapped) forControlEvents:UIControlEventValueChanged];
+    self.tableView.bottomRefreshControl = self.bottomRefresher;
+    self.refreshControl = [UIRefreshControl new];
+    [self.refreshControl addTarget:self action:@selector(refreshData) forControlEvents:UIControlEventValueChanged];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
--(void)viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:animated];
+
+
+-(void)didReceiveMemoryWarning{
     [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
@@ -56,16 +73,26 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
-    return 1;
+    return 2;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    ItemTableViewCell *cell = (ItemTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"ItemCell"];
-    if (!cell) {
-        cell = [[ItemTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ItemCell"];
+    
+    if (indexPath.row==0) {
+        UITableViewCell *cell = [[UITableViewCell alloc]init];
+        [cell.contentView addSubview:self.searchBar];
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        return cell;
+    }else if (indexPath.row==1){
+        ItemTableViewCell *cell = (ItemTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"ItemCell"];
+        if (!cell) {
+            cell = [[ItemTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"ItemCell"];
+        }
+        return cell;
+    }else{
+        return nil;
     }
-    return cell;
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
@@ -77,8 +104,6 @@
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath  {
-    
-    NSLog(@"%i",indexPath.item);
     if ([collectionView isKindOfClass:[ItemCollectionView class]]) {
         Item *item = [self.datasourceArray objectAtIndex:indexPath.item];
         ItemDetailViewController *itemDetailController = [[ItemDetailViewController alloc]initWithNibName:@"ItemDetailViewController" bundle:nil];
@@ -137,11 +162,15 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([self.datasourceArray count]%2==1) {
-        return [self.datasourceArray count]*120+120;
-    }
-    else{
-        return [self.datasourceArray count]*120;
+    if (indexPath.row==0) {
+        return 44;
+    }else{
+        if ([self.datasourceArray count]%2==1) {
+            return [self.datasourceArray count]*120+120;
+        }
+        else{
+            return [self.datasourceArray count]*120;
+        }
     }
 }
 
@@ -158,12 +187,28 @@
     NSArray *json = [noti object];
     [self.itemContainer addItemsFromJSONDictionaries:json];
     self.datasourceArray = self.itemContainer.container;
+    [self.refreshControl endRefreshing];
+    [self.bottomRefresher endRefreshing];
     [self.tableView reloadData];
+}
+-(void)refreshData{
+    if ([self.searchText isEqualToString:@""]) {
+        [self.connection fetchItemsByCategory:self.categoryName amount:[self.itemContainer.container count]];
+        [self.itemContainer.container removeAllObjects];
+    }else{
+        [self.connection fetchItemsByCategory:self.categoryName titleSearch:self.searchText amount:[self.itemContainer.container count]];
+        [self.itemContainer.container removeAllObjects];
+    }
 }
 
 -(void)viewMoreButtonTapped{
-    [self.connection fetchItemsByCategory:self.categoryName amount:[self.itemContainer.container count]+i];
-    [self.itemContainer.container removeAllObjects];
+    if ([self.searchText isEqualToString:@""]) {
+        [self.connection fetchItemsByCategory:self.categoryName amount:[self.itemContainer.container count]+i];
+        [self.itemContainer.container removeAllObjects];
+    }else{
+        [self.connection fetchItemsByCategory:self.categoryName titleSearch:self.searchText amount:[self.itemContainer.container count]+i];
+        [self.itemContainer.container removeAllObjects];
+    }
 }
 
 
@@ -178,17 +223,33 @@
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     [self.navigationController.navigationBar
      setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
-    self.navigationController.navigationBar.barTintColor =[UIColor colorWithRed:36/255.0 green:104/255.0 blue:156/255.0 alpha:1.0];
+    self.navigationController.navigationBar.barTintColor =[UIColor colorWithRed:50/255.0 green:144/255.0 blue:148/255.0 alpha:1.0];
 
     self.navigationItem.title = self.categoryName;
-    [self.itemContainer fetchItemsFromDatabaseWithCategoryName:self.categoryName number:i];
-    self.viewMoreButton = [[UIButton alloc]initWithFrame:CGRectMake(Screen_width*0.05, 0, Screen_width*0.9, 80)];
-    self.viewMoreButton.backgroundColor = [UIColor colorWithRed:140/255.0 green:158/255.0 blue:255/255.0 alpha:1];
-    [self.viewMoreButton setTitle:@"View More" forState:UIControlStateNormal];
-    [self.viewMoreButton setTintColor:[UIColor whiteColor]];
-    [self.viewMoreButton addTarget:self action:@selector(viewMoreButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+    [self.itemContainer fetchItemsFromDatabaseWithCategoryName:self.categoryName number:20];
     
 }
+
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    self.searchText = [searchBar text];
+    [self.connection fetchItemsByCategory:self.categoryName titleSearch:self.searchText amount:[self.itemContainer.container count]];
+    [self.itemContainer.container removeAllObjects];
+    [searchBar resignFirstResponder];
+    [searchBar setShowsCancelButton:NO animated:YES];
+}
+
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    [searchBar setShowsCancelButton:YES animated:YES];
+}
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [searchBar resignFirstResponder];
+    [searchBar setShowsCancelButton:NO animated:YES];
+}
+
 
 
 @end

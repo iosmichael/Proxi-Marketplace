@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "Furniture.png",
+      "filename" : "furniture.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Furniture-1.png",
+      "filename" : "furniture-1.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Furniture-2.png",
+      "filename" : "furniture-2.png",
       "scale" : "3x"
     }
   ],

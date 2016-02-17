@@ -11,7 +11,7 @@
 
 @implementation Order
 
--(instancetype)initWithItem:(NSString *)item_id user:(NSString *)user_id orderID:(NSString *)order_id orderDate:(NSString *)orderDate orderPrice:(NSString *)orderPrice item_img_url:(NSString *)item_img_url item_title:(NSString *)item_title item_description:(NSString *)item_description user_info:(NSDictionary *)user_info order_status:(NSString *)status{
+-(instancetype)initWithItem:(NSString *)item_id user:(NSString *)user_id orderID:(NSString *)order_id orderDate:(NSString *)orderDate orderPrice:(NSString *)orderPrice item_img_url:(NSString *)item_img_url item_title:(NSString *)item_title item_description:(NSString *)item_description user_info:(NSDictionary *)user_info order_status:(NSString *)status item_status:(NSString *)item_status{
     self = [super init];
     if (self) {
         self.order_id = order_id;
@@ -24,6 +24,7 @@
         self.item_description = item_description;
         self.user_info = user_info;
         self.order_status = status;
+        self.item_status = item_status;
 
         if (self.item_img_url) {
             

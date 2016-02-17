@@ -12,12 +12,11 @@
 #import "User.h"
 #import "UserConnection.h"
 #import "RegisterViewController.h"
-
+#import "PasswordRetrieveViewController.h"
 
 #define LoginSuccessProtocol @"success login"
 
 @interface LoginViewController ()
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *refresher;
 
 @end
 
@@ -36,9 +35,8 @@
     self.username.delegate=self;
     self.password.delegate=self;
 
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginPass:) name:@"LoginPassNotification" object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loginError) name:@"LoginErrorNotification" object:nil];
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -65,7 +63,8 @@
 }
 
 - (IBAction)passwordRetrieve:(id)sender {
-    
+    PasswordRetrieveViewController *passwordRetrieveViewController= [self.storyboard instantiateViewControllerWithIdentifier:@"password"];
+    [self presentViewController:passwordRetrieveViewController animated:YES completion:nil];
 }
 
 
@@ -76,11 +75,9 @@
         self.refresher.hidden = YES;
         [self.refresher stopAnimating];
         //Success AlertView
-        
-        
+        NSLog(@"success");
         [[NSUserDefaults standardUserDefaults]setObject:self.username.text forKey:@"username"];
         [[NSUserDefaults standardUserDefaults]setObject:self.password.text forKey:@"password"];
-        [[NSNotificationCenter defaultCenter]removeObserver:self];
         [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
         
     }else{

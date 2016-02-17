@@ -22,6 +22,7 @@
 //second page
 @property (weak, nonatomic) IBOutlet UITextField *titleTextField;
 @property (weak, nonatomic) IBOutlet UITextView *descriptionTextView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleHeight;
 //third page
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 

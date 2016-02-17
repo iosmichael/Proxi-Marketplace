@@ -14,7 +14,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="197" height="179"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ceR-fH-fz3">
-                        <rect key="frame" x="8" y="31" width="181" height="125"/>
+                        <rect key="frame" x="0.0" y="31" width="197" height="125"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="December 20" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q3e-pE-fRA">
                         <rect key="frame" x="8" y="157" width="181" height="22"/>
@@ -42,11 +42,11 @@
                 <constraint firstItem="Q3e-pE-fRA" firstAttribute="top" secondItem="ceR-fH-fz3" secondAttribute="bottom" constant="1" id="1U4-6m-wPg"/>
                 <constraint firstItem="Q3e-pE-fRA" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leadingMargin" id="4mp-gX-0eU"/>
                 <constraint firstItem="ceR-fH-fz3" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="31" id="BUX-qF-b0R"/>
-                <constraint firstItem="Q3e-pE-fRA" firstAttribute="leading" secondItem="ceR-fH-fz3" secondAttribute="leading" id="L5p-13-AAe"/>
-                <constraint firstItem="lWk-44-oOu" firstAttribute="leading" secondItem="ceR-fH-fz3" secondAttribute="leading" id="PjS-lq-MQA"/>
+                <constraint firstItem="Q3e-pE-fRA" firstAttribute="leading" secondItem="ceR-fH-fz3" secondAttribute="leading" constant="8" id="L5p-13-AAe"/>
+                <constraint firstItem="lWk-44-oOu" firstAttribute="leading" secondItem="ceR-fH-fz3" secondAttribute="leading" constant="8" id="PjS-lq-MQA"/>
                 <constraint firstItem="Q3e-pE-fRA" firstAttribute="trailing" secondItem="gTV-IL-0wX" secondAttribute="trailingMargin" id="RDB-LU-bhz"/>
-                <constraint firstItem="ceR-fH-fz3" firstAttribute="trailing" secondItem="lWk-44-oOu" secondAttribute="trailing" id="cHc-bH-NyO"/>
-                <constraint firstItem="ceR-fH-fz3" firstAttribute="trailing" secondItem="Q3e-pE-fRA" secondAttribute="trailing" id="dpN-8V-Q5P"/>
+                <constraint firstItem="ceR-fH-fz3" firstAttribute="trailing" secondItem="lWk-44-oOu" secondAttribute="trailing" constant="8" id="cHc-bH-NyO"/>
+                <constraint firstItem="ceR-fH-fz3" firstAttribute="trailing" secondItem="Q3e-pE-fRA" secondAttribute="trailing" constant="8" id="dpN-8V-Q5P"/>
                 <constraint firstItem="lWk-44-oOu" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="hrS-FG-33M"/>
                 <constraint firstAttribute="bottom" secondItem="Q3e-pE-fRA" secondAttribute="bottom" id="sWG-dm-MeB"/>
             </constraints>
@@ -56,7 +56,7 @@
                 <outlet property="cellPrice" destination="Q3e-pE-fRA" id="EVx-rH-c6m"/>
                 <outlet property="cellTitle" destination="lWk-44-oOu" id="gZW-ed-cTd"/>
             </connections>
-            <point key="canvasLocation" x="213.5" y="389.5"/>
+            <point key="canvasLocation" x="99.5" y="294.5"/>
         </collectionViewCell>
     </objects>
 </document>

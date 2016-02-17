@@ -13,8 +13,9 @@
 @property (strong,nonatomic) NSString *bought_date;
 @property (strong,nonatomic) NSString *item_price;
 @property (strong,nonatomic) NSString *transaction_status;
+@property (strong,nonatomic) NSString *transaction_id;
 
--(instancetype)initWith:(NSString *)item_title date:(NSString *)bought_date price:(NSString *)item_price status:(NSString *)status;
+-(instancetype)initWith:(NSString *)item_title date:(NSString *)bought_date price:(NSString *)item_price status:(NSString *)status Trans_id:(NSString *)transaction_id;
 
 
 @end

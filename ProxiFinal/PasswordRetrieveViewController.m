@@ -44,7 +44,9 @@
                                     style:UIAlertActionStyleDefault
                                     handler:^(UIAlertAction * action)
                                     {//Handel your yes please button action here
-                                        [alertYes dismissViewControllerAnimated:YES completion:nil];
+                                        [alertYes dismissViewControllerAnimated:YES completion:^{
+                                            [self dismissViewControllerAnimated:YES completion:nil];
+                                        }];
                                     }];
         [alertYes addAction:yesButton];
         [self presentViewController:alertYes animated:YES completion:nil];
@@ -58,7 +60,9 @@
                                     style:UIAlertActionStyleDefault
                                     handler:^(UIAlertAction * action)
                                     {//Handel your yes please button action here
-                                        [alertNo dismissViewControllerAnimated:YES completion:nil];
+                                        [alertNo dismissViewControllerAnimated:YES completion:^{
+                                            [self dismissViewControllerAnimated:YES completion:nil];
+                                        }];
                                     }];
         [alertNo addAction:noButton];
         [self presentViewController:alertNo animated:YES completion:nil];

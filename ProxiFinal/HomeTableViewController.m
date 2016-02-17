@@ -24,6 +24,8 @@
 
 @interface HomeTableViewController ()
 @property (strong,nonatomic) NSArray *colorArray;
+@property (weak, nonatomic) IBOutlet UIRefreshControl *refresh;
+@property (strong,nonatomic) UIRefreshControl *bottomRefresher;
 
 @property (strong,nonatomic) UICollectionView *collectionView;
 @property (strong,nonatomic) ItemContainer *itemContainer;
@@ -54,12 +56,14 @@
     [self.tableView registerNib:nibForScrollViewCell forCellReuseIdentifier:@"ScrollViewCell"];
     self.tableView.tableHeaderView = [[HomePageSlideView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width,200)];
     [self.tableView setShowsVerticalScrollIndicator:NO];
-    UIView *footerView = [self setupFooterView];
     
-    self.tableView.tableFooterView = footerView;
-    
-    self.tableView.backgroundColor = [UIColor colorWithRed:153.0f/255.0f green:226.0f/255.0f blue:225.0f/255.0f alpha:1];
+    self.tableView.backgroundColor = [UIColor whiteColor];
     [self viewMoreButtonTapped];
+    [self.refresh addTarget:self action:@selector(refreshData) forControlEvents:UIControlEventValueChanged];
+    self.bottomRefresher = [UIRefreshControl new];
+    self.bottomRefresher.triggerVerticalOffset = 100.;
+    [self.bottomRefresher addTarget:self action:@selector(viewMoreButtonTapped) forControlEvents:UIControlEventValueChanged];
+    self.tableView.bottomRefreshControl = self.bottomRefresher;
 
 }
 
@@ -80,11 +84,11 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 1;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section ==0) {
+    if (indexPath.row ==0) {
         static NSString *CellIdentifierRow1 = @"CellIdentifierRow1";
         
         CategoryTableViewCell *cell = (CategoryTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifierRow1];
@@ -94,7 +98,7 @@
             cell = [[CategoryTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifierRow1];
         }
         return cell;
-    }else if(indexPath.section ==1){
+    }else if(indexPath.row ==1){
         static NSString *CellIdentifierRow2 = @"CellIdentifierRow2";
         ItemTableViewCell *cell = (ItemTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifierRow2];
         if (!cell) {
@@ -109,7 +113,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
-        return 1;
+        return 2;
 }
 
 /*
@@ -176,21 +180,17 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
                     ItemCollectionViewCell *cell = (ItemCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
                     [cell.cellImage setImage:[UIImage imageWithData: item_image_data]];
-                    
                 });
             });
-            
-            
         }
         NSString *item_title = item.item_title;
         cell.cellPrice.text =[[@"$ " stringByAppendingString:item.price_current]stringByAppendingString:@" USD"];
         cell.cellLabel.text = item_title;
         cell.cellLabel.textAlignment = NSTextAlignmentCenter;
         cell.layer.masksToBounds = NO;
-        cell.layer.cornerRadius = 2;
         cell.layer.shadowOffset = CGSizeMake(-1, 2);
         cell.layer.shadowRadius = 2;
-        cell.layer.shadowOpacity = 0.5;
+        cell.layer.shadowOpacity = 0.3;
         return cell;
     }else{
         return nil;
@@ -220,13 +220,14 @@
 {
     CGRect rect = [[UIScreen mainScreen]bounds];
     CGFloat screenWidth = rect.size.width;
-    CGFloat rowHeight = screenWidth *0.5*182.0/147.0f;
+    CGFloat rowHeight = screenWidth *0.5*192.0/147.0f;
     
-    if (indexPath.section ==0) {
+    if (indexPath.row ==0) {
         return 120;
-    }else if(indexPath.section ==1){
+    }else if(indexPath.row ==1){
         
         if ([self.datasourceItemArray count]%2==1) {
+           
             return [self.datasourceItemArray count]*(rowHeight/2+7.5)+rowHeight/2+7.5+15;
         }
         else{
@@ -238,37 +239,7 @@
     }
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    switch (section) {
-        case 0:
-            return 35;
-            break;
-        case 1:
-            return 15;
-            break;
-        default:
-            return 0;
-            break;
-    }
-   
-}
--(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    NSString *sectionName;
-    switch (section)
-    {
-        case 0:
-            sectionName = @"Category";
-            break;
-        case 1:
-            sectionName = @"Newest Items";
-            break;
-            // ...
-        default:
-            sectionName = @"";
-            break;
-    }
-    return sectionName;
-}
+
 
 
 
@@ -289,7 +260,7 @@
         for (NSInteger collectionViewItem = 0; collectionViewItem < numberOfCollectionViewCells; collectionViewItem++)
         {
             
-            UIImageView *categoryImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
+            UIImageView *categoryImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 85, 100)];
             UIImage *categoryImage= [UIImage imageNamed:[self.categoryImagesArray objectAtIndex:collectionViewItem]];
             if (!categoryImage) {
                 categoryImage = [UIImage imageNamed:@"manshoes"];
@@ -306,24 +277,6 @@
 
 }
 
--(UIView *)setupFooterView{
-    UIView *footerButtonView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 60)];
-    footerButtonView.backgroundColor = [UIColor clearColor];
-    self.viewMoreButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width*0.05, 0, self.view.frame.size.width*0.9, 50)];
-
-    [self.viewMoreButton setTitle:@"View More" forState:UIControlStateNormal];
-    [self.viewMoreButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    self.viewMoreButton.layer.borderColor = [UIColor colorWithRed:1/255.0 green:175/255.0 blue:178/255.0 alpha:1].CGColor;
-    self.viewMoreButton.layer.borderWidth = 3;
-    [self.viewMoreButton.layer setCornerRadius:25];
-    [self.viewMoreButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:22.0]];
-    [footerButtonView addSubview:self.viewMoreButton];
-    self.viewMoreButton.backgroundColor = [UIColor whiteColor];
-    [self.viewMoreButton addTarget:self action:@selector(viewMoreButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-    
-    return footerButtonView;
-    
-}
 
 
 -(void)setupDatabase{
@@ -335,7 +288,7 @@
 -(void)refreshTable:(NSNotification *)noti{
     [self.itemContainer addItemsFromJSONDictionaries:[noti object]];
     [self updateTable];
-    
+    [self.refresh endRefreshing];
 }
 
 -(void)updateTable{
@@ -343,12 +296,16 @@
     self.datasourceItemArray = [[self.itemContainer allItem] copy];
     [self.tableView reloadData];
     self.viewMoreButton.enabled = YES;
+    [self.refresh endRefreshing];
+    [self.bottomRefresher endRefreshing];
 }
 -(void)updateTableOnce{
     NSInteger containerNum = [self.itemContainer.container count];
     [self.itemContainer.container removeAllObjects];
     [self.itemConnection fetchItemFromIndex:0 amount:containerNum];
-    self.viewMoreButton.enabled = NO;
+    self.viewMoreButton.enabled = YES;
+    [self.refresh endRefreshing];
+    [self.bottomRefresher endRefreshing];
 }
 -(void)viewMoreButtonTapped{
     
@@ -363,6 +320,15 @@
     [self.itemConnection fetchItemFromIndex:0 amount:[self.itemContainer.container count]];
     [self.itemContainer.container removeAllObjects];
     self.viewMoreButton.enabled = NO;
+}
+
+-(void)refreshData{
+    NSInteger containerNum = [self.itemContainer.container count];
+    [self.itemContainer.container removeAllObjects];
+    [self.itemConnection fetchItemFromIndex:0 amount: containerNum];
+    self.viewMoreButton.enabled = NO;
+    [self.refresh beginRefreshing];
+
 }
 
 @end

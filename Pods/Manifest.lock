@@ -50,16 +50,22 @@ PODS:
     - Braintree/API
   - Braintree/Venmo (3.9.6):
     - Braintree/API
+  - CCBottomRefreshControl (0.5.1):
+    - Masonry (~> 0.6.2)
   - Firebase (2.5.0)
+  - Masonry (0.6.4)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.5)
   - Braintree (~> 3.9)
+  - CCBottomRefreshControl
   - Firebase (>= 2.5.0)
 
 SPEC CHECKSUMS:
   AFNetworking: 8e4e60500beb8bec644cf575beee72990a76d399
   Braintree: 74f0bd85743c2227147c361cc2c5c9aefe083ae8
+  CCBottomRefreshControl: 57a596348855260f627ffc2b311328ed15b94877
   Firebase: 744617c0733b45198f9486ebd5cac64ec2d10d79
+  Masonry: 281802d04d787ea2973179ee8bcb50500579ede2
 
 COCOAPODS: 0.38.2

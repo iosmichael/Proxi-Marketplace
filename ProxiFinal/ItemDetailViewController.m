@@ -32,6 +32,7 @@
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.allowsSelection = NO;
+    self.tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     [self.tableView setBackgroundView:nil];
     [[HHAlertView shared]setDelegate:self];
     [self setupElements];
@@ -89,7 +90,7 @@
             break;
         default:
             [cell.contentView addSubview:self.orderButton];
-            cell.backgroundColor = [UIColor colorWithRed:239/255.0f green:239/255.0f blue:239/255.0f alpha:1  ];
+            cell.backgroundColor = [UIColor clearColor];
             break;
     }
     
@@ -99,7 +100,7 @@
     switch (indexPath.section) {
         
         case 0:
-            return Screen_width*0.9+10;
+            return Screen_width;
             break;
         case 1:
             return 120+25;
@@ -144,6 +145,7 @@
         [imageView setImage:[UIImage imageNamed:@"Time"]];
         [dateView addSubview:imageView];
         [dateView addSubview:self.item_post_time];
+        dateView.backgroundColor = [UIColor whiteColor];
         return dateView;
     }else{
         return nil;
@@ -183,8 +185,9 @@
 -(void)setupItemInfo{
     self.item_title = [[UILabel alloc]initWithFrame:CGRectMake(15, 10, Screen_width-15-5, 25+25)];
     self.item_title.textAlignment = NSTextAlignmentCenter;
-    self.item_title.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:20];
+    self.item_title.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:22];
     //NSAttributedString *titleStr =[[NSAttributedString alloc]initWithString:self.item.item_title attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:20]}];
+    [self.item_title setMinimumScaleFactor:20.0/[UIFont labelFontSize]];
     self.item_title.adjustsFontSizeToFitWidth = YES;
     self.item_title.lineBreakMode = NSLineBreakByWordWrapping;
     self.item_title.numberOfLines= 0;
@@ -203,12 +206,12 @@
     
     UIImageView *descIcon = [[UIImageView alloc]initWithFrame:CGRectMake(20, 15, 30, 30)];
     [descIcon setImage:[UIImage imageNamed:@"note"]];
-    NSAttributedString *descStr =[[NSAttributedString alloc]initWithString:self.item.item_description attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:14]}];
+    NSAttributedString *descStr =[[NSAttributedString alloc]initWithString:self.item.item_description attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:16]}];
     CGSize size = CGSizeMake(230, 999);
     CGRect textRect = [self.item.item_description
                        boundingRectWithSize:size
                        options:NSStringDrawingUsesLineFragmentOrigin
-                       attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Helvetica" size:14]}
+                       attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Helvetica" size:16]}
                        context:nil];
     descSize = textRect.size;
     self.item_description = [[UILabel alloc]initWithFrame:CGRectMake(75, 15, Screen_width-90, descSize.height)];
@@ -220,12 +223,16 @@
     [descView addSubview:descIcon];
     
     
-    self.item_image = [[UIImageView alloc]initWithFrame:CGRectMake(Screen_width*0.05, 10, Screen_width*0.9,Screen_width*0.9)];
+    self.item_image = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, Screen_width,Screen_width)];
     self.orderButton = [[UIButton alloc]initWithFrame:CGRectMake(Screen_width*0.05, 5, Screen_width*0.9, 50)];
     [self.orderButton addTarget:self action:@selector(paymentButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.orderButton.layer setCornerRadius:25];
-    self.orderButton.backgroundColor = [UIColor colorWithRed:251/255.0f green:176/255.0f blue:87/255.0f alpha:1];
-    [self.orderButton setTitle:@"Purchase" forState:UIControlStateNormal];
+    self.orderButton.backgroundColor = [UIColor whiteColor];
+    [self.orderButton.layer setBorderColor:[UIColor colorWithRed:251/255.0f green:176/255.0f blue:87/255.0f alpha:1].CGColor];
+    [self.orderButton.layer setBorderWidth:3.0];
+    NSAttributedString *title = [[NSAttributedString alloc]initWithString:@"Purchase" attributes:@{ NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:22.0],NSForegroundColorAttributeName:[UIColor blackColor]}];
+    [self.orderButton setAttributedTitle:title forState:UIControlStateNormal];
+    
     
     
     if (self.item.image) {
@@ -255,7 +262,11 @@
     if ([protocal isEqualToString:@"success"]) {
         [HHAlertView showAlertWithStyle:HHAlertStyleOk inView:self.view Title:@"Congrats!" detail:@"Thank you for using Proxi" cancelButton:nil Okbutton:@"Thank you"];
         //Dismiss Page
-    }else{
+    }else if ([protocal isEqualToString:@"item has already been ordered"]){
+        [HHAlertView showAlertWithStyle:HHAlertStyleError inView:self.view Title:@"Sorry" detail:@"Item has already been ordered" cancelButton:nil
+                               Okbutton:@"Cancel"];
+    }
+    else{
         [HHAlertView showAlertWithStyle:HHAlertStyleError inView:self.view Title:@"Error" detail:@"Order didn't process" cancelButton:nil
                             Okbutton:@"Cancel"];
         
@@ -328,7 +339,6 @@
 - (void)postNonceToServer:(NSString *)paymentMethodNonce {
     OrderConnection *connection = [[OrderConnection alloc]init];
     [connection postOrder:[[NSUserDefaults standardUserDefaults]objectForKey:@"username"] item:self.item paymentMethodNonce:paymentMethodNonce];
-#warning What if credit card is invalid?
 }
 
 

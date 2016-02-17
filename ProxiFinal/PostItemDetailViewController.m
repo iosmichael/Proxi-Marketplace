@@ -13,6 +13,7 @@
 
 #define Screen_width [[UIScreen mainScreen]bounds].size.width
 #define Screen_height [[UIScreen mainScreen]bounds].size.height
+#define keyboardHeight 96.0
 #define PostItemSuccessProtocol @"success"
 #define gray [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1]
 #define hightlight_color [UIColor colorWithRed:245/255.0 green:166/255.0 blue:35/255.0 alpha:1]
@@ -30,6 +31,7 @@
     int numberOfArray;
     BOOL categoryClicked;
     BOOL textViewEdited;
+
 }
 
 
@@ -42,6 +44,8 @@
     categoryClicked = NO;
     textViewEdited = NO;
     [self setKeyboardTheme];
+    self.descriptionTextView.text = @"What do you want buyers to know?\n-Quality\n-Size\n-Color";
+    self.descriptionTextView.textColor = [UIColor colorWithRed:180/255.0 green:180/255.0 blue:180/255.0 alpha:1];
     /*[self.buttons.layer setCornerRadius:5];
     self.buttons.layer.borderWidth=3;
     [self.buttons.layer setBorderColor:[UIColor colorWithRed:73/255.0 green:143/255.0 blue:157/255.0 alpha:1].CGColor];
@@ -73,6 +77,7 @@
     UIImageView *imageView = [[UIImageView alloc]initWithImage:image];
     self.navigationItem.titleView = imageView;
     [self.tabBarController.tabBar setHidden:YES];
+    [self setupGestureRecognizer];
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -235,9 +240,8 @@
     BOOL success = [[noti object]isEqualToString:PostItemSuccessProtocol];
     if (success) {
         [HHAlertView showAlertWithStyle:HHAlertStyleOk inView:self.view Title:@"Congrats!" detail:@"Successfully Posted Item" cancelButton:nil Okbutton:@"OK"];
-        
     }else{
-        [HHAlertView showAlertWithStyle:HHAlertStyleError inView:self.view Title:@"Sorry" detail:@"Item Didn't Post Successfully" cancelButton:nil Okbutton:@"Please Contact Us"];
+        [HHAlertView showAlertWithStyle:HHAlertStyleError inView:self.view Title:@"Sorry" detail:@"Item Didn't Post Successfully" cancelButton:nil Okbutton:@"Contact Us"];
         //Error Alert View
         self.postButton.enabled = YES;
     }
@@ -246,7 +250,7 @@
     [self.refresher stopAnimating];
     self.refresher.hidden = YES;
     //Error Alert View
-    [HHAlertView showAlertWithStyle:HHAlertStyleError inView:self.view Title:@"Sorry" detail:@"Please Check Wifi Connection" cancelButton:nil Okbutton:@"Please Contact Us"];
+    [HHAlertView showAlertWithStyle:HHAlertStyleError inView:self.view Title:@"Sorry" detail:@"Please Check Wifi Connection" cancelButton:nil Okbutton:@"Contact Us"];
     self.postButton.enabled = YES;
 }
 
@@ -254,6 +258,7 @@
 -(void)didClickButtonAnIndex:(HHAlertButton)button{
     if (button ==HHAlertButtonOk) {
         [[NSNotificationCenter defaultCenter]removeObserver:self];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"UpdateTableNotification" object:nil];
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }
@@ -271,26 +276,21 @@
 -(void)textViewDidBeginEditing:(UITextView *)textView{
     if (!textViewEdited) {
         textView.text = @"";
+        textView.textColor = [UIColor blackColor];
     }
     textViewEdited = YES;
+    self.titleHeight.constant-=keyboardHeight;
+    
 }
 -(void)textViewDidEndEditing:(UITextView *)textView{
     if (textView.text.length==0) {
         textViewEdited= NO;
-        textView.text = @"Anything You Want Your Buyers To Know?";
+        self.descriptionTextView.text = @"What do you want buyers to know?\n-Quality\n-Size\n-Color";
+        self.descriptionTextView.textColor = [UIColor colorWithRed:180/255.0 green:180/255.0 blue:180/255.0 alpha:1];
     }
+    self.titleHeight.constant+=keyboardHeight;
 }
 
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-    NSRange resultRange = [text rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet] options:NSBackwardsSearch];
-    if ([text length] == 1 && resultRange.location != NSNotFound) {
-        [textView resignFirstResponder];
-        [self checkAllValidation];
-        return NO;
-    }
-    
-    return YES;
-}
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     [self checkAllValidation];
@@ -303,7 +303,7 @@
     if (self.image&&
         self.titleTextField.text.length!=0&&
         self.descriptionTextView.text.length!=0&&
-        categoryClicked&&[price doubleValue]>5.0) {
+        categoryClicked&&[price doubleValue]>=5.0) {
         self.postAlertLabel.textColor = [UIColor clearColor];
         
         self.postButton.enabled = YES;
@@ -348,14 +348,30 @@
     [self.imagePageRetakeButton.layer setCornerRadius:25];
     self.imagePageRetakeButton.layer.borderWidth=3;
     [self.imagePageRetakeButton.layer setBorderColor:theme_color.CGColor];
-    
-
-    
 }
 -(void)changeButtonTheme:(UIButton *)button{
     [button.layer setCornerRadius:5];
     button.layer.borderWidth=3;
     [button.layer setBorderColor:theme_color.CGColor];
+}
+
+-(void)setupGestureRecognizer{
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
+                                   initWithTarget:self
+                                   action:@selector(dismissKeyboard)];
+    
+    [self.view addGestureRecognizer:tap];
+}
+
+-(void)dismissKeyboard{
+    [self.titleTextField resignFirstResponder];
+    [self.descriptionTextView resignFirstResponder];
+    
+}
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    [self.titleTextField resignFirstResponder];
+    [self.descriptionTextView resignFirstResponder];
 }
 
 /*

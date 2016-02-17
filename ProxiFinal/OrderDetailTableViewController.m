@@ -109,14 +109,11 @@
     return 1;
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 4;
+    return 3;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     switch (section) {
-        case 0:
-            return 70;
-            break;
         case 1:
             return 35;
             break;
@@ -132,9 +129,7 @@
     }
 }
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    if (section==0){
-        return personDetailView;
-    }else if(section==1) {
+    if(section==1) {
         UIView *dateView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, Screen_width, 33)];
         dateView.backgroundColor = [UIColor whiteColor];
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(Screen_width-158, 5, 33, 33)];
@@ -258,7 +253,7 @@
     if (![self.order.order_status isEqualToString:@"held"]) {
         self.orderButton.backgroundColor = [UIColor grayColor];
         self.confirmButton.backgroundColor = [UIColor grayColor];
-        self.confirmButton.enabled = YES;
+        self.confirmButton.enabled = NO;
         self.orderButton.enabled = NO;
     }
     
@@ -290,11 +285,8 @@
 }
 
 -(void)confirmButtonTapped{
-
-    /*
-         */
     self.confirm_status = @"Confirm Status";
-    [HHAlertView showAlertWithStyle:HHAlertStyleWraning inView:self.view Title:@"Are Your Sure?" detail:@"This action cannot be undone" cancelButton:@"Cancel" Okbutton:@"Yes"];
+    [HHAlertView showAlertWithStyle:HHAlertStyleWraning inView:self.view Title:@"Item Received?" detail:@"This Action Cannot Be Undone" cancelButton:@"Cancel" Okbutton:@"Yes"];
 }
 
 

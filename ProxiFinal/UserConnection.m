@@ -28,7 +28,6 @@
                            @"firstName":user.firstName,
                            @"lastName":user.lastName,
                            @"phone":user.phone,
-                           @"venmoEmail":user.venmoEmail,
                            @"dateOfBirth":user.dateOfBirth
                            };
     NSLog(@"%@",[param description]);
@@ -107,8 +106,9 @@
                              };
     [self.manager POST:address parameters:param2 constructingBodyWithBlock:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSData *responseData = responseObject;
-        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:nil];
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"RetrievePasswordNotification" object:json];
+        NSString *responseString = [[NSString alloc]initWithData:responseData encoding:NSUTF8StringEncoding];
+        NSLog(@"response:%@", [responseString description]);
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"RetrievePasswordNotification" object:responseString];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",[error description]);
     }];

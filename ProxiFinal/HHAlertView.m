@@ -8,8 +8,7 @@
 
 
 #define OKBUTTON_BACKGROUND_COLOR [UIColor colorWithRed:36/255.0 green:104/255.0 blue:156/255.0 alpha:1]
-#define CANCELBUTTON_BACKGROUND_COLOR [UIColor colorWithRed:255/255.0 green:20/255.0 blue:20/255.0 alpha:1]
-
+#define CANCELBUTTON_BACKGROUND_COLOR [UIColor grayColor]
 
 NSInteger const HHAlertview_SIZE_WIDTH = 260;
 NSInteger const HHAlertview_SIZE_HEIGHT = 250;
@@ -23,8 +22,8 @@ NSInteger const Buutton_SIZE_HEIGHT      = 50;
 
 NSInteger const HHAlertview_SIZE_TITLE_FONT = 25;
 NSInteger const HHAlertview_SIZE_DETAIL_FONT = 18;
-
 static selectButton STAblock;
+
 
 
 @interface HHAlertView()
@@ -144,6 +143,7 @@ static selectButton STAblock;
     
     [view addSubview:[self shared]];
     [[self shared] show];
+
     
 }
 
@@ -200,28 +200,28 @@ static selectButton STAblock;
     
     if (cancel!=nil && ok!=nil) {
         if (_cancelButton == nil) {
-            _cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(([self getSelfSize].width/2-100)/2, [self getSelfSize].height-Buutton_SIZE_HEIGHT-10, Button_SIZE_WIDTH, Buutton_SIZE_HEIGHT)];
+            _cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(([self getSelfSize].width/2-120)/2, [self getSelfSize].height-Buutton_SIZE_HEIGHT-10, Button_SIZE_WIDTH, Buutton_SIZE_HEIGHT)];
         }
         
         [_cancelButton setBackgroundColor:CANCELBUTTON_BACKGROUND_COLOR];
         [_cancelButton setTitle:cancel forState:UIControlStateNormal];
-        [[_cancelButton layer] setCornerRadius:5];
+        [[_cancelButton layer] setCornerRadius:25];
         [_cancelButton addTarget:self action:@selector(dismissWithCancel) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_cancelButton];
         
         
         
         if (_OkButton==nil) {
-            _OkButton = [[UIButton alloc] initWithFrame:CGRectMake(([self getSelfSize].width/2-100)/2+[self getSelfSize].width/2, [self getSelfSize].height-Buutton_SIZE_HEIGHT-10, Button_SIZE_WIDTH, Buutton_SIZE_HEIGHT)];
+            _OkButton = [[UIButton alloc] initWithFrame:CGRectMake(([self getSelfSize].width/2-120)/2+[self getSelfSize].width/2, [self getSelfSize].height-Buutton_SIZE_HEIGHT-10, Button_SIZE_WIDTH, Buutton_SIZE_HEIGHT)];
         }
         else
         {
-            [_OkButton setFrame:CGRectMake(([self getSelfSize].width/2-100)/2+[self getSelfSize].width/2, [self getSelfSize].height-Buutton_SIZE_HEIGHT-10, Button_SIZE_WIDTH, Buutton_SIZE_HEIGHT)];
+            [_OkButton setFrame:CGRectMake(([self getSelfSize].width/2-120)/2+[self getSelfSize].width/2, [self getSelfSize].height-Buutton_SIZE_HEIGHT-10, Button_SIZE_WIDTH, Buutton_SIZE_HEIGHT)];
         }
         
         [_OkButton setTitle:ok forState:UIControlStateNormal];
         [_OkButton setBackgroundColor:OKBUTTON_BACKGROUND_COLOR];
-        [[_OkButton layer] setCornerRadius:5];
+        [[_OkButton layer] setCornerRadius:25];
         [_OkButton addTarget:self action:@selector(dismissWithOk) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_OkButton];
     }
@@ -237,6 +237,7 @@ static selectButton STAblock;
     {
         [_delegate didClickButtonAnIndex:HHAlertButtonCancel];
     }
+    
     [HHAlertView Hide];
 }
 

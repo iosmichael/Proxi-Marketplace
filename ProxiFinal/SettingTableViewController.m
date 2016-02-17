@@ -8,21 +8,36 @@
 
 #import "SettingTableViewController.h"
 #import "LoginMainViewController.h"
+#import "ContactUsTableViewCell.h"
+#import "ReportViewController.h"
+#import "AboutTableViewController.h"
+#import "ProfileTableViewController.h"
+#import "PersonDetailTableViewController.h"
 
-
-@interface SettingTableViewController ()
-
+#define screen_width [UIScreen mainScreen].bounds.size.width
+@interface SettingTableViewController ()<ContactUsDelegate>
+@property (strong,nonatomic) UIButton *logoutButton;
 @end
 
-@implementation SettingTableViewController
+@implementation SettingTableViewController{
+
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    UINib *nibCell = [UINib nibWithNibName:@"ContactUsTableViewCell" bundle:nil];
+    [self.tableView registerNib:nibCell forCellReuseIdentifier:@"ContactUsCell"];
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"regularCell"];
+    self.tableView.separatorColor = [UIColor groupTableViewBackgroundColor];
     [self.navigationController.navigationBar setTitleTextAttributes:
      @{NSForegroundColorAttributeName:[UIColor whiteColor],
        NSFontAttributeName:[UIFont fontWithName:@"Helvetica" size:20]}];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"regularCell"];
+    UIView *footerView = [self setupFooterView];
+    self.tableView.tableFooterView = footerView;
+
+    // Configure the cell...
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -31,28 +46,116 @@
 }
 
 
+
+
+-(void)didClickButtonAnIndex:(ContactButton)button{
+    if(button == Facebook){
+        [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"https://www.facebook.com/proximarketplace"]];
+    }else if (button==Twitter){
+        [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"https://twitter.com/proxiwheaton"]];
+    }else if (button==Instagram){
+        [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"https://www.instagram.com/proxi.wheaton/"]];
+    }
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section==0){
+        ProfileTableViewController *profTableView = [[ProfileTableViewController alloc]init];
+        [self.navigationController pushViewController:profTableView animated:YES];
+        return;
+    }
+    if (indexPath.row==0) {
+        PersonDetailTableViewController *history = [[PersonDetailTableViewController alloc]init];
+        history.detailCategory = @"My History";
+        [self.navigationController pushViewController:history animated:YES];
+        
+    }else if (indexPath.row==1) {
+        //Payment
+        [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"https://venmo.com"]];
+        [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
+    }else if (indexPath.row==2){
+        //Report a Problem
+        ReportViewController *reportViewController = [[ReportViewController alloc]initWithNibName:@"ReportViewController" bundle:nil];
+        [self.navigationController pushViewController:reportViewController animated:YES];
+    }else if(indexPath.row==3){
+        //About Page
+        AboutTableViewController *aboutVC = [[AboutTableViewController alloc]init];
+        [self.navigationController pushViewController:aboutVC animated:YES];
+        
+    }
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
-    return 1;
+    if (section==0) {
+        return 1;
+    }else{
+        return 5;
+    }
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    switch (indexPath.row) {
+        case 4:
+            return 160;
+            break;
+            
+        default:
+            return 120;
+            break;
+    }
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"regularCell" forIndexPath:indexPath];
-    UIButton *paymentButton = [[UIButton alloc]initWithFrame:CGRectMake(100, 0, 80, 40)];
-    [paymentButton setTitle:@"Logout" forState:UIControlStateNormal];
-    [paymentButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [paymentButton addTarget:self action:@selector(logoutTapped) forControlEvents:UIControlEventTouchUpInside];
-    // Configure the cell...
-    [cell.contentView addSubview:paymentButton];
-    return cell;
+    if (indexPath.section==0) {
+        UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"regularCell"];
+        cell.accessoryType = UITableViewCellAccessoryDetailButton;
+        cell.textLabel.attributedText = [[NSAttributedString alloc]initWithString:@"Connor Jenkins" attributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:20]}];
+        cell.detailTextLabel.attributedText=[[NSAttributedString alloc]initWithString:@"connor.jenkins@my.wheaton.edu" attributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:14]}];
+        return cell;
+
+    }
+    
+    if (indexPath.row==0) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"regularCell" forIndexPath:indexPath];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.textLabel.attributedText = [[NSAttributedString alloc]initWithString:@"History" attributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:20]}];
+        [cell.imageView setImage:[UIImage imageNamed:@"history"]];
+        return cell;
+    }
+    else if (indexPath.row==1) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"regularCell" forIndexPath:indexPath];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.textLabel.attributedText = [[NSAttributedString alloc]initWithString:@"Payment" attributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:20]}];
+        [cell.imageView setImage:[UIImage imageNamed:@"payment"]];
+        return cell;
+    }else if (indexPath.row==2){
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"regularCell" forIndexPath:indexPath];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.textLabel.attributedText = [[NSAttributedString alloc]initWithString:@"Report a Problem" attributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:20]}];
+        [cell.imageView setImage:[UIImage imageNamed:@"problem"]];
+        return cell;
+    }else if (indexPath.row==3){
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"regularCell" forIndexPath:indexPath];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.textLabel.attributedText = [[NSAttributedString alloc]initWithString:@"About" attributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:20]}];
+        [cell.imageView setImage:[UIImage imageNamed:@"about"]];
+        return cell;
+    }else if (indexPath.row==4){
+        ContactUsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContactUsCell"];
+        [cell setDelegate:self];
+        return cell;
+    }else{
+        return nil;
+    }
+    
 }
 
 -(void)logoutTapped{
@@ -61,48 +164,25 @@
     [[NSUserDefaults standardUserDefaults]setObject:nil forKey:@"password"];
     [self presentViewController:loginController animated:YES completion:nil];
 }
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+
+
+
+
+-(UIView *)setupFooterView{
+    UIView *footerButtonView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 60)];
+    footerButtonView.backgroundColor = [UIColor clearColor];
+    self.logoutButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width*0.05, 0, self.view.frame.size.width*0.9, 50)];
+    
+    [self.logoutButton setTitle:@"Log Out" forState:UIControlStateNormal];
+    [self.logoutButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    self.logoutButton.layer.borderColor = [UIColor colorWithRed:1/255.0 green:175/255.0 blue:178/255.0 alpha:1].CGColor;
+    self.logoutButton.layer.borderWidth = 3;
+    [self.logoutButton.layer setCornerRadius:25];
+    [self.logoutButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:22.0]];
+    [footerButtonView addSubview:self.logoutButton];
+    self.logoutButton.backgroundColor = [UIColor whiteColor];
+    [self.logoutButton addTarget:self action:@selector(logoutTapped) forControlEvents:UIControlEventTouchUpInside];
+    return footerButtonView;
+    
 }
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 @end

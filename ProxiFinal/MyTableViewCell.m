@@ -8,6 +8,8 @@
 
 #import "MyTableViewCell.h"
 
+
+
 @implementation MyTableViewCell
 
 - (void)awakeFromNib {
@@ -16,8 +18,13 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
     // Configure the view for the selected state
+}
+- (IBAction)confirmTransaction:(id)sender {
+    [self.delegate didClickButtonAtIndex:Confirmation];
+}
+- (IBAction)messageButton:(id)sender {
+    [self.delegate didClickButtonAtIndex:Message];
 }
 
 @end

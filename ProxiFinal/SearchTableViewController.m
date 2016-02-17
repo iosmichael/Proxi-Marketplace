@@ -13,9 +13,14 @@
 #import "ItemDetailViewController.h"
 #import "ItemContainer.h"
 #import "ItemConnection.h"
+#import "StoreConnection.h"
+#import "StoreViewController.h"
 #import "CategoryTableViewCell.h"
 #import "GMDCircleLoader.h"
 #import "Item.h"
+#import "Event.h"
+#import "EventConnection.h"
+#import "Store.h"
 
 #define Image_url_prefix @"http://proximarketplace.com/database/images/event/"
 
@@ -23,7 +28,7 @@
 
 @property (nonatomic, strong) UISearchController *searchController;
 @property (nonatomic, strong) NSMutableArray *searchResults; // Filtered search results
-@property (strong,nonatomic) NSArray *eventArray;
+@property (strong,nonatomic) NSArray *storeArray;
 @property (strong,nonatomic) ItemContainer *searchContainer;
 @property (strong,nonatomic) ItemConnection *itemConnection;
 @property (strong,nonatomic) NSArray *colorArray;
@@ -32,6 +37,8 @@
 @property (strong,nonatomic) NSArray *datasourceItemArray;
 @property (strong,nonatomic) UIButton *viewMoreButton;
 @property (strong,nonatomic) NSArray *categoryImagesArray;
+@property (strong,nonatomic) NSArray *eventArray;
+
 @end
 
 @implementation SearchTableViewController{
@@ -44,9 +51,9 @@
     self.searchContainer = [[ItemContainer alloc]init];
     self.itemConnection = [[ItemConnection alloc]init];
     EventConnection *connection = [[EventConnection alloc]init];
+    [connection fetchEvents];
     [self setupTestingSources];
     [self setupDatabase];
-    [connection fetchEvents];
     // Create a mutable array to contain products for the search results table.
     
     // The table view controller is in a nav controller, and so the containing nav controller is the 'search results controller'
@@ -60,7 +67,7 @@
     
     self.searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x, self.searchController.searchBar.frame.origin.y, self.searchController.searchBar.frame.size.width, 50.0);
     
-    [self.searchController.searchBar setBarTintColor:[UIColor colorWithRed:36/255.0 green:104/255.0 blue:156/255.0 alpha:1.0]];
+    [self.searchController.searchBar setBarTintColor:[UIColor colorWithRed:50/255.0 green:144/255.0 blue:148/255.0 alpha:1.0]];
     [self.searchController.searchBar setTintColor:[UIColor whiteColor]];
     [self.searchController.searchBar setPlaceholder:@"Search"];
 
@@ -71,8 +78,9 @@
     
     
     
-    self.tableView.backgroundColor = [UIColor colorWithRed:153.0f/255.0f green:226.0f/255.0f blue:225.0f/255.0f alpha:1];
+    self.tableView.backgroundColor = [UIColor whiteColor];
     self.tableView.backgroundView= nil;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.tableHeaderView = self.searchController.searchBar;
     [self.tableView setShowsVerticalScrollIndicator:NO];
     i = 10;
@@ -139,6 +147,12 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath  {
     if ([collectionView isKindOfClass:[ItemBigCollectionView class]]) {
+       /* Store *store = [self.storeArray objectAtIndex:indexPath.item];
+        //Show Store Info
+        StoreViewController *storeViewController = [[StoreViewController alloc]initWithNibName:@"StoreViewController" bundle:nil];
+        storeViewController.store = store;
+        [self.navigationController pushViewController:storeViewController animated:YES];
+        */
         Event *event = [self.eventArray objectAtIndex:indexPath.item];
         [[UIApplication sharedApplication]openURL:[NSURL URLWithString:event.url]];
     }
@@ -152,6 +166,18 @@
         ItemBigCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ItemBigCollectionCell" forIndexPath:indexPath];
         
         //custom cell
+        /*Store *store = [self.storeArray objectAtIndex:indexPath.row];
+        if ([store.store_status isEqualToString:@"open"]) {
+            [cell.cellImage setImage:[UIImage imageNamed:@"store_open"]];
+        }else{
+            [cell.cellImage setImage:[UIImage imageNamed:@"store_close"]];
+        }
+        NSString *store_title = store.store_location;
+        
+        cell.cellPrice.text =store.store_open_time;
+        cell.cellTitle.text = store_title;
+        return cell;
+         */
         Event *event = [self.eventArray objectAtIndex:indexPath.row];
         if (!event.img_url) {
             UIImage *item_img= [UIImage imageNamed:@"manshoes"];
@@ -179,10 +205,6 @@
         cell.cellPrice.text =event.time;
         cell.cellTitle.text = event_title;
         return cell;
-
-        
-               
-        return cell;
     }else{
         return nil;
     }
@@ -208,14 +230,31 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-   if(indexPath.section ==0){
+    if(indexPath.section ==0){
         
-        return [self.eventArray count]*([[UIScreen mainScreen]bounds].size.height*0.4-20+15);
+        return [self.eventArray count]*270;//[[UIScreen mainScreen]bounds].size.height*0.4-20+15);
         
     }else{
         return 0;
     }
+    /*
+    CGRect rect = [[UIScreen mainScreen]bounds];
+    CGFloat screenWidth = rect.size.width;
+    CGFloat rowHeight = screenWidth *0.5*182.0/147.0f;
+    if(indexPath.section ==0){
+        
+       if ([self.storeArray count]%2==1) {
+           
+           return [self.storeArray count]*(rowHeight/2+7.5)+rowHeight/2+7.5+15;
+       }
+       else{
+           return [self.storeArray count]*(rowHeight/2+7.5)+15;
+       }
+       
+    }else{
+        return 0;
+    }
+     */
 }
 
 
@@ -251,10 +290,30 @@
 
 -(void)setupDatabase{
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(eventsFromNotification:) name:@"EventNotification" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(storesFromNotification:) name:@"StoreNotification" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateSearch:) name:@"FetchItemByNameNotification" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(detailItem:) name:@"resultSelected" object:nil];
 }
 
+
+-(void)storesFromNotification:(NSNotification *)noti{
+    NSMutableArray *array = [[NSMutableArray alloc]init];
+    NSArray *json = [noti object];
+    
+    for (NSDictionary *dic in json) {
+        NSString *store_id = dic[@"store_id"];
+        NSString *store_location = dic[@"store_location"];
+        NSString *store_name= dic[@"store_name"];
+        NSString *store_open_time = dic[@"store_open_time"];
+        NSString *store_operator = dic[@"store_operator"];
+        NSString *store_status = dic[@"store_status"];
+        Store *store = [[Store alloc]initWithID:store_id name:store_name time:store_open_time owner:store_operator location:store_location status:store_status];
+        [array addObject:store];
+    }
+    self.storeArray = array;
+
+    [self.tableView reloadData];
+}
 
 -(void)eventsFromNotification:(NSNotification *)noti{
     
@@ -269,12 +328,11 @@
         Event *event = [[Event alloc]initWithTitle:title time:time url:url image:img_url];
         [array addObject:event];
     }
-
+    
     self.eventArray = array;
-
+    
     [self.tableView reloadData];
 }
-
 
 
 -(void)updateSearch:(NSNotification *)noti{

@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Gotham-Book.ttf">
+            <string>Gotham-Book</string>
+            <string>Gotham-Book</string>
+            <string>Gotham-Book</string>
+            <string>Gotham-Book</string>
+            <string>Gotham-Book</string>
+            <string>Gotham-Book</string>
+        </mutableArray>
+        <mutableArray key="Gotham-BookItalic.ttf">
+            <string>Gotham-BookItalic</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ReceiptViewController">
             <connections>
@@ -13,7 +27,103 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Receipt" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u8d-sJ-Ukg">
+                    <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                    <fontDescription key="fontDescription" name="Gotham-Book" family="Gotham" pointSize="21"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="widthClass=compact" fixedFrame="YES">
+                        <rect key="frame" x="8" y="25" width="101" height="21"/>
+                    </variation>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Size 16 Shoes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cbm-zn-swJ">
+                    <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                    <fontDescription key="fontDescription" name="Gotham-Book" family="Gotham" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="widthClass=compact" fixedFrame="YES">
+                        <rect key="frame" x="168" y="59" width="224" height="21"/>
+                    </variation>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ordering Receipt" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iIf-3g-qND">
+                    <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                    <fontDescription key="fontDescription" name="Gotham-Book" family="Gotham" pointSize="13"/>
+                    <color key="textColor" red="0.31432462993421051" green="0.31116365131578949" blue="0.31684313322368424" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="widthClass=compact" fixedFrame="YES">
+                        <rect key="frame" x="168" y="88" width="181" height="21"/>
+                    </variation>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Tpp-Js-ECm">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                    <variation key="widthClass=compact" fixedFrame="YES">
+                        <rect key="frame" x="8" y="54" width="145" height="128"/>
+                    </variation>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ptZ-n9-Bfv">
+                    <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                    <color key="backgroundColor" red="0.39164125919342041" green="0.77771466970443726" blue="0.77132618427276611" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <fontDescription key="fontDescription" name="Gotham-Book" family="Gotham" pointSize="21"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <state key="normal" title="Complete Order"/>
+                    <variation key="widthClass=compact" fixedFrame="YES">
+                        <rect key="frame" x="92" y="522" width="217" height="61"/>
+                    </variation>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Price: $5.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JUA-Yr-o1Y">
+                    <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                    <fontDescription key="fontDescription" name="Gotham-Book" family="Gotham" pointSize="19"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="widthClass=compact" fixedFrame="YES">
+                        <rect key="frame" x="168" y="136" width="224" height="21"/>
+                    </variation>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(including 8% commission fee)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aCb-bo-EBK">
+                    <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                    <fontDescription key="fontDescription" name="Gotham-BookItalic" family="Gotham" pointSize="14"/>
+                    <color key="textColor" red="0.31217136411052637" green="0.30996124897894745" blue="0.3042817670710527" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="widthClass=compact" fixedFrame="YES">
+                        <rect key="frame" x="168" y="156" width="224" height="21"/>
+                    </variation>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="6:34pm on Feb. 1, 2016" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jsX-eR-2Xe">
+                    <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                    <fontDescription key="fontDescription" name="Gotham-Book" family="Gotham" pointSize="13"/>
+                    <color key="textColor" red="0.31432462993421051" green="0.31116365131578949" blue="0.31684313322368424" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="widthClass=compact" fixedFrame="YES">
+                        <rect key="frame" x="168" y="107" width="181" height="21"/>
+                    </variation>
+                </label>
+            </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="u8d-sJ-Ukg"/>
+                    <exclude reference="cbm-zn-swJ"/>
+                    <exclude reference="iIf-3g-qND"/>
+                    <exclude reference="Tpp-Js-ECm"/>
+                    <exclude reference="ptZ-n9-Bfv"/>
+                    <exclude reference="JUA-Yr-o1Y"/>
+                    <exclude reference="aCb-bo-EBK"/>
+                    <exclude reference="jsX-eR-2Xe"/>
+                </mask>
+            </variation>
+            <variation key="widthClass=compact">
+                <mask key="subviews">
+                    <include reference="u8d-sJ-Ukg"/>
+                    <include reference="cbm-zn-swJ"/>
+                    <include reference="iIf-3g-qND"/>
+                    <include reference="Tpp-Js-ECm"/>
+                    <include reference="ptZ-n9-Bfv"/>
+                    <include reference="JUA-Yr-o1Y"/>
+                    <include reference="aCb-bo-EBK"/>
+                    <include reference="jsX-eR-2Xe"/>
+                </mask>
+            </variation>
         </view>
     </objects>
 </document>

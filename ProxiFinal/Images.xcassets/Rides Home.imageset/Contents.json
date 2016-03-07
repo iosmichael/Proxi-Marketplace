@@ -2,16 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "banner.png",
+      "filename" : "rideCategory.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "banner-1.png",
+      "filename" : "rideCategory-1.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
+      "filename" : "rideCategory-2.png",
       "scale" : "3x"
     }
   ],

@@ -17,6 +17,7 @@
 #define screen_width [UIScreen mainScreen].bounds.size.width
 @interface SettingTableViewController ()<ContactUsDelegate>
 @property (strong,nonatomic) UIButton *logoutButton;
+@property (strong,nonatomic) NSString *email;
 @end
 
 @implementation SettingTableViewController{
@@ -35,7 +36,8 @@
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"regularCell"];
     UIView *footerView = [self setupFooterView];
     self.tableView.tableFooterView = footerView;
-
+    
+    self.email = [[NSUserDefaults standardUserDefaults]objectForKey:@"username"];
     // Configure the cell...
     
     // Uncomment the following line to preserve selection between presentations.
@@ -117,8 +119,8 @@
     if (indexPath.section==0) {
         UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"regularCell"];
         cell.accessoryType = UITableViewCellAccessoryDetailButton;
-        cell.textLabel.attributedText = [[NSAttributedString alloc]initWithString:@"Connor Jenkins" attributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:20]}];
-        cell.detailTextLabel.attributedText=[[NSAttributedString alloc]initWithString:@"connor.jenkins@my.wheaton.edu" attributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:14]}];
+        cell.textLabel.attributedText = [[NSAttributedString alloc]initWithString:[self profileName:self.email] attributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:20]}];
+        cell.detailTextLabel.attributedText=[[NSAttributedString alloc]initWithString:self.email attributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:14]}];
         return cell;
 
     }
@@ -185,4 +187,23 @@
     return footerButtonView;
     
 }
+
+-(NSString *)profileName:(NSString *)email{
+    NSString *usernameString = email;
+    NSArray *components = [usernameString componentsSeparatedByString:@"@"];
+    NSString *nameString = [components objectAtIndex:0];
+    NSArray *nameComponents = [nameString componentsSeparatedByString:@"."];
+    NSString *firstName = [nameComponents objectAtIndex:0];
+    
+    NSString *capitalizedFirstName = [firstName stringByReplacingCharactersInRange:NSMakeRange(0,1)
+                                                                        withString:[[firstName substringToIndex:1] capitalizedString]];
+    NSString *lastName = [nameComponents objectAtIndex:1];
+    NSString *capitalizedLastName = [lastName stringByReplacingCharactersInRange:NSMakeRange(0,1)
+                                                                      withString:[[lastName substringToIndex:1] capitalizedString]];
+    
+    NSString *fullName = [[capitalizedFirstName stringByAppendingString:@" "]stringByAppendingString:capitalizedLastName];
+    return fullName;
+    
+}
+
 @end

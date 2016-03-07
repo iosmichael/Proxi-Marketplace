@@ -37,8 +37,8 @@
     CGFloat screenWidth = rect.size.width;
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
-    layout.sectionInset = UIEdgeInsetsMake(15,5,15,5);
-    layout.itemSize = CGSizeMake(screenWidth-10,240); //screenWidth*182.0/147.0
+    layout.sectionInset = UIEdgeInsetsMake(5,5,5,5);
+    layout.itemSize = CGSizeMake(screenWidth-10,170); //screenWidth*182.0/147.0
     layout.scrollDirection = UICollectionViewScrollDirectionVertical;
     self.collectionView = [[ItemBigCollectionView alloc]initWithFrame:CGRectZero collectionViewLayout:layout];
     self.layout = layout;

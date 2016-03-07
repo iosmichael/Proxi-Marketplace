@@ -22,7 +22,7 @@
 
 #define Image_url_prefix @"http://proximarketplace.com/database/images/"
 
-@interface PersonDetailTableViewController ()<MyTableViewCellDelegate>
+@interface PersonDetailTableViewController ()<MyTableViewCellDelegate,HHAlertViewDelegate>
 @property (nonatomic,strong) ItemConnection *itemConnection;
 @property (strong,nonatomic) ItemContainer *itemContainer;
 @property (strong,nonatomic) ItemContainer *storeContainer;
@@ -41,8 +41,7 @@
     NSIndexPath *selectRow;
     BOOL sync_order;
     BOOL sync_item;
-    UIButton *right;
-    UIButton *left;
+    UIViewController *presentingModalViewController;
 }
 
 - (void)viewDidLoad {
@@ -59,6 +58,7 @@
     [refreshControl addTarget:self action:@selector(refreshControlRefresh)
              forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refreshControl;
+    [[HHAlertView shared]setDelegate:self];
     [self filterDetailCategory];
     
 }
@@ -171,10 +171,8 @@
         Order *order = [self.itemContainer.container objectAtIndex:indexPath.row];
         cell.leftButtonWidth.constant = screenWidth/2;
         cell.rightButtonWidth.constant = screenWidth/2;
-        left = cell.leftButton;
-        right = cell.rightButton;
-        [self createSubbarButtonViewWith:order andLeft:NO];
-        [self createSubbarButtonViewWith:order andLeft:YES];
+        [self createSubbarButtonViewWith:order andLeft:NO withCell:cell];
+        [self createSubbarButtonViewWith:order andLeft:YES withCell:cell];
     }else{
         cell.subbar.hidden = YES;
     }
@@ -373,9 +371,10 @@
     return instructionView;
 }
 
--(void)createSubbarButtonViewWith:(Order *)order andLeft:(BOOL)dir{
+-(void)createSubbarButtonViewWith:(Order *)order andLeft:(BOOL)dir withCell:(MyTableViewCell *)cell{
     CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
     if (!dir) {
+        UIButton *right = cell.rightButton;
         UIImageView *icon = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 30, 20)];
         UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(30+20, 12, screenWidth/2-30-20, 16)];
         icon.image = [UIImage imageNamed:@"messageBox"];
@@ -386,10 +385,15 @@
             msgStr = @"Message to Seller";
         }
         label.attributedText = [[NSAttributedString alloc]initWithString:msgStr attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Helvetica" size:13],NSForegroundColorAttributeName:[UIColor whiteColor]}];
+        if (cell.setRight) {
+            return;
+        }
         [right addSubview:icon];
         [right addSubview:label];
-        right.backgroundColor = [UIColor colorWithRed:145/255.0 green:160/255.0 blue:237/255.0 alpha:1];
+        cell.setRight = YES;
+        right.backgroundColor = [UIColor colorWithRed:29/255.0 green:129/255.0 blue:210/255.0 alpha:1];
     }else{
+        UIButton *left = cell.leftButton;
         UIImageView *icon = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 25, 20)];
         UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(25+20, 12, screenWidth/2-25-20, 16)];
         NSString *msgStr = [[NSString alloc]init];
@@ -414,10 +418,17 @@
             }
         }
         label.attributedText = [[NSAttributedString alloc]initWithString:msgStr attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Helvetica" size:13],NSForegroundColorAttributeName:[UIColor whiteColor]}];
+        if (cell.setLeft) {
+            [cell.leftButtonLabel removeFromSuperview];
+            cell.leftButtonLabel = label;
+            [left addSubview:cell.leftButtonLabel];
+            return;
+        }
+        cell.leftButtonLabel = label;
         [left addSubview:icon];
-        [left addSubview:label];
-        
-        left.backgroundColor = [UIColor colorWithRed:177/255.0 green:188/255.0 blue:244/255.0 alpha:1];
+        [left addSubview:cell.leftButtonLabel];
+        cell.setLeft = YES;
+        left.backgroundColor = [UIColor colorWithRed:100/255.0 green:181/255.0 blue:246/255.0 alpha:1];
         
     }
     
@@ -523,16 +534,21 @@
 -(void)dropSuccess:(NSNotification *)noti{
     NSString *protocol = [noti object];
     [GMDCircleLoader hideFromView:self.view animated:YES];
+    UIViewController *alertViewContainer = [self makingAlertViewController];
     if ([protocol isEqualToString:@"success"]) {
-        [HHAlertView showAlertWithStyle:HHAlertStyleOk inView:self.view Title:@"Success" detail:@"Removed Item From Proxi" cancelButton:nil Okbutton:@"Thank You"];
+        [HHAlertView showAlertWithStyle:HHAlertStyleOk inView:alertViewContainer.view Title:@"Success" detail:@"Removed Item From Proxi" cancelButton:nil Okbutton:@"Thank You"];
+        
         [self.storeContainer.container removeObjectAtIndex:deleteRow.row];
         self.itemsArray = self.storeContainer.container;
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView reloadData];
         });
     }else{
-        [HHAlertView showAlertWithStyle:HHAlertStyleError inView:self.view Title:@"Sorry" detail:@"Please Check Your Wifi Connection" cancelButton:nil Okbutton:@"OK"];
+        [HHAlertView showAlertWithStyle:HHAlertStyleError inView:alertViewContainer.view Title:@"Sorry" detail:@"Please Check Your Wifi Connection" cancelButton:nil Okbutton:@"OK"];
     }
+    [self presentViewController:alertViewContainer animated:YES completion:^{
+        presentingModalViewController = alertViewContainer;
+    }];
 
     
 }
@@ -540,16 +556,23 @@
 -(void)dropHistorySuccess:(NSNotification *)noti{
     NSString *protocol = [noti object];
     [GMDCircleLoader hideFromView:self.view animated:YES];
+    UIViewController *alertViewContainer = [self makingAlertViewController];
     if ([protocol isEqualToString:@"success"]) {
-        [HHAlertView showAlertWithStyle:HHAlertStyleOk inView:self.view Title:@"Success" detail:@"You Will No Longer View this History" cancelButton:nil Okbutton:@"Thank You"];
+        [HHAlertView showAlertWithStyle:HHAlertStyleOk inView:alertViewContainer.view Title:@"Success" detail:@"You Will No Longer View this History" cancelButton:nil Okbutton:@"Thank You"];
         [self.itemContainer.container removeObjectAtIndex:deleteRow.row];
         self.datasourceArray = self.itemContainer.container;
         [self.tableView deleteRowsAtIndexPaths:@[deleteRow] withRowAnimation:UITableViewRowAnimationFade];
     }else{
-        [HHAlertView showAlertWithStyle:HHAlertStyleError inView:self.view Title:@"Sorry" detail:@"Please Check Your Wifi Connection" cancelButton:nil Okbutton:@"OK"];
+        [HHAlertView showAlertWithStyle:HHAlertStyleError inView:alertViewContainer.view Title:@"Sorry" detail:@"Please Check Your Wifi Connection" cancelButton:nil Okbutton:@"OK"];
     }
+    [self presentViewController:alertViewContainer animated:YES completion:^{
+        presentingModalViewController = alertViewContainer;
+    }];
     
     
+}
+- (void)didClickButtonAnIndex:(HHAlertButton )button{
+    [presentingModalViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)refreshControlRefresh{
@@ -566,7 +589,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if ([[self.datasourceArray objectAtIndex:indexPath.row]isKindOfClass:[Order class]]&&[self.detailCategory isEqualToString:@"My Sales"]){
+    if ([self.detailCategory isEqualToString:@"My Sales"]){
         if(indexPath.section==1){
             [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
             return;
@@ -673,7 +696,7 @@
             [self fulfilledDeliveryButtonPressed:order];
         }else if (button==Message){
             ChatViewController *chatViewController = [[ChatViewController alloc]init];
-            chatViewController.title = [@"Buyer: " stringByAppendingString:[self profileName:order.user_info[@"user_email"]withSpace:YES]];
+            chatViewController.title = [@"" stringByAppendingString:[self profileName:order.user_info[@"user_email"]withSpace:YES]];
             chatViewController.seller_email = order.user_info[@"user_email"];
             [self.navigationController pushViewController:chatViewController animated:YES];
         }else{
@@ -735,7 +758,9 @@
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(checkoutPostSuccess:) name:@"FinishCheckoutNotification" object:nil];
     }];
     UIAlertAction *refundAction = [UIAlertAction actionWithTitle:@"Refund" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-        
+        RefundViewController *refundViewController = [[RefundViewController alloc]initWithNibName:@"RefundViewController" bundle:nil];
+        [self.navigationController pushViewController:refundViewController animated:YES];
+        refundViewController.order = order;
         [self dismissViewControllerAnimated:YES completion:nil];
     }];  // UIAlertActionStyleDestructive
     [deliverActionSheet addAction:cancelAction];
@@ -746,7 +771,9 @@
         [deliverActionSheet addAction:okAction];
     }
     [deliverActionSheet addAction:refundAction];
-    [self presentViewController:deliverActionSheet animated:YES completion:nil];
+    if (self.presentedViewController == NULL) {
+        [self presentViewController:deliverActionSheet animated:YES completion:nil];
+    }
 }
 -(void)fulfilDelivery:(NSNotification *)noti{
     if ([[noti object]isEqualToString:@"success"]) {
@@ -762,6 +789,7 @@
             [self dismissViewControllerAnimated:YES completion:nil];
         }]];
         [self presentViewController:alertInfo animated:YES completion:nil];
+        
     }
 }
 
@@ -770,7 +798,9 @@
     [alertInfo addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         [self dismissViewControllerAnimated:YES completion:nil];
     }]];
-    [self presentViewController:alertInfo animated:YES completion:nil];
+    if (self.presentedViewController == NULL) {
+        [self presentViewController:alertInfo animated:YES completion:nil];
+    }
 }
 
 
@@ -779,17 +809,17 @@
 -(void)checkoutPostSuccess:(NSNotification *)noti{
     NSString *protocal = [noti object];
     NSLog(@"protocal: %@",[protocal description]);
+    UIViewController *alertViewContainer = [self makingAlertViewController];
     if ([protocal isEqualToString:@"success"]) {
-        [HHAlertView showAlertWithStyle:HHAlertStyleOk inView:self.view Title:@"Success" detail:@"Thank you!" cancelButton:nil Okbutton:@"OK"];
+        [HHAlertView showAlertWithStyle:HHAlertStyleOk inView:alertViewContainer.view Title:@"Success" detail:@"Thank you!" cancelButton:nil Okbutton:@"OK"];
     }else{
-        [HHAlertView showAlertWithStyle:HHAlertStyleError inView:self.view Title:@"Error" detail:@"Please Contact Us" cancelButton:@"Cancel" Okbutton:@"Move Back"];
+        [HHAlertView showAlertWithStyle:HHAlertStyleError inView:alertViewContainer.view Title:@"Error" detail:@"Please Contact Us" cancelButton:nil Okbutton:@"Cancel"];
     }
-}
-
--(void)orderButtonTapped:(Order *)order{
-    RefundViewController *refundViewController = [[RefundViewController alloc]initWithNibName:@"RefundViewController" bundle:nil];
-    [self.navigationController pushViewController:refundViewController animated:YES];
-    refundViewController.order = order;
+    if (self.presentedViewController == NULL) {
+        [self presentViewController:alertViewContainer animated:YES completion:^{
+            presentingModalViewController = alertViewContainer;
+        }];
+    }
 }
 
 -(void)confirmButtonTapped:(Order *)order{
@@ -805,7 +835,9 @@
     }];
     [alert addAction:yesButton];
     [alert addAction:noButton];
-    [self presentViewController:alert animated:YES completion:nil];
+    if (self.presentedViewController == NULL) {
+        [self presentViewController:alert animated:YES completion:nil];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
@@ -814,7 +846,13 @@
     v.backgroundView.backgroundColor = [UIColor colorWithRed:139/255.0 green:220/255.0 blue:218/255.0 alpha:1];
 }
 
-
+-(UIViewController *)makingAlertViewController{
+    UIViewController *viewcontroller = [[UIViewController alloc]init];
+    viewcontroller.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    viewcontroller.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    viewcontroller.view.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.7];
+    return viewcontroller;
+}
 
 
 @end

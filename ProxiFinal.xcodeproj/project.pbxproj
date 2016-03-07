@@ -12,7 +12,6 @@
 		9E0C10831C5DA77700166C07 /* StoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E0C10811C5DA77700166C07 /* StoreViewController.xib */; };
 		9E0C10861C5DAA8300166C07 /* Store.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E0C10851C5DAA8300166C07 /* Store.m */; };
 		9E0C10891C5DAB8500166C07 /* StoreConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E0C10881C5DAB8500166C07 /* StoreConnection.m */; };
-		9E0C108C1C60204F00166C07 /* RideTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E0C108B1C60204F00166C07 /* RideTableViewController.m */; };
 		9E0ECF471BC9921E00D6B749 /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E0ECF461BC9921E00D6B749 /* Item.m */; };
 		9E0ECF4A1BC9922A00D6B749 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E0ECF491BC9922A00D6B749 /* User.m */; };
 		9E0ECF4D1BC9923B00D6B749 /* ItemContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E0ECF4C1BC9923B00D6B749 /* ItemContainer.m */; };
@@ -35,11 +34,42 @@
 		9E2D37BC1BD6DA42005BE36A /* MyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E2D37BA1BD6DA42005BE36A /* MyTableViewCell.m */; };
 		9E2D37BD1BD6DA42005BE36A /* MyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E2D37BB1BD6DA42005BE36A /* MyTableViewCell.xib */; };
 		9E2D37C01BD6DC05005BE36A /* PersonDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E2D37BF1BD6DC05005BE36A /* PersonDetailTableViewController.m */; };
+		9E3F68BB1C8B45D8003365CC /* ForumTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E3F68B91C8B45D8003365CC /* ForumTableViewCell.m */; };
+		9E3F68BC1C8B45D8003365CC /* ForumTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E3F68BA1C8B45D8003365CC /* ForumTableViewCell.xib */; };
+		9E3F68C01C8B486C003365CC /* ForumSubmitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E3F68BE1C8B486C003365CC /* ForumSubmitViewController.m */; };
+		9E3F68C11C8B486C003365CC /* ForumSubmitViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E3F68BF1C8B486C003365CC /* ForumSubmitViewController.xib */; };
 		9E6DD2FC1C71316A00C09307 /* ReceiptViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E6DD2FA1C71316A00C09307 /* ReceiptViewController.m */; };
 		9E6DD2FD1C71316A00C09307 /* ReceiptViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E6DD2FB1C71316A00C09307 /* ReceiptViewController.xib */; };
 		9E6DD3001C7141BA00C09307 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E6DD2FF1C7141BA00C09307 /* WebViewController.m */; };
 		9E6DD3021C715DC000C09307 /* introPage.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E6DD3011C715DC000C09307 /* introPage.png */; };
 		9E6DD3041C715EB200C09307 /* proxi white.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E6DD3031C715EB200C09307 /* proxi white.png */; };
+		9E6DD3A01C7EC0CE00C09307 /* Gotham-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9E6DD34E1C7EC0CE00C09307 /* Gotham-Black.otf */; };
+		9E6DD3A11C7EC0CE00C09307 /* Gotham-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9E6DD34F1C7EC0CE00C09307 /* Gotham-Black.ttf */; };
+		9E6DD3A21C7EC0CE00C09307 /* Gotham-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9E6DD3501C7EC0CE00C09307 /* Gotham-BlackItalic.otf */; };
+		9E6DD3A31C7EC0CE00C09307 /* Gotham-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9E6DD3511C7EC0CE00C09307 /* Gotham-BlackItalic.ttf */; };
+		9E6DD3A41C7EC0CE00C09307 /* Gotham-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9E6DD3521C7EC0CE00C09307 /* Gotham-Bold.otf */; };
+		9E6DD3A51C7EC0CE00C09307 /* Gotham-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9E6DD3531C7EC0CE00C09307 /* Gotham-Bold.ttf */; };
+		9E6DD3A61C7EC0CE00C09307 /* Gotham-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9E6DD3541C7EC0CE00C09307 /* Gotham-BoldItalic.otf */; };
+		9E6DD3A71C7EC0CE00C09307 /* Gotham-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9E6DD3551C7EC0CE00C09307 /* Gotham-BoldItalic.ttf */; };
+		9E6DD3A81C7EC0CE00C09307 /* Gotham-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9E6DD3561C7EC0CE00C09307 /* Gotham-Book.otf */; };
+		9E6DD3A91C7EC0CE00C09307 /* Gotham-Book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9E6DD3571C7EC0CE00C09307 /* Gotham-Book.ttf */; };
+		9E6DD3AA1C7EC0CE00C09307 /* Gotham-BookItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9E6DD3581C7EC0CE00C09307 /* Gotham-BookItalic.otf */; };
+		9E6DD3AB1C7EC0CE00C09307 /* Gotham-BookItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9E6DD3591C7EC0CE00C09307 /* Gotham-BookItalic.ttf */; };
+		9E6DD3AC1C7EC0CE00C09307 /* Gotham-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9E6DD35A1C7EC0CE00C09307 /* Gotham-Light.otf */; };
+		9E6DD3AD1C7EC0CE00C09307 /* Gotham-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9E6DD35B1C7EC0CE00C09307 /* Gotham-Light.ttf */; };
+		9E6DD3AE1C7EC0CE00C09307 /* Gotham-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9E6DD35C1C7EC0CE00C09307 /* Gotham-LightItalic.otf */; };
+		9E6DD3AF1C7EC0CE00C09307 /* Gotham-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9E6DD35D1C7EC0CE00C09307 /* Gotham-LightItalic.ttf */; };
+		9E6DD3B01C7EC0CE00C09307 /* Gotham-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9E6DD35E1C7EC0CE00C09307 /* Gotham-Medium.otf */; };
+		9E6DD3B11C7EC0CE00C09307 /* Gotham-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9E6DD35F1C7EC0CE00C09307 /* Gotham-Medium.ttf */; };
+		9E6DD3B21C7EC0CE00C09307 /* Gotham-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9E6DD3601C7EC0CE00C09307 /* Gotham-MediumItalic.otf */; };
+		9E6DD3B31C7EC0CE00C09307 /* Gotham-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9E6DD3611C7EC0CE00C09307 /* Gotham-MediumItalic.ttf */; };
+		9E6DD3B41C7EC0CE00C09307 /* Gotham-MSN-NarrowBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9E6DD3621C7EC0CE00C09307 /* Gotham-MSN-NarrowBold.ttf */; };
+		9E6DD3B51C7EC0CE00C09307 /* Gotham-MSN-NarrowBook.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9E6DD3631C7EC0CE00C09307 /* Gotham-MSN-NarrowBook.ttf */; };
+		9E6DD3B61C7EC0CE00C09307 /* Gotham-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9E6DD3641C7EC0CE00C09307 /* Gotham-Thin.otf */; };
+		9E6DD3B71C7EC0CE00C09307 /* Gotham-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9E6DD3651C7EC0CE00C09307 /* Gotham-Thin.ttf */; };
+		9E6DD3B81C7EC0CE00C09307 /* Gotham-ThinItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9E6DD3661C7EC0CE00C09307 /* Gotham-ThinItalic.otf */; };
+		9E6DD3B91C7EC0CE00C09307 /* Gotham-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9E6DD3671C7EC0CE00C09307 /* Gotham-ThinItalic.ttf */; };
+		9E6DD3F51C8A92E300C09307 /* ForumPostTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E6DD3F41C8A92E300C09307 /* ForumPostTableViewController.m */; };
 		9E6DE3601BC0718200C68E45 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E6DE35F1BC0718200C68E45 /* Main.storyboard */; };
 		9E74D2031C66A1B900B080FB /* PersonContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E74D2021C66A1B900B080FB /* PersonContainerViewController.m */; };
 		9E7620381C06B3BC00248250 /* OrderDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E7620371C06B3BC00248250 /* OrderDetailTableViewController.m */; };
@@ -134,6 +164,7 @@
 		9E8093F61C4B3C9B00BBA16F /* resource.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E8093F51C4B3C9B00BBA16F /* resource.xcassets */; };
 		9E8093F91C4B511200BBA16F /* AboutTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E8093F81C4B511200BBA16F /* AboutTableViewController.m */; };
 		9E8093FC1C4B5A2600BBA16F /* IssueConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E8093FB1C4B5A2600BBA16F /* IssueConnection.m */; };
+		9E8573FA1C8CD1170050938A /* Forum.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E8573F91C8CD1170050938A /* Forum.m */; };
 		9E8BA26D1BEFEAE30039F790 /* Transaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E8BA26C1BEFEAE30039F790 /* Transaction.m */; };
 		9E9038F21C38627700F6C610 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E9038F11C38627700F6C610 /* Event.m */; };
 		9E9038FB1C38DAF600F6C610 /* EventConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E9038FA1C38DAF600F6C610 /* EventConnection.m */; };
@@ -199,8 +230,6 @@
 		9E0C10851C5DAA8300166C07 /* Store.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Store.m; sourceTree = "<group>"; };
 		9E0C10871C5DAB8500166C07 /* StoreConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreConnection.h; sourceTree = "<group>"; };
 		9E0C10881C5DAB8500166C07 /* StoreConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreConnection.m; sourceTree = "<group>"; };
-		9E0C108A1C60204F00166C07 /* RideTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideTableViewController.h; sourceTree = "<group>"; };
-		9E0C108B1C60204F00166C07 /* RideTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RideTableViewController.m; sourceTree = "<group>"; };
 		9E0ECF451BC9921E00D6B749 /* Item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Item.h; sourceTree = "<group>"; };
 		9E0ECF461BC9921E00D6B749 /* Item.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Item.m; sourceTree = "<group>"; };
 		9E0ECF481BC9922A00D6B749 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
@@ -242,6 +271,12 @@
 		9E2D37BB1BD6DA42005BE36A /* MyTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyTableViewCell.xib; sourceTree = "<group>"; };
 		9E2D37BE1BD6DC05005BE36A /* PersonDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonDetailTableViewController.h; sourceTree = "<group>"; };
 		9E2D37BF1BD6DC05005BE36A /* PersonDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonDetailTableViewController.m; sourceTree = "<group>"; };
+		9E3F68B81C8B45D8003365CC /* ForumTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForumTableViewCell.h; sourceTree = "<group>"; };
+		9E3F68B91C8B45D8003365CC /* ForumTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForumTableViewCell.m; sourceTree = "<group>"; };
+		9E3F68BA1C8B45D8003365CC /* ForumTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ForumTableViewCell.xib; sourceTree = "<group>"; };
+		9E3F68BD1C8B486C003365CC /* ForumSubmitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForumSubmitViewController.h; sourceTree = "<group>"; };
+		9E3F68BE1C8B486C003365CC /* ForumSubmitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForumSubmitViewController.m; sourceTree = "<group>"; };
+		9E3F68BF1C8B486C003365CC /* ForumSubmitViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ForumSubmitViewController.xib; sourceTree = "<group>"; };
 		9E6DD2F91C71316A00C09307 /* ReceiptViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiptViewController.h; sourceTree = "<group>"; };
 		9E6DD2FA1C71316A00C09307 /* ReceiptViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiptViewController.m; sourceTree = "<group>"; };
 		9E6DD2FB1C71316A00C09307 /* ReceiptViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReceiptViewController.xib; sourceTree = "<group>"; };
@@ -249,6 +284,34 @@
 		9E6DD2FF1C7141BA00C09307 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		9E6DD3011C715DC000C09307 /* introPage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = introPage.png; path = ../../../../UIResource/introPage.png; sourceTree = "<group>"; };
 		9E6DD3031C715EB200C09307 /* proxi white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "proxi white.png"; path = "../../../../UIResource/proxi white.png"; sourceTree = "<group>"; };
+		9E6DD34E1C7EC0CE00C09307 /* Gotham-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-Black.otf"; sourceTree = "<group>"; };
+		9E6DD34F1C7EC0CE00C09307 /* Gotham-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-Black.ttf"; sourceTree = "<group>"; };
+		9E6DD3501C7EC0CE00C09307 /* Gotham-BlackItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-BlackItalic.otf"; sourceTree = "<group>"; };
+		9E6DD3511C7EC0CE00C09307 /* Gotham-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-BlackItalic.ttf"; sourceTree = "<group>"; };
+		9E6DD3521C7EC0CE00C09307 /* Gotham-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-Bold.otf"; sourceTree = "<group>"; };
+		9E6DD3531C7EC0CE00C09307 /* Gotham-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-Bold.ttf"; sourceTree = "<group>"; };
+		9E6DD3541C7EC0CE00C09307 /* Gotham-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-BoldItalic.otf"; sourceTree = "<group>"; };
+		9E6DD3551C7EC0CE00C09307 /* Gotham-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-BoldItalic.ttf"; sourceTree = "<group>"; };
+		9E6DD3561C7EC0CE00C09307 /* Gotham-Book.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-Book.otf"; sourceTree = "<group>"; };
+		9E6DD3571C7EC0CE00C09307 /* Gotham-Book.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-Book.ttf"; sourceTree = "<group>"; };
+		9E6DD3581C7EC0CE00C09307 /* Gotham-BookItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-BookItalic.otf"; sourceTree = "<group>"; };
+		9E6DD3591C7EC0CE00C09307 /* Gotham-BookItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-BookItalic.ttf"; sourceTree = "<group>"; };
+		9E6DD35A1C7EC0CE00C09307 /* Gotham-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-Light.otf"; sourceTree = "<group>"; };
+		9E6DD35B1C7EC0CE00C09307 /* Gotham-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-Light.ttf"; sourceTree = "<group>"; };
+		9E6DD35C1C7EC0CE00C09307 /* Gotham-LightItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-LightItalic.otf"; sourceTree = "<group>"; };
+		9E6DD35D1C7EC0CE00C09307 /* Gotham-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-LightItalic.ttf"; sourceTree = "<group>"; };
+		9E6DD35E1C7EC0CE00C09307 /* Gotham-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-Medium.otf"; sourceTree = "<group>"; };
+		9E6DD35F1C7EC0CE00C09307 /* Gotham-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-Medium.ttf"; sourceTree = "<group>"; };
+		9E6DD3601C7EC0CE00C09307 /* Gotham-MediumItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-MediumItalic.otf"; sourceTree = "<group>"; };
+		9E6DD3611C7EC0CE00C09307 /* Gotham-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-MediumItalic.ttf"; sourceTree = "<group>"; };
+		9E6DD3621C7EC0CE00C09307 /* Gotham-MSN-NarrowBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-MSN-NarrowBold.ttf"; sourceTree = "<group>"; };
+		9E6DD3631C7EC0CE00C09307 /* Gotham-MSN-NarrowBook.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-MSN-NarrowBook.ttf"; sourceTree = "<group>"; };
+		9E6DD3641C7EC0CE00C09307 /* Gotham-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-Thin.otf"; sourceTree = "<group>"; };
+		9E6DD3651C7EC0CE00C09307 /* Gotham-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-Thin.ttf"; sourceTree = "<group>"; };
+		9E6DD3661C7EC0CE00C09307 /* Gotham-ThinItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-ThinItalic.otf"; sourceTree = "<group>"; };
+		9E6DD3671C7EC0CE00C09307 /* Gotham-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-ThinItalic.ttf"; sourceTree = "<group>"; };
+		9E6DD3F31C8A92E300C09307 /* ForumPostTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForumPostTableViewController.h; sourceTree = "<group>"; };
+		9E6DD3F41C8A92E300C09307 /* ForumPostTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForumPostTableViewController.m; sourceTree = "<group>"; };
 		9E6DE35F1BC0718200C68E45 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		9E74D2011C66A1B900B080FB /* PersonContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonContainerViewController.h; sourceTree = "<group>"; };
 		9E74D2021C66A1B900B080FB /* PersonContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonContainerViewController.m; sourceTree = "<group>"; };
@@ -368,6 +431,8 @@
 		9E8093F81C4B511200BBA16F /* AboutTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutTableViewController.m; sourceTree = "<group>"; };
 		9E8093FA1C4B5A2600BBA16F /* IssueConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IssueConnection.h; sourceTree = "<group>"; };
 		9E8093FB1C4B5A2600BBA16F /* IssueConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IssueConnection.m; sourceTree = "<group>"; };
+		9E8573F81C8CD1170050938A /* Forum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Forum.h; sourceTree = "<group>"; };
+		9E8573F91C8CD1170050938A /* Forum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Forum.m; sourceTree = "<group>"; };
 		9E8BA26B1BEFEAE30039F790 /* Transaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Transaction.h; sourceTree = "<group>"; };
 		9E8BA26C1BEFEAE30039F790 /* Transaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Transaction.m; sourceTree = "<group>"; };
 		9E9038F01C38627700F6C610 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
@@ -509,6 +574,7 @@
 				9E0ECF421BC991DE00D6B749 /* Connection */,
 				9E0ECF411BC991CD00D6B749 /* Person */,
 				9E0ECF401BC991C300D6B749 /* Items */,
+				9E8573FB1C8CF0960050938A /* Forum */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -573,6 +639,7 @@
 				9EF4C4241BC9CE8D00F4ED38 /* MasterViewController.m */,
 				9E8093951C3E3B0F00BBA16F /* ChatController */,
 				9EF4C4351BC9D1E400F4ED38 /* HomeController */,
+				9E6DD3F21C8A92C700C09307 /* Forum Controller */,
 				9EF4C45C1BCB390D00F4ED38 /* SearchController */,
 				9EF4C4361BC9D1F300F4ED38 /* CameraController */,
 				9EF4C4371BC9D22500F4ED38 /* Login/Register */,
@@ -621,6 +688,52 @@
 				9E8093F21C4B3BE200BBA16F /* ContactUsTableViewCell.xib */,
 			);
 			name = PersonCells;
+			sourceTree = "<group>";
+		};
+		9E6DD34D1C7EC0CE00C09307 /* gotham */ = {
+			isa = PBXGroup;
+			children = (
+				9E6DD34E1C7EC0CE00C09307 /* Gotham-Black.otf */,
+				9E6DD34F1C7EC0CE00C09307 /* Gotham-Black.ttf */,
+				9E6DD3501C7EC0CE00C09307 /* Gotham-BlackItalic.otf */,
+				9E6DD3511C7EC0CE00C09307 /* Gotham-BlackItalic.ttf */,
+				9E6DD3521C7EC0CE00C09307 /* Gotham-Bold.otf */,
+				9E6DD3531C7EC0CE00C09307 /* Gotham-Bold.ttf */,
+				9E6DD3541C7EC0CE00C09307 /* Gotham-BoldItalic.otf */,
+				9E6DD3551C7EC0CE00C09307 /* Gotham-BoldItalic.ttf */,
+				9E6DD3561C7EC0CE00C09307 /* Gotham-Book.otf */,
+				9E6DD3571C7EC0CE00C09307 /* Gotham-Book.ttf */,
+				9E6DD3581C7EC0CE00C09307 /* Gotham-BookItalic.otf */,
+				9E6DD3591C7EC0CE00C09307 /* Gotham-BookItalic.ttf */,
+				9E6DD35A1C7EC0CE00C09307 /* Gotham-Light.otf */,
+				9E6DD35B1C7EC0CE00C09307 /* Gotham-Light.ttf */,
+				9E6DD35C1C7EC0CE00C09307 /* Gotham-LightItalic.otf */,
+				9E6DD35D1C7EC0CE00C09307 /* Gotham-LightItalic.ttf */,
+				9E6DD35E1C7EC0CE00C09307 /* Gotham-Medium.otf */,
+				9E6DD35F1C7EC0CE00C09307 /* Gotham-Medium.ttf */,
+				9E6DD3601C7EC0CE00C09307 /* Gotham-MediumItalic.otf */,
+				9E6DD3611C7EC0CE00C09307 /* Gotham-MediumItalic.ttf */,
+				9E6DD3621C7EC0CE00C09307 /* Gotham-MSN-NarrowBold.ttf */,
+				9E6DD3631C7EC0CE00C09307 /* Gotham-MSN-NarrowBook.ttf */,
+				9E6DD3641C7EC0CE00C09307 /* Gotham-Thin.otf */,
+				9E6DD3651C7EC0CE00C09307 /* Gotham-Thin.ttf */,
+				9E6DD3661C7EC0CE00C09307 /* Gotham-ThinItalic.otf */,
+				9E6DD3671C7EC0CE00C09307 /* Gotham-ThinItalic.ttf */,
+			);
+			name = gotham;
+			path = ../../../../../Desktop/font/gotham;
+			sourceTree = "<group>";
+		};
+		9E6DD3F21C8A92C700C09307 /* Forum Controller */ = {
+			isa = PBXGroup;
+			children = (
+				9E6DD3F31C8A92E300C09307 /* ForumPostTableViewController.h */,
+				9E6DD3F41C8A92E300C09307 /* ForumPostTableViewController.m */,
+				9E3F68BD1C8B486C003365CC /* ForumSubmitViewController.h */,
+				9E3F68BE1C8B486C003365CC /* ForumSubmitViewController.m */,
+				9E3F68BF1C8B486C003365CC /* ForumSubmitViewController.xib */,
+			);
+			name = "Forum Controller";
 			sourceTree = "<group>";
 		};
 		9E8093111C3E3AD600BBA16F /* MessagesTableViewController */ = {
@@ -765,6 +878,15 @@
 			name = Category_Images;
 			sourceTree = "<group>";
 		};
+		9E8573FB1C8CF0960050938A /* Forum */ = {
+			isa = PBXGroup;
+			children = (
+				9E8573F81C8CD1170050938A /* Forum.h */,
+				9E8573F91C8CD1170050938A /* Forum.m */,
+			);
+			name = Forum;
+			sourceTree = "<group>";
+		};
 		9E9038ED1C38624500F6C610 /* Event */ = {
 			isa = PBXGroup;
 			children = (
@@ -799,8 +921,6 @@
 			children = (
 				9EBDCA991BF9313C0006013C /* CategoryDetailTableViewController.h */,
 				9EBDCA9A1BF9313C0006013C /* CategoryDetailTableViewController.m */,
-				9E0C108A1C60204F00166C07 /* RideTableViewController.h */,
-				9E0C108B1C60204F00166C07 /* RideTableViewController.m */,
 			);
 			name = CategoryController;
 			sourceTree = "<group>";
@@ -877,6 +997,7 @@
 			isa = PBXGroup;
 			children = (
 				9EE687441BC037C80030BC8F /* main.m */,
+				9E6DD34D1C7EC0CE00C09307 /* gotham */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -985,6 +1106,9 @@
 				9EF4C4791BCDA19E00F4ED38 /* ItemBigCollectionViewCell.xib */,
 				9EF4C47C1BCDA1D700F4ED38 /* ItemBigTableViewCell.h */,
 				9EF4C47D1BCDA1D700F4ED38 /* ItemBigTableViewCell.m */,
+				9E3F68B81C8B45D8003365CC /* ForumTableViewCell.h */,
+				9E3F68B91C8B45D8003365CC /* ForumTableViewCell.m */,
+				9E3F68BA1C8B45D8003365CC /* ForumTableViewCell.xib */,
 			);
 			name = SearchCells;
 			sourceTree = "<group>";
@@ -1114,14 +1238,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E8093F61C4B3C9B00BBA16F /* resource.xcassets in Resources */,
+				9E3F68C11C8B486C003365CC /* ForumSubmitViewController.xib in Resources */,
+				9E6DD3A01C7EC0CE00C09307 /* Gotham-Black.otf in Resources */,
+				9E6DD3AA1C7EC0CE00C09307 /* Gotham-BookItalic.otf in Resources */,
 				9EF4C4731BCC91CA00F4ED38 /* Images.xcassets in Resources */,
 				9E8093C91C4AFC6A00BBA16F /* service_icon_inactive.png in Resources */,
 				9E8093641C3E3AD600BBA16F /* bubble-default-incoming-green@2x.png in Resources */,
 				9E80936C1C3E3AD600BBA16F /* bubble-default-outgoing-selected@2x.png in Resources */,
+				9E6DD3B41C7EC0CE00C09307 /* Gotham-MSN-NarrowBold.ttf in Resources */,
 				9E8093781C3E3AD600BBA16F /* bubble-flat-outgoing@2x.png in Resources */,
 				9E8093BB1C4AF49700BBA16F /* other_icon.png in Resources */,
 				9E8093CF1C4AFFD000BBA16F /* furniture_icon_inactive.png in Resources */,
 				9E8093721C3E3AD600BBA16F /* bubble-flat-incoming@2x.png in Resources */,
+				9E6DD3A51C7EC0CE00C09307 /* Gotham-Bold.ttf in Resources */,
 				9E80937E1C3E3AD600BBA16F /* bubble-square-outgoing-selected@2x.png in Resources */,
 				9EB66B041BD079A4001D5416 /* Proxi Logo.png in Resources */,
 				9E8093681C3E3AD600BBA16F /* bubble-default-incoming@2x.png in Resources */,
@@ -1135,14 +1264,18 @@
 				9E80936A1C3E3AD600BBA16F /* bubble-default-outgoing-green@2x.png in Resources */,
 				9E2D37B21BD6BF67005BE36A /* ItemDetailViewController.xib in Resources */,
 				9E8093D51C4B0F0D00BBA16F /* PhotoIcon@2x.png in Resources */,
+				9E6DD3B91C7EC0CE00C09307 /* Gotham-ThinItalic.ttf in Resources */,
 				9E80938F1C3E3AD600BBA16F /* messageReceived.aiff in Resources */,
 				9E80937D1C3E3AD600BBA16F /* bubble-square-outgoing-selected.png in Resources */,
 				9EF4C47B1BCDA19E00F4ED38 /* ItemBigCollectionViewCell.xib in Resources */,
+				9E6DD3A31C7EC0CE00C09307 /* Gotham-BlackItalic.ttf in Resources */,
 				9E8093B91C4AF48400BBA16F /* furniture_icon.png in Resources */,
+				9E6DD3A41C7EC0CE00C09307 /* Gotham-Bold.otf in Resources */,
 				9E8093CB1C4AFC7600BBA16F /* other_icon_inactive.png in Resources */,
 				9E8093711C3E3AD600BBA16F /* bubble-flat-incoming.png in Resources */,
 				9E8093A61C41DD9C00BBA16F /* RefundViewController.xib in Resources */,
 				9EB66ABE1BCE9523001D5416 /* JAMMainViewController.xib in Resources */,
+				9E6DD3B71C7EC0CE00C09307 /* Gotham-Thin.ttf in Resources */,
 				9E8093C31C4AFC4900BBA16F /* post_icon.png in Resources */,
 				9E76203F1C07C5BD00248250 /* PostItemDetailViewController.xib in Resources */,
 				9E6DD2FD1C71316A00C09307 /* ReceiptViewController.xib in Resources */,
@@ -1152,10 +1285,15 @@
 				9E8093E21C4B21C500BBA16F /* ChangePasswordViewController.xib in Resources */,
 				9E8093751C3E3AD600BBA16F /* bubble-flat-outgoing-selected.png in Resources */,
 				9E8093E71C4B221100BBA16F /* ReportViewController.xib in Resources */,
+				9E6DD3AC1C7EC0CE00C09307 /* Gotham-Light.otf in Resources */,
 				9E2D37BD1BD6DA42005BE36A /* MyTableViewCell.xib in Resources */,
+				9E6DD3B21C7EC0CE00C09307 /* Gotham-MediumItalic.otf in Resources */,
 				9E6DE3601BC0718200C68E45 /* Main.storyboard in Resources */,
 				9E0ECF5B1BC993D400D6B749 /* ItemCollectionViewCell.xib in Resources */,
+				9E6DD3A81C7EC0CE00C09307 /* Gotham-Book.otf in Resources */,
 				9E80936D1C3E3AD600BBA16F /* bubble-default-outgoing.png in Resources */,
+				9E6DD3A91C7EC0CE00C09307 /* Gotham-Book.ttf in Resources */,
+				9E6DD3AB1C7EC0CE00C09307 /* Gotham-BookItalic.ttf in Resources */,
 				9EF4C4341BC9D05E00F4ED38 /* RegisterViewController.xib in Resources */,
 				9E8093D41C4B0F0D00BBA16F /* PhotoIcon.png in Resources */,
 				9E8093841C3E3AD600BBA16F /* input-bar-flat@2x.png in Resources */,
@@ -1165,6 +1303,8 @@
 				9E76203A1C06C78900248250 /* icons.xcassets in Resources */,
 				9E8093651C3E3AD600BBA16F /* bubble-default-incoming-selected.png in Resources */,
 				9E8093741C3E3AD600BBA16F /* bubble-flat-outgoing-old@2x.png in Resources */,
+				9E6DD3A11C7EC0CE00C09307 /* Gotham-Black.ttf in Resources */,
+				9E6DD3AE1C7EC0CE00C09307 /* Gotham-LightItalic.otf in Resources */,
 				9E6DD3041C715EB200C09307 /* proxi white.png in Resources */,
 				9E80936F1C3E3AD600BBA16F /* bubble-flat-incoming-selected.png in Resources */,
 				9E8093691C3E3AD600BBA16F /* bubble-default-outgoing-green.png in Resources */,
@@ -1175,26 +1315,38 @@
 				9E8093AD1C454E4900BBA16F /* headerBackground.png in Resources */,
 				9E8093871C3E3AD600BBA16F /* input-field.png in Resources */,
 				9EE687531BC037C80030BC8F /* LaunchScreen.storyboard in Resources */,
+				9E6DD3B31C7EC0CE00C09307 /* Gotham-MediumItalic.ttf in Resources */,
 				9E6DD3021C715DC000C09307 /* introPage.png in Resources */,
+				9E6DD3B11C7EC0CE00C09307 /* Gotham-Medium.ttf in Resources */,
 				9E8093B41C4AF35900BBA16F /* book_icon.png in Resources */,
 				9E8093B71C4AF47B00BBA16F /* cloth_icon.png in Resources */,
 				9E8093901C3E3AD600BBA16F /* messageSent.aiff in Resources */,
 				9E8093701C3E3AD600BBA16F /* bubble-flat-incoming-selected@2x.png in Resources */,
 				9E8093851C3E3AD600BBA16F /* input-bar.png in Resources */,
 				9E8093D11C4B072F00BBA16F /* cloth_icon_inactive.png in Resources */,
+				9E6DD3B61C7EC0CE00C09307 /* Gotham-Thin.otf in Resources */,
 				9E80937F1C3E3AD600BBA16F /* bubble-square-outgoing.png in Resources */,
 				9E8093881C3E3AD600BBA16F /* input-field@2x.png in Resources */,
 				9E0C10831C5DA77700166C07 /* StoreViewController.xib in Resources */,
 				9E8093C11C4AF4B700BBA16F /* post_inactive_icon.png in Resources */,
 				9E80937C1C3E3AD600BBA16F /* bubble-square-incoming@2x.png in Resources */,
+				9E6DD3B51C7EC0CE00C09307 /* Gotham-MSN-NarrowBook.ttf in Resources */,
+				9E3F68BC1C8B45D8003365CC /* ForumTableViewCell.xib in Resources */,
 				9E80936B1C3E3AD600BBA16F /* bubble-default-outgoing-selected.png in Resources */,
 				9E8093761C3E3AD600BBA16F /* bubble-flat-outgoing-selected@2x.png in Resources */,
+				9E6DD3B81C7EC0CE00C09307 /* Gotham-ThinItalic.otf in Resources */,
 				9E8093831C3E3AD600BBA16F /* input-bar-flat.png in Resources */,
 				9E8093771C3E3AD600BBA16F /* bubble-flat-outgoing.png in Resources */,
 				9E8093C71C4AFC6100BBA16F /* ride_icon_inactive.png in Resources */,
 				9E8093BF1C4AF4AB00BBA16F /* service_icon.png in Resources */,
+				9E6DD3A71C7EC0CE00C09307 /* Gotham-BoldItalic.ttf in Resources */,
+				9E6DD3AD1C7EC0CE00C09307 /* Gotham-Light.ttf in Resources */,
+				9E6DD3AF1C7EC0CE00C09307 /* Gotham-LightItalic.ttf in Resources */,
+				9E6DD3B01C7EC0CE00C09307 /* Gotham-Medium.otf in Resources */,
 				9E8093671C3E3AD600BBA16F /* bubble-default-incoming.png in Resources */,
+				9E6DD3A21C7EC0CE00C09307 /* Gotham-BlackItalic.otf in Resources */,
 				9E8093C51C4AFC5600BBA16F /* book_icon_inactive.png in Resources */,
+				9E6DD3A61C7EC0CE00C09307 /* Gotham-BoldItalic.otf in Resources */,
 				9E8093661C3E3AD600BBA16F /* bubble-default-incoming-selected@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1261,8 +1413,10 @@
 				9E8093911C3E3AD600BBA16F /* UIButton+JSMessagesView.m in Sources */,
 				9EB66B161BD2EA8B001D5416 /* ItemConnection.m in Sources */,
 				9E9038F21C38627700F6C610 /* Event.m in Sources */,
+				9E3F68BB1C8B45D8003365CC /* ForumTableViewCell.m in Sources */,
 				9E8093941C3E3AD600BBA16F /* UIView+AnimationOptionsForCurve.m in Sources */,
 				9EF4C43A1BC9D25F00F4ED38 /* Utility.m in Sources */,
+				9E8573FA1C8CD1170050938A /* Forum.m in Sources */,
 				9E0ECF4D1BC9923B00D6B749 /* ItemContainer.m in Sources */,
 				9EF4C43D1BC9E53B00F4ED38 /* HomeTableViewController.m in Sources */,
 				9E8093921C3E3AD600BBA16F /* UIColor+JSMessagesView.m in Sources */,
@@ -1284,6 +1438,7 @@
 				9E8093DD1C4B1DAB00BBA16F /* ProfileTableViewController.m in Sources */,
 				9E0ECF911BC9A6E500D6B749 /* CameraSessionView.m in Sources */,
 				9EF4C47A1BCDA19E00F4ED38 /* ItemBigCollectionViewCell.m in Sources */,
+				9E6DD3F51C8A92E300C09307 /* ForumPostTableViewController.m in Sources */,
 				9E76203E1C07C5BD00248250 /* PostItemDetailViewController.m in Sources */,
 				9E0ECF8A1BC9A68B00D6B749 /* CameraToggleButton.m in Sources */,
 				9E8093E61C4B221100BBA16F /* ReportViewController.m in Sources */,
@@ -1312,11 +1467,11 @@
 				9EE687481BC037C80030BC8F /* AppDelegate.m in Sources */,
 				9E6DD3001C7141BA00C09307 /* WebViewController.m in Sources */,
 				9E8093981C3E3B2D00BBA16F /* ChatViewController.m in Sources */,
-				9E0C108C1C60204F00166C07 /* RideTableViewController.m in Sources */,
 				9E8093A51C41DD9C00BBA16F /* RefundViewController.m in Sources */,
 				9E8BA26D1BEFEAE30039F790 /* Transaction.m in Sources */,
 				9E7620381C06B3BC00248250 /* OrderDetailTableViewController.m in Sources */,
 				9E0ECF871BC9A68B00D6B749 /* CameraFlashButton.m in Sources */,
+				9E3F68C01C8B486C003365CC /* ForumSubmitViewController.m in Sources */,
 				9E8093F31C4B3BE200BBA16F /* ContactUsTableViewCell.m in Sources */,
 				9EE687451BC037C80030BC8F /* main.m in Sources */,
 				9E6DD2FC1C71316A00C09307 /* ReceiptViewController.m in Sources */,

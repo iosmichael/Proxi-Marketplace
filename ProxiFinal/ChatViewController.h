@@ -12,7 +12,7 @@
 
 @interface ChatViewController : JSMessagesViewController
 @property (strong,nonatomic) NSString *seller_email;
-@property (strong,nonatomic) NSString *title;
+@property (strong,nonatomic) NSString *message_title;
 @property (strong,nonatomic) NSString *me;
 @property (strong,nonatomic) Firebase *firebase;
 @end

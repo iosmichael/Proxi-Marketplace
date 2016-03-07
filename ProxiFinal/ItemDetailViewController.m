@@ -13,6 +13,7 @@
 #define Screen_width [[UIScreen mainScreen]bounds].size.width
 
 @interface ItemDetailViewController ()<UITableViewDelegate,UITableViewDataSource,BTDropInViewControllerDelegate,HHAlertViewDelegate>
+@property (strong,nonatomic) UIViewController *presentedModalView;
 
 @end
 
@@ -33,6 +34,11 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.allowsSelection = NO;
     self.tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    self.presentedModalView = [[UIViewController alloc]init];
+    self.presentedModalView.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    self.presentedModalView.modalTransitionStyle =UIModalTransitionStyleCrossDissolve;
+    self.presentedModalView.view.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.7];
+    
     [self.tableView setBackgroundView:nil];
     [[HHAlertView shared]setDelegate:self];
     [self setupElements];
@@ -163,7 +169,6 @@
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     [self.navigationController.navigationBar
      setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
-    self.navigationController.navigationBar.barTintColor =[UIColor colorWithRed:36/255.0 green:104/255.0 blue:156/255.0 alpha:1.0];
     [self setupTime];
     [self setupItemInfo];
 }
@@ -260,15 +265,17 @@
 -(void)orderPostSuccess:(NSNotification *)noti{
     NSString *protocal = [noti object];
     if ([protocal isEqualToString:@"success"]) {
-        [HHAlertView showAlertWithStyle:HHAlertStyleOk inView:self.view Title:@"Congrats!" detail:@"Thank you for using Proxi" cancelButton:nil Okbutton:@"Thank you"];
+        [HHAlertView showAlertWithStyle:HHAlertStyleOk inView:self.presentedModalView.view Title:@"Congrats!" detail:@"Thank you for using Proxi" cancelButton:nil Okbutton:@"Thank you"];
+        [self presentViewController:self.presentedModalView animated:YES completion:nil];
         //Dismiss Page
     }else if ([protocal isEqualToString:@"item has already been ordered"]){
-        [HHAlertView showAlertWithStyle:HHAlertStyleError inView:self.view Title:@"Sorry" detail:@"Item has already been ordered" cancelButton:nil
-                               Okbutton:@"Cancel"];
+        [HHAlertView showAlertWithStyle:HHAlertStyleError inView:self.presentedModalView.view Title:@"Sorry" detail:@"Item has already been ordered" cancelButton:nil Okbutton:@"Cancel"];
+                [self presentViewController:self.presentedModalView animated:YES completion:nil];
     }
     else{
-        [HHAlertView showAlertWithStyle:HHAlertStyleError inView:self.view Title:@"Error" detail:@"Order didn't process" cancelButton:nil
+        [HHAlertView showAlertWithStyle:HHAlertStyleError inView:self.presentedModalView.view Title:@"Error" detail:@"Order didn't process" cancelButton:nil
                             Okbutton:@"Cancel"];
+        [self presentViewController:self.presentedModalView animated:YES completion:nil];
         
     }
 }

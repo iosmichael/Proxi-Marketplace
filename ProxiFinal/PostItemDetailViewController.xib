@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -294,14 +295,6 @@
                         </mask>
                         <mask key="constraints">
                             <exclude reference="3A2-w2-IdM"/>
-                            <exclude reference="3Sn-iD-zLC"/>
-                            <exclude reference="3ZZ-4y-4e3"/>
-                            <exclude reference="GFh-5v-X8N"/>
-                            <exclude reference="I98-fQ-aN1"/>
-                            <exclude reference="UiK-wV-OSE"/>
-                            <exclude reference="miP-eu-qu3"/>
-                            <exclude reference="pHO-hc-lQY"/>
-                            <exclude reference="zvn-JT-CgQ"/>
                             <exclude reference="0oM-L5-sJ5"/>
                             <exclude reference="1S4-hn-uaN"/>
                             <exclude reference="DdW-lZ-PBk"/>
@@ -314,6 +307,14 @@
                             <exclude reference="u9e-gh-d4K"/>
                             <exclude reference="uS6-KW-4Xk"/>
                             <exclude reference="zvm-hw-fwP"/>
+                            <exclude reference="3Sn-iD-zLC"/>
+                            <exclude reference="3ZZ-4y-4e3"/>
+                            <exclude reference="GFh-5v-X8N"/>
+                            <exclude reference="I98-fQ-aN1"/>
+                            <exclude reference="UiK-wV-OSE"/>
+                            <exclude reference="miP-eu-qu3"/>
+                            <exclude reference="pHO-hc-lQY"/>
+                            <exclude reference="zvn-JT-CgQ"/>
                         </mask>
                     </variation>
                     <variation key="widthClass=compact">
@@ -323,14 +324,6 @@
                         </mask>
                         <mask key="constraints">
                             <include reference="3A2-w2-IdM"/>
-                            <include reference="3Sn-iD-zLC"/>
-                            <include reference="3ZZ-4y-4e3"/>
-                            <include reference="GFh-5v-X8N"/>
-                            <include reference="I98-fQ-aN1"/>
-                            <include reference="UiK-wV-OSE"/>
-                            <include reference="miP-eu-qu3"/>
-                            <include reference="pHO-hc-lQY"/>
-                            <include reference="zvn-JT-CgQ"/>
                             <include reference="0oM-L5-sJ5"/>
                             <include reference="1S4-hn-uaN"/>
                             <include reference="DdW-lZ-PBk"/>
@@ -343,6 +336,14 @@
                             <include reference="u9e-gh-d4K"/>
                             <include reference="uS6-KW-4Xk"/>
                             <include reference="zvm-hw-fwP"/>
+                            <include reference="3Sn-iD-zLC"/>
+                            <include reference="3ZZ-4y-4e3"/>
+                            <include reference="GFh-5v-X8N"/>
+                            <include reference="I98-fQ-aN1"/>
+                            <include reference="UiK-wV-OSE"/>
+                            <include reference="miP-eu-qu3"/>
+                            <include reference="pHO-hc-lQY"/>
+                            <include reference="zvn-JT-CgQ"/>
                         </mask>
                     </variation>
                 </view>
@@ -429,13 +430,13 @@
                     <exclude reference="AyK-Fd-gCX"/>
                 </mask>
                 <mask key="constraints">
+                    <exclude reference="FVm-mW-ELN"/>
                     <exclude reference="ANv-aK-ocg"/>
                     <exclude reference="BlC-Rw-1QP"/>
                     <exclude reference="Lrh-2q-PJa"/>
                     <exclude reference="Ucc-pj-Veu"/>
                     <exclude reference="ghe-D4-wxk"/>
                     <exclude reference="ubk-hI-3X3"/>
-                    <exclude reference="FVm-mW-ELN"/>
                     <exclude reference="2zP-fZ-zb0"/>
                     <exclude reference="iUo-Qj-0lZ"/>
                     <exclude reference="u0X-tP-hc6"/>
@@ -448,13 +449,13 @@
                     <include reference="AyK-Fd-gCX"/>
                 </mask>
                 <mask key="constraints">
+                    <include reference="FVm-mW-ELN"/>
                     <include reference="ANv-aK-ocg"/>
                     <include reference="BlC-Rw-1QP"/>
                     <include reference="Lrh-2q-PJa"/>
                     <include reference="Ucc-pj-Veu"/>
                     <include reference="ghe-D4-wxk"/>
                     <include reference="ubk-hI-3X3"/>
-                    <include reference="FVm-mW-ELN"/>
                     <include reference="2zP-fZ-zb0"/>
                     <include reference="iUo-Qj-0lZ"/>
                     <include reference="u0X-tP-hc6"/>

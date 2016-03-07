@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Gotham-Bold.otf">
+            <string>Gotham-Bold</string>
+        </mutableArray>
+        <mutableArray key="Gotham-Book.ttf">
+            <string>Gotham-Book</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ForumSubmitViewController">
+            <connections>
+                <outlet property="forum_description" destination="cB8-hk-hMP" id="Go3-7u-MXe"/>
+                <outlet property="postButton" destination="PcS-De-snF" id="Qln-7C-Pgb"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="wordCount" destination="yUK-KF-zuI" id="Wgw-dd-93M"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Your post here..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="cB8-hk-hMP">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="142" id="X4L-SI-pBH"/>
+                    </constraints>
+                    <color key="textColor" red="0.56405855429292928" green="0.56405855429292928" blue="0.56405855429292928" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" name="Gotham-Book" family="Gotham" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="X4L-SI-pBH"/>
+                        </mask>
+                    </variation>
+                    <variation key="widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="X4L-SI-pBH"/>
+                        </mask>
+                    </variation>
+                </textView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PcS-De-snF">
+                    <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                    <color key="backgroundColor" red="0.18600672486285466" green="0.39750495051430129" blue="0.58039215690000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="116" id="SOc-G0-OZc"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Gotham-Bold" family="Gotham" pointSize="16"/>
+                    <state key="normal" title="Post">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="SOc-G0-OZc"/>
+                        </mask>
+                    </variation>
+                    <variation key="widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="SOc-G0-OZc"/>
+                        </mask>
+                    </variation>
+                    <connections>
+                        <action selector="sendPressed" destination="-1" eventType="touchUpInside" id="thr-UJ-nac"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 words" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yUK-KF-zuI">
+                    <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="62" id="dTA-iw-AS6"/>
+                        <constraint firstAttribute="height" constant="21" id="vfB-YD-Gig"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.45395359848484851" green="0.45395359848484851" blue="0.45395359848484851" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="dTA-iw-AS6"/>
+                            <exclude reference="vfB-YD-Gig"/>
+                        </mask>
+                    </variation>
+                    <variation key="widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="dTA-iw-AS6"/>
+                            <include reference="vfB-YD-Gig"/>
+                        </mask>
+                    </variation>
+                </label>
+            </subviews>
+            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="yUK-KF-zuI" firstAttribute="leading" secondItem="cB8-hk-hMP" secondAttribute="leading" id="3y3-YZ-E3A"/>
+                <constraint firstItem="PcS-De-snF" firstAttribute="trailing" secondItem="cB8-hk-hMP" secondAttribute="trailing" id="Kfr-1O-IBh"/>
+                <constraint firstItem="cB8-hk-hMP" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="16" id="T2u-wy-tbd"/>
+                <constraint firstItem="yUK-KF-zuI" firstAttribute="baseline" secondItem="PcS-De-snF" secondAttribute="baseline" id="T5P-3d-FEL"/>
+                <constraint firstItem="cB8-hk-hMP" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="btN-gh-PlO"/>
+                <constraint firstItem="PcS-De-snF" firstAttribute="top" secondItem="cB8-hk-hMP" secondAttribute="bottom" constant="8" symbolic="YES" id="gzq-wR-bcF"/>
+                <constraint firstItem="yUK-KF-zuI" firstAttribute="top" secondItem="cB8-hk-hMP" secondAttribute="bottom" constant="15" id="iNJ-dV-QMd"/>
+                <constraint firstItem="cB8-hk-hMP" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailingMargin" id="ms7-WP-Qo3"/>
+                <constraint firstItem="yUK-KF-zuI" firstAttribute="baseline" secondItem="PcS-De-snF" secondAttribute="firstBaseline" id="yvJ-DT-WHT"/>
+            </constraints>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="cB8-hk-hMP"/>
+                    <exclude reference="PcS-De-snF"/>
+                    <exclude reference="yUK-KF-zuI"/>
+                </mask>
+                <mask key="constraints">
+                    <exclude reference="T2u-wy-tbd"/>
+                    <exclude reference="btN-gh-PlO"/>
+                    <exclude reference="ms7-WP-Qo3"/>
+                    <exclude reference="3y3-YZ-E3A"/>
+                    <exclude reference="T5P-3d-FEL"/>
+                    <exclude reference="iNJ-dV-QMd"/>
+                    <exclude reference="yvJ-DT-WHT"/>
+                    <exclude reference="Kfr-1O-IBh"/>
+                    <exclude reference="gzq-wR-bcF"/>
+                </mask>
+            </variation>
+            <variation key="widthClass=compact">
+                <mask key="subviews">
+                    <include reference="cB8-hk-hMP"/>
+                    <include reference="PcS-De-snF"/>
+                    <include reference="yUK-KF-zuI"/>
+                </mask>
+                <mask key="constraints">
+                    <include reference="T2u-wy-tbd"/>
+                    <include reference="btN-gh-PlO"/>
+                    <include reference="ms7-WP-Qo3"/>
+                    <include reference="3y3-YZ-E3A"/>
+                    <include reference="T5P-3d-FEL"/>
+                    <include reference="iNJ-dV-QMd"/>
+                    <include reference="yvJ-DT-WHT"/>
+                    <include reference="Kfr-1O-IBh"/>
+                    <include reference="gzq-wR-bcF"/>
+                </mask>
+            </variation>
+        </view>
+    </objects>
+</document>

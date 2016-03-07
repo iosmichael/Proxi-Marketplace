@@ -36,6 +36,9 @@ typedef void (^chooseButton)(SelectionButton buttonIndex);
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightButtonWidth;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftButtonWidth;
 @property (weak, nonatomic) IBOutlet UIButton *rightButton;
+@property (strong,nonatomic) UILabel *leftButtonLabel;
+@property BOOL setRight;
+@property BOOL setLeft;
 
 @property (weak,nonatomic) id <MyTableViewCellDelegate> delegate;
 @end

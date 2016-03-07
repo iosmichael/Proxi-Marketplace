@@ -249,7 +249,7 @@
 
 -(void)setupTestingSources{
     const NSInteger numberOfTableViewRows = 1;
-    const NSInteger numberOfCollectionViewCells = 6;
+    const NSInteger numberOfCollectionViewCells = [self.categoryImagesArray count];
     
     NSMutableArray *mutableArray = [NSMutableArray arrayWithCapacity:numberOfTableViewRows];
     

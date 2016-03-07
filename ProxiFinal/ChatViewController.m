@@ -33,6 +33,8 @@
     self.firebase = [[[[Firebase alloc] initWithUrl:@"https://luminous-inferno-5888.firebaseio.com/"]childByAppendingPath:@"users"]childByAppendingPath:@"WheatonCollege"];
     self.delegate = self;
     self.dataSource = self;
+    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60)
+                                                         forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.hidden = NO;
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:50/255.0 green:144/255.0 blue:148/255.0 alpha:1.0];
     self.navigationController.navigationBar.backItem.backBarButtonItem.title = @"";
@@ -49,7 +51,6 @@
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
     [self.firebase removeAllObservers];
-    
 }
 
 

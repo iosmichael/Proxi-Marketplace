@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Gotham-Book.ttf">
+            <string>Gotham-Book</string>
+        </mutableArray>
+        <mutableArray key="Gotham-BookItalic.ttf">
+            <string>Gotham-BookItalic</string>
+        </mutableArray>
+        <mutableArray key="Gotham-Medium.otf">
+            <string>Gotham-Medium</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="235" id="KGk-i7-Jjw" customClass="ForumTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="235"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="234.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Michael Liu" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4uX-JD-Dob">
+                        <rect key="frame" x="8" y="8" width="304" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="WVT-b6-Xzg"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Gotham-Medium" family="Gotham" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;michael.liu@my.wheaton.edu&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z44-oS-u42">
+                        <rect key="frame" x="8" y="31" width="304" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="maB-0u-fta"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Gotham-BookItalic" family="Gotham" pointSize="14"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fGM-GK-2Y8">
+                        <rect key="frame" x="8" y="56" width="304" height="171"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="304" id="GS1-RH-dSu"/>
+                        </constraints>
+                        <string key="text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
+                        <fontDescription key="fontDescription" name="Gotham-Book" family="Gotham" pointSize="14"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Z44-oS-u42" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="4qR-wV-BEs"/>
+                    <constraint firstItem="fGM-GK-2Y8" firstAttribute="top" secondItem="Z44-oS-u42" secondAttribute="bottom" constant="8" id="64d-qF-TZp"/>
+                    <constraint firstItem="fGM-GK-2Y8" firstAttribute="leading" secondItem="Z44-oS-u42" secondAttribute="leading" id="99J-AH-fkw"/>
+                    <constraint firstItem="Z44-oS-u42" firstAttribute="top" secondItem="4uX-JD-Dob" secondAttribute="bottom" constant="2" id="A2k-7U-KKP"/>
+                    <constraint firstItem="Z44-oS-u42" firstAttribute="trailing" secondItem="fGM-GK-2Y8" secondAttribute="trailing" id="DVP-HM-lNa"/>
+                    <constraint firstItem="fGM-GK-2Y8" firstAttribute="top" secondItem="Z44-oS-u42" secondAttribute="bottom" constant="10" id="QTd-Nm-8R9"/>
+                    <constraint firstItem="Z44-oS-u42" firstAttribute="trailing" secondItem="4uX-JD-Dob" secondAttribute="trailing" id="f1N-3k-ELL"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="fGM-GK-2Y8" secondAttribute="bottom" constant="-0.5" id="fNR-ja-zls"/>
+                    <constraint firstItem="4uX-JD-Dob" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="fao-PL-6mQ"/>
+                    <constraint firstItem="4uX-JD-Dob" firstAttribute="leading" secondItem="Z44-oS-u42" secondAttribute="leading" id="ljd-a0-MwX"/>
+                    <constraint firstItem="fGM-GK-2Y8" firstAttribute="top" secondItem="Z44-oS-u42" secondAttribute="bottom" constant="3" id="zuH-p5-UUh"/>
+                </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="64d-qF-TZp"/>
+                        <exclude reference="zuH-p5-UUh"/>
+                    </mask>
+                </variation>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="forum_description" destination="fGM-GK-2Y8" id="YcR-4t-3Le"/>
+                <outlet property="forum_email" destination="Z44-oS-u42" id="aLV-0s-J3o"/>
+                <outlet property="forum_title" destination="4uX-JD-Dob" id="QnF-Sd-cnT"/>
+            </connections>
+            <point key="canvasLocation" x="245" y="430.5"/>
+        </tableViewCell>
+    </objects>
+</document>

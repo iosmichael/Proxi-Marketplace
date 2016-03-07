@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -27,7 +28,7 @@
                             <constraint firstAttribute="height" constant="24" id="vbF-gH-KcO"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                        <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="April 8,2015" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="80N-mj-Wbx">
@@ -36,7 +37,7 @@
                             <constraint firstAttribute="width" constant="86" id="EO6-0A-fvB"/>
                             <constraint firstAttribute="height" constant="18" id="SJK-Kb-f09"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="14"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -98,7 +99,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.56862745098039214" green="0.62745098039215685" blue="0.92941176470588238" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="6eX-e7-zl4" firstAttribute="leading" secondItem="eS5-kb-S2d" secondAttribute="leading" id="6BH-dq-Ocy"/>
                             <constraint firstAttribute="trailing" secondItem="sFC-v5-Krw" secondAttribute="trailing" id="f19-yD-uVK"/>

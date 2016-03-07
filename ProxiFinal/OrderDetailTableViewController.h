@@ -16,8 +16,8 @@
 @property (strong, nonatomic) UILabel *item_description;
 @property (strong,nonatomic) UILabel *item_title;
 @property (strong, nonatomic) UILabel *item_post_time;
-@property (strong, nonatomic) UIButton *orderButton;
-@property (strong, nonatomic) UIButton *confirmButton;
+
+
 @property (strong, nonatomic) UILabel *item_current_price;
 @property (strong, nonatomic) UILabel *owner_info;
 @property (strong,nonatomic) UIButton *refundButton;

@@ -14,6 +14,7 @@
 
 @interface OrderDetailTableViewController ()<HHAlertViewDelegate>
 
+@property (strong,nonatomic) UIViewController *presentedModalView;
 @end
 
 @implementation OrderDetailTableViewController{
@@ -37,6 +38,11 @@
     numbersOfOrderDaysBeforeRefund = 10;
     [self.tableView setBackgroundView:nil];
     [[HHAlertView shared]setDelegate:self];
+
+    self.presentedModalView = [[UIViewController alloc]init];
+    self.presentedModalView.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    self.presentedModalView.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    self.presentedModalView.view.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.7];
     [self setupElements];
     [self refundButtonEligibility];
     
@@ -76,8 +82,7 @@
             [cell.contentView addSubview:descView];
             break;
         case 3:
-            [cell.contentView addSubview:self.confirmButton];
-            [cell.contentView addSubview:self.orderButton];
+             [cell.contentView addSubview:personDetailView];
             break;
         default:
             break;
@@ -109,7 +114,7 @@
     return 1;
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 3;
+    return 4;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -230,32 +235,9 @@
     
     
     self.item_image = [[UIImageView alloc]initWithFrame:CGRectMake(Screen_width*0.05, 10, Screen_width*0.9,Screen_width*0.9)];
-    
-    self.orderButton = [[UIButton alloc]initWithFrame:CGRectMake(Screen_width*0.05, 5, Screen_width*0.4, 50)];
-    [self.orderButton addTarget:self action:@selector(orderButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-    [self.orderButton.layer setCornerRadius:15];
-    self.orderButton.backgroundColor = [UIColor colorWithRed:251/255.0f green:176/255.0f blue:87/255.0f alpha:1];
-    [self.orderButton setTitle:@"Refund" forState:UIControlStateNormal];
-    [self.orderButton setTitle:@"Payment Pending..." forState:UIControlStateDisabled];
-    self.orderButton.titleLabel.adjustsFontSizeToFitWidth = YES;
-    
-    
-    
-    self.confirmButton = [[UIButton alloc]initWithFrame:CGRectMake(Screen_width*0.5, 5, Screen_width*0.45, 50)];
-    [self.confirmButton addTarget:self action:@selector(confirmButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-    [self.confirmButton.layer setCornerRadius:15];
-    self.confirmButton.backgroundColor = [UIColor colorWithRed:251/255.0f green:176/255.0f blue:87/255.0f alpha:1];
-    [self.confirmButton setTitle:@"Item Received" forState:UIControlStateNormal];
-    [self.confirmButton setTitle:@"Payment Pending..." forState:UIControlStateDisabled];
 
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(checkoutPostSuccess:) name:@"FinishCheckoutNotification" object:nil];
-    
-    if (![self.order.order_status isEqualToString:@"held"]) {
-        self.orderButton.backgroundColor = [UIColor grayColor];
-        self.confirmButton.backgroundColor = [UIColor grayColor];
-        self.confirmButton.enabled = NO;
-        self.orderButton.enabled = NO;
-    }
+
     
     if (self.order.img_data) {
         [self.item_image setImage:[UIImage imageWithData:self.order.img_data]];
@@ -268,25 +250,20 @@
     NSString *protocal = [noti object];
     NSLog(@"protocal: %@",[protocal description]);
     if ([protocal isEqualToString:@"success"]) {
-        [HHAlertView showAlertWithStyle:HHAlertStyleOk inView:self.view Title:@"Success" detail:@"Thank you!" cancelButton:nil Okbutton:@"OK"];
+        
+        [HHAlertView showAlertWithStyle:HHAlertStyleOk inView:self.presentedModalView.view Title:@"Success" detail:@"Thank you!" cancelButton:nil Okbutton:@"OK"];
+        [self presentViewController:self.presentedModalView animated:YES completion:nil];
+        
     }else{
-        [HHAlertView showAlertWithStyle:HHAlertStyleError inView:self.view Title:@"Error" detail:@"Please Contact Us" cancelButton:@"Cancel" Okbutton:@"Move Back"];
+        [HHAlertView showAlertWithStyle:HHAlertStyleError inView:self.presentedModalView.view Title:@"Error" detail:@"Please Contact Us" cancelButton:@"Cancel" Okbutton:@"Move Back"];
+        [self presentViewController:self.presentedModalView animated:YES completion:nil];
     }
-}
-
--(void)orderButtonTapped{
-   /* OrderConnection *orderConnection = [[OrderConnection alloc]init];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(finish:) name:@"RefundNotification" object:nil];
-    [orderConnection refund:self.order.item_id];
-    */
-    RefundViewController *refundViewController = [[RefundViewController alloc]initWithNibName:@"RefundViewController" bundle:nil];
-    [self.navigationController pushViewController:refundViewController animated:YES];
-    refundViewController.order = self.order;
 }
 
 -(void)confirmButtonTapped{
     self.confirm_status = @"Confirm Status";
-    [HHAlertView showAlertWithStyle:HHAlertStyleWraning inView:self.view Title:@"Item Received?" detail:@"This Action Cannot Be Undone" cancelButton:@"Cancel" Okbutton:@"Yes"];
+    [HHAlertView showAlertWithStyle:HHAlertStyleWraning inView:self.presentedModalView.view Title:@"Item Received?" detail:@"This Action Cannot Be Undone" cancelButton:@"Cancel" Okbutton:@"Yes"];
+    [self presentViewController:self.presentedModalView animated:YES completion:nil];
 }
 
 
@@ -296,11 +273,10 @@
     UIButton *personButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, Screen_width, 70)];
     [personButton addTarget:self action:@selector(personButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     UIImageView *personIcon = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 40, 40)];
-    [personIcon setImage:[UIImage imageNamed:@"userIcon"]];
+    [personIcon setImage:[UIImage imageNamed:@"User"]];
     UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(75, 15, Screen_width-75, 17)];
     UILabel *emailLabel = [[UILabel alloc]initWithFrame:CGRectMake(75, 36, Screen_width - 75, 17)];
-    UIImageView *detailPointer = [[UIImageView alloc]initWithFrame:CGRectMake(Screen_width-30-15, 20, 30, 30)];
-    [detailPointer setImage:[UIImage imageNamed:@"detail"]];
+    
     NSAttributedString *nameStr =[[NSAttributedString alloc]initWithString:[self profileName:self.order.user_info[@"seller_email"]] attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:14]}];
     nameLabel.attributedText = nameStr;
     NSAttributedString *emailStr =[[NSAttributedString alloc]initWithString:self.order.user_info[@"seller_email"] attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:14]}];
@@ -308,10 +284,7 @@
     [personDetailView addSubview:personIcon];
     [personDetailView addSubview:nameLabel];
     [personDetailView addSubview:emailLabel];
-    [personDetailView addSubview:detailPointer];
     [personDetailView addSubview:personButton];
-
-    
     
 }
 -(void)personButtonTapped{
@@ -358,7 +331,13 @@
 -(void)refundCode:(NSNotification *)noti{
     self.confirm_status = @"Refund Code";
     NSString *code = [noti object];
-    [HHAlertView showAlertWithStyle:HHAlertStyleDefault inView:self.view Title:@"Refund Code" detail:code cancelButton:nil Okbutton:@"Cancel"];
+    [HHAlertView showAlertWithStyle:HHAlertStyleDefault inView:self.presentedModalView.view Title:@"Refund Code" detail:code cancelButton:nil Okbutton:@"Cancel"];
+    if (self.presentedViewController == NULL) {
+        [self presentViewController:self.presentedModalView animated:YES completion:nil];
+    }else{
+        NSLog(@"%@",[self.presentedViewController description]);
+    }
+    
 }
 
 -(void)refundButtonEligibility{
@@ -381,6 +360,7 @@
             [orderConnection finishCheckOut:self.order.item_id];
             NSLog(@"%@",[self.order description]);
         }
+        
     }else if ([self.confirm_status isEqualToString:@"Process"]){
         if (button==HHAlertButtonCancel) {
             self.confirm_status=@"Confirm Status";
@@ -388,8 +368,11 @@
             [self.navigationController popToRootViewControllerAnimated:YES];
         }
     }else if ([self.confirm_status isEqualToString:@"Refund Code"]){
-        
+    
     }
+    
+    [self.presentedModalView dismissViewControllerAnimated:YES completion:nil];
+    
 }
 
 @end

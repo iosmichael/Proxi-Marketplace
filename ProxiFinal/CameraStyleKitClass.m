@@ -27,8 +27,8 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
 
     //// Color Declarations
-    UIColor* color0 = [UIColor colorWithRed: 1 green: 1 blue: 1 alpha: 1];
-    UIColor* color1 = [UIColor colorWithRed: 0.812 green: 0.812 blue: 0.812 alpha: 0.62];
+    UIColor* color0 = [UIColor grayColor];
+    UIColor* color1 = [UIColor whiteColor];
 
 
     //// Subframes
@@ -49,7 +49,7 @@
             [color1 setFill];
             [cameraShutterVectorPath fill];
             [color0 setStroke];
-            cameraShutterVectorPath.lineWidth = 3;
+            cameraShutterVectorPath.lineWidth = 1;
             [cameraShutterVectorPath stroke];
 
 

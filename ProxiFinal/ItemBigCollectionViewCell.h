@@ -10,7 +10,6 @@
 
 @interface ItemBigCollectionViewCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *cellImage;
-@property (weak, nonatomic) IBOutlet UILabel *cellTitle;
-@property (weak, nonatomic) IBOutlet UILabel *cellPrice;
+
 
 @end

@@ -10,19 +10,33 @@
 #import "OrderConnection.h"
 #import "HHAlertView.h"
 
+#define complete_button_background [UIColor colorWithRed:104/255.0 green:198/255.0 blue:196/255.0 alpha:1]
+
 @interface RefundViewController ()<HHAlertViewDelegate,UITextFieldDelegate,UITextViewDelegate>
 
 @end
 
-@implementation RefundViewController
+@implementation RefundViewController{
+    int numbersOfOrderDaysBeforeRefund;
+    BOOL textViewEdited;
+    BOOL policyPassed;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [[HHAlertView shared]setDelegate:self];
     self.navigationController.navigationBar.translucent = NO;
-    self.refundCode.delegate = self;
     self.feedback.delegate = self;
+    self.item_title.text = self.order.item_title;
+    self.refundAmount.text = [@"Refund Amount: $" stringByAppendingString:self.order.order_price];
+    numbersOfOrderDaysBeforeRefund = 10;
+    [self setupRefundTimeRequirement];
+    [self setupGestureRecognizer];
+    [self checkValidation];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    self.completeRefundButton.layer.cornerRadius = 25;
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -33,13 +47,9 @@
     
     OrderConnection *orderConnection = [[OrderConnection alloc]init];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(finish:) name:@"RefundNotification" object:nil];
-    [orderConnection refund:self.order.item_id refundCode:self.refundCode.text];
+    [orderConnection refund:self.order.item_id feedback:self.feedback.text];
 }
 
--(BOOL)textFieldShouldReturn:(UITextField *)textField{
-    [self.refundCode resignFirstResponder];
-    return NO;
-}
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     
     if([text isEqualToString:@"\n"]) {
@@ -48,6 +58,43 @@
     }
     
     return YES;
+}
+
+-(void)setupGestureRecognizer{
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
+                                   initWithTarget:self
+                                   action:@selector(dismissKeyboard)];
+    
+    [self.view addGestureRecognizer:tap];
+}
+-(void)dismissKeyboard{
+    [self.feedback resignFirstResponder];
+}
+
+-(void)textViewDidBeginEditing:(UITextView *)textView{
+    if (!textViewEdited) {
+        textView.text = @"";
+        textView.textColor = [UIColor blackColor];
+    }
+    textViewEdited = YES;
+    [self checkValidation];
+}
+-(void)textViewDidEndEditing:(UITextView *)textView{
+    if (textView.text.length==0) {
+        textViewEdited= NO;
+        self.feedback.text = @"What is wrong?";
+        self.feedback.textColor = [UIColor colorWithRed:180/255.0 green:180/255.0 blue:180/255.0 alpha:1];
+    }
+    [self checkValidation];
+}
+-(void)checkValidation{
+    if (!textViewEdited||!policyPassed) {
+        self.completeRefundButton.enabled = NO;
+        self.completeRefundButton.backgroundColor = [UIColor grayColor];
+    }else{
+        self.completeRefundButton.enabled = YES;
+        self.completeRefundButton.backgroundColor = complete_button_background;
+    }
 }
 
 -(void)finish:(NSNotification *)noti{
@@ -62,14 +109,28 @@
 }
 - (void)didClickButtonAnIndex:(HHAlertButton )button{
     if (button==HHAlertButtonCancel) {
-        self.refundCode.text = @"";
         self.feedback.text = @"";
         self.submitButton.enabled= YES;
     }else if (button==HHAlertButtonOk){
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }
-
+-(void)setupRefundTimeRequirement{
+    NSDate *now = [NSDate date];
+    NSDate *tenDaysBefore = [now dateByAddingTimeInterval:-60*60*24*numbersOfOrderDaysBeforeRefund];
+    NSDateFormatter *dateFormatter=[[NSDateFormatter alloc]init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate *order_date = [dateFormatter dateFromString:self.order.order_date];
+    if ([order_date compare:tenDaysBefore]==NSOrderedAscending) {
+        self.alertLabel.hidden = YES;
+        policyPassed = YES;
+    }else{
+        self.completeRefundButton.enabled = NO;
+        self.completeRefundButton.backgroundColor = [UIColor grayColor];
+        self.alertLabel.hidden = NO;
+        
+    }
+}
 /*
 #pragma mark - Navigation
 

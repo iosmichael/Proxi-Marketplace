@@ -982,7 +982,7 @@
                 <button opaque="NO" tag="102" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Xl-pR-Ngh">
                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                     <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                    <state key="normal" image="rides_icon.png">
+                    <state key="normal" image="electronic_icon.png">
                         <color key="titleColor" red="0.14901960784313725" green="0.30588235294117649" blue="0.43137254901960786" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                     <connections>
@@ -1018,7 +1018,7 @@
                 <button opaque="NO" tag="104" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z7i-wc-i4H">
                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                     <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                    <state key="normal" title="Service" image="service_icon.png">
+                    <state key="normal" title="Service" image="equipment_icon.png">
                         <color key="titleColor" red="0.14901960784313725" green="0.30588235294117649" blue="0.43137254901960786" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                     <connections>
@@ -1258,10 +1258,10 @@
     <resources>
         <image name="book_icon.png" width="207" height="267"/>
         <image name="cloth_icon.png" width="138" height="182"/>
+        <image name="electronic_icon.png" width="207" height="267"/>
+        <image name="equipment_icon.png" width="207" height="273"/>
         <image name="furniture_icon.png" width="138" height="178"/>
         <image name="other_icon.png" width="138" height="178"/>
         <image name="post_inactive_icon.png" width="218" height="216"/>
-        <image name="rides_icon.png" width="138" height="178"/>
-        <image name="service_icon.png" width="138" height="178"/>
     </resources>
 </document>

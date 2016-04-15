@@ -82,6 +82,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO];
+    [self.tabBarController.tabBar setHidden:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -98,9 +99,9 @@
     self.category = @"";
     [self.other setImage:[UIImage imageNamed:@"other_icon_inactive.png"] forState:UIControlStateNormal];
     [self.clothing setImage:[UIImage imageNamed:@"cloth_icon_inactive.png"] forState:UIControlStateNormal];
-    [self.ride setImage:[UIImage imageNamed:@"ride_icon_inactive.png"] forState:UIControlStateNormal];
+    [self.ride setImage:[UIImage imageNamed:@"electronic_icon_inactive.png"] forState:UIControlStateNormal];
     [self.book setImage:[UIImage imageNamed:@"book_icon_inactive.png"] forState:UIControlStateNormal];
-    [self.service setImage:[UIImage imageNamed:@"service_icon_inactive.png"] forState:UIControlStateNormal];
+    [self.service setImage:[UIImage imageNamed:@"equipment_icon_inactive.png"] forState:UIControlStateNormal];
     [self.furniture setImage:[UIImage imageNamed:@"furniture_icon_inactive.png"] forState:UIControlStateNormal];
 }
 -(void)renewNumber{
@@ -200,16 +201,16 @@
             [self.book setImage:[UIImage imageNamed:@"book_icon.png"] forState:UIControlStateNormal];
             break;
         case 102: //ride
-            self.category=@"Ride";
-            [self.ride setImage:[UIImage imageNamed:@"rides_icon.png"] forState:UIControlStateNormal];
+            self.category=@"Electronic";
+            [self.ride setImage:[UIImage imageNamed:@"electronic_icon.png"] forState:UIControlStateNormal];
             break;
         case 103: //furniture
             self.category=@"Furniture";
             [self.furniture setImage:[UIImage imageNamed:@"furniture_icon.png"] forState:UIControlStateNormal];
             break;
         case 104: //service
-            self.category=@"Service";
-            [self.service setImage:[UIImage imageNamed:@"service_icon.png"] forState:UIControlStateNormal];
+            self.category=@"Equipment";
+            [self.service setImage:[UIImage imageNamed:@"equipment_icon.png"] forState:UIControlStateNormal];
             break;
         case 105: //cloth
             self.category=@"Clothing";

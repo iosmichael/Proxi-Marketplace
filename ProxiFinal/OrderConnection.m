@@ -101,10 +101,10 @@
     
 }
 
--(void)refund:(NSString *)item_id refundCode:(NSString *)refund_code{
+-(void)refund:(NSString *)item_id feedback:(NSString *)feedback{
     NSDictionary *param = @{
                             @"item_id":item_id,
-                            @"refund_code":refund_code
+                            @"feedback":feedback
                             };
     NSDictionary *param2 = @{
                              @"object":@"Transaction_Test",

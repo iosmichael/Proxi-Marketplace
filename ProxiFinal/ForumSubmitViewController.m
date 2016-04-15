@@ -29,6 +29,10 @@
     [self setupGestureRecognizer];
     [[HHAlertView shared]setDelegate:self];
     modalViewController = [[UIViewController alloc]init];
+    modalViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    modalViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    modalViewController.view.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.7];
+    
     user_email = [[NSUserDefaults standardUserDefaults]objectForKey:@"username"];
     [self setupUsername];
     self.navigationController.navigationBar.translucent = NO;
@@ -47,6 +51,8 @@
                               @"time": timeInt
                               };
     Firebase *destineFirebase = [self.firebase childByAutoId];
+    self.postButton.enabled = NO;
+    self.postButton.backgroundColor = [UIColor grayColor];
     [destineFirebase setValue:message withCompletionBlock:^(NSError *error, Firebase *ref) {
         if (error) {
             [self postErrorResponse];
@@ -76,7 +82,9 @@
     }
 }
 -(void)textViewDidChange:(UITextView *)textView{
-    NSArray *components = [textView.text componentsSeparatedByString:@" "];
+    NSString *sep = @" \n";
+    NSCharacterSet *set = [NSCharacterSet characterSetWithCharactersInString:sep];
+    NSArray *components = [textView.text componentsSeparatedByCharactersInSet:set];
     self.wordCount.text = [[@(components.count)stringValue]stringByAppendingString:@" words"];
 }
 
@@ -103,6 +111,7 @@
 }
 -(void)postSuccessResponse{
     [HHAlertView showAlertWithStyle:HHAlertStyleOk inView:modalViewController.view Title:@"Congrats!" detail:@"Thank you for using Proxi" cancelButton:nil Okbutton:@"Thank you"];
+    self.forum_description.text =@"";
     [self presentViewController:modalViewController animated:YES completion:nil];
 }
 

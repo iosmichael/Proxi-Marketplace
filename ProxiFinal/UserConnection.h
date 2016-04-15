@@ -19,6 +19,7 @@
 
 -(void)registeredUserInfo:(User *)user;
 -(void)loginUserInfo:(User *)user;
+-(void)registerSubMerchantInfo:(NSDictionary *)merchantInfo;
 -(void)fetchSellerInfo: (NSString *)sellerEmail;
 -(void)retrievePassword: (NSString *)userEmail phone:(NSString *)userPhone;
 @end

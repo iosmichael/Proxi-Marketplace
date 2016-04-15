@@ -157,8 +157,7 @@
     self.navigationItem.titleView = imageView;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     [self.navigationController.navigationBar
-     setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
-    self.navigationController.navigationBar.barTintColor =[UIColor colorWithRed:36/255.0 green:104/255.0 blue:156/255.0 alpha:1.0];
+     setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"Gotham-Book" size:25],NSForegroundColorAttributeName : [UIColor whiteColor]}];
     [self setupTime];
     [self setupItemInfo];
     [self setupPersonInfo];
@@ -183,20 +182,20 @@
     self.item_title = [[UILabel alloc]initWithFrame:CGRectMake(75, 20, Screen_width-15, 25)];
     self.item_title.numberOfLines = 0;
     self.item_title.adjustsFontSizeToFitWidth = YES;
-    NSAttributedString *titleStr =[[NSAttributedString alloc]initWithString:self.order.item_title attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:18]}];
+    NSAttributedString *titleStr =[[NSAttributedString alloc]initWithString:self.order.item_title attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Gotham-Light" size:18]}];
     self.item_title.attributedText = titleStr;
     [titleIcon setImage:[UIImage imageNamed:@"gift"]];
     UIImageView *priceIcon = [[UIImageView alloc]initWithFrame:CGRectMake(15, 65, 40, 40)];
     [priceIcon setImage:[UIImage imageNamed:@"vemo"]];
     self.item_current_price = [[UILabel alloc]initWithFrame:CGRectMake(75, 70, Screen_width-15, 25)];
-    NSAttributedString *priceStr =[[NSAttributedString alloc]initWithString:[@"$ " stringByAppendingString:self.order.order_price] attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:19]}];
+    NSAttributedString *priceStr =[[NSAttributedString alloc]initWithString:[@"$ " stringByAppendingString:self.order.order_price] attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Gotham-Light" size:19]}];
     self.item_current_price.attributedText = priceStr;
     UIButton *refundButton = [[UIButton alloc]initWithFrame:CGRectMake(Screen_width-15-116, 70, 116, 22)];
     [refundButton setImage:[UIImage imageNamed:@"refundCode"] forState:UIControlStateDisabled];
     [refundButton setImage:[UIImage imageNamed:@"refundCode_active"] forState:UIControlStateNormal];
     [refundButton addTarget:self action:@selector(retrieveRefundCode) forControlEvents:UIControlEventTouchUpInside];
     UILabel *refundButtonDesc = [[UILabel alloc]initWithFrame:CGRectMake(Screen_width-15-116, 95, 116, 15)];
-    NSAttributedString *refundLabelDesc =[[NSAttributedString alloc]initWithString:@"You can only access the refund code 10 days after your initial order" attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:6.5]}];
+    NSAttributedString *refundLabelDesc =[[NSAttributedString alloc]initWithString:@"You can only access the refund code 10 days after your initial order" attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Gotham-Light" size:6.5]}];
     refundButtonDesc.attributedText = refundLabelDesc;
     refundButtonDesc.numberOfLines = 0;
     refundButtonDesc.lineBreakMode = NSLineBreakByWordWrapping;
@@ -217,12 +216,12 @@
     [descIcon setImage:[UIImage imageNamed:@"note"]];
     
     
-    NSAttributedString *descStr =[[NSAttributedString alloc]initWithString:self.order.item_description attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:14]}];
+    NSAttributedString *descStr =[[NSAttributedString alloc]initWithString:self.order.item_description attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Gotham-Light" size:14]}];
     CGSize size = CGSizeMake(230, 999);
     CGRect textRect = [self.order.item_description
                        boundingRectWithSize:size
                        options:NSStringDrawingUsesLineFragmentOrigin
-                       attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Helvetica" size:14]}
+                       attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Gotham-Light" size:14]}
                        context:nil];
     descSize = textRect.size;
     self.item_description = [[UILabel alloc]initWithFrame:CGRectMake(75, 15, Screen_width-90, descSize.height)];
@@ -277,9 +276,9 @@
     UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(75, 15, Screen_width-75, 17)];
     UILabel *emailLabel = [[UILabel alloc]initWithFrame:CGRectMake(75, 36, Screen_width - 75, 17)];
     
-    NSAttributedString *nameStr =[[NSAttributedString alloc]initWithString:[self profileName:self.order.user_info[@"seller_email"]] attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:14]}];
+    NSAttributedString *nameStr =[[NSAttributedString alloc]initWithString:[self profileName:self.order.user_info[@"seller_email"]] attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Gotham-Light" size:14]}];
     nameLabel.attributedText = nameStr;
-    NSAttributedString *emailStr =[[NSAttributedString alloc]initWithString:self.order.user_info[@"seller_email"] attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Helvetica" size:14]}];
+    NSAttributedString *emailStr =[[NSAttributedString alloc]initWithString:self.order.user_info[@"seller_email"] attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Gotham-Light" size:14]}];
     emailLabel.attributedText = emailStr;
     [personDetailView addSubview:personIcon];
     [personDetailView addSubview:nameLabel];

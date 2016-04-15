@@ -45,7 +45,7 @@
                                     handler:^(UIAlertAction * action)
                                     {//Handel your yes please button action here
                                         [alertYes dismissViewControllerAnimated:YES completion:^{
-                                            [self dismissViewControllerAnimated:YES completion:nil];
+                                            [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
                                         }];
                                     }];
         [alertYes addAction:yesButton];

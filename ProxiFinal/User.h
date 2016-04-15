@@ -14,12 +14,11 @@
 @property (strong,nonatomic) NSString *email;
 @property (strong,nonatomic) NSString *password;
 @property (strong,nonatomic) NSString *phone;
-@property (strong,nonatomic) NSString *dateOfBirth;
 @property (strong,nonatomic) NSString *firstName;
 @property (strong,nonatomic) NSString *lastName;
 
 
--(instancetype)initWithEmail:(NSString *)email firstName:(NSString *)firstName lastName:(NSString *)lastName password:(NSString *)password phone:(NSString *)phone dateOfBirth:(NSString *)dateOfBirth;
+-(instancetype)initWithEmail:(NSString *)email firstName:(NSString *)firstName lastName:(NSString *)lastName password:(NSString *)password phone:(NSString *)phone;
 
 
 -(instancetype)initWithEmail:(NSString *)email password:(NSString *)password;

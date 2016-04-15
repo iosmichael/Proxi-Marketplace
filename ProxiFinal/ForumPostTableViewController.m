@@ -13,14 +13,20 @@
 #define forum_url @"https://luminous-inferno-5888.firebaseio.com/"
 #define screen_width [UIScreen mainScreen].bounds.size.width
 #define header_backgroundColor [UIColor colorWithRed:47/255.0 green:52/255.0 blue:87/255.0 alpha:1]
+#define email_backgroundColor [UIColor colorWithRed:29/255.0 green:129/255.0 blue:210/255.0 alpha:1]
 
-@interface ForumPostTableViewController ()
+
+@interface ForumPostTableViewController ()<MFMailComposeViewControllerDelegate>
 @property (strong,nonatomic) NSMutableArray *dataSource;
 @property (strong,nonatomic) NSMutableArray *dataSourceKey;
 @property (strong,nonatomic) Firebase *firebase;
+@property (strong,nonatomic) UIRefreshControl *bottomRefresher;
 @end
 
-@implementation ForumPostTableViewController
+@implementation ForumPostTableViewController{
+    NSIndexPath *selectRow;
+    NSString *selectEmail;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -39,14 +45,20 @@
     UINib *nibForScrollViewCell = [UINib nibWithNibName:@"ForumTableViewCell" bundle:nil];
     [self.tableView registerNib:nibForScrollViewCell forCellReuseIdentifier:@"forumCell"];
     self.tableView.tableHeaderView = [self setupTableHeaderView:self.category];
+    self.tableView.tableFooterView = [self setupTableFooterView];
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     [self setupDatabase];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addForumPost)];
+    self.bottomRefresher = [UIRefreshControl new];
+    self.bottomRefresher.triggerVerticalOffset = 100.;
+    [self.bottomRefresher addTarget:self action:@selector(viewMoreButtonTapped) forControlEvents:UIControlEventValueChanged];
+    self.tableView.bottomRefreshControl = self.bottomRefresher;
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+    [self.firebase removeAllObservers];
 }
 
 -(void)addForumPost{
@@ -55,7 +67,7 @@
     [self.navigationController pushViewController:forumSubmitViewController animated:YES];
 }
 # pragma mark - Cell Setup
-- (void)setUpCell:(ForumTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+- (void)setUpCell:(ForumTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath withEmailButton:(BOOL)withEmail{
     NSDictionary *dic = [self.dataSource objectAtIndex:indexPath.row];
     cell.forum_title.text = dic[@"forum_title"];
     cell.forum_email.text = dic[@"forum_email"];
@@ -65,6 +77,27 @@
     [cell layoutIfNeeded];
 }
 
+- (void)openEmail:(NSDictionary *)dic{
+    // Email Subject
+    NSString *emailTitle = @"Reply to Proxi Forum";
+    // Email Content
+    NSString *messageBody = [@"Reply to: \nProxi Forum: " stringByAppendingString:dic[@"forum_description"]];
+    // To address
+    NSArray *toRecipents = [NSArray arrayWithObject:dic[@"forum_email"]];
+    
+    MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];
+    mc.mailComposeDelegate = self;
+    [mc setSubject:emailTitle];
+    [mc setMessageBody:messageBody isHTML:NO];
+    [mc setToRecipients:toRecipents];
+    // Present mail view controller on screen
+    [self presentViewController:mc animated:YES completion:NULL];
+}
+
+- (void) mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
 
 #pragma mark - Table view data source
 
@@ -78,8 +111,21 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ForumTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"forumCell" forIndexPath:indexPath];
-    [self setUpCell:cell atIndexPath:indexPath];
+    [self setUpCell:cell atIndexPath:indexPath withEmailButton:[selectRow isEqual:indexPath]];
     return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+        if ([selectRow isEqual:indexPath]) {
+            selectRow=nil;
+        }else{
+            selectRow = indexPath;
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+        });
+            return;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -88,19 +134,32 @@
     dispatch_once(&onceToken, ^{
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"forumCell"];
     });
-    [self setUpCell:cell atIndexPath:indexPath];
-    
-    return [self calculateHeightForConfiguredSizingCell:cell withEmailButton:NO];
+    [self setUpCell:cell atIndexPath:indexPath withEmailButton:[selectRow isEqual:indexPath]];
+    return [self calculateHeightForConfiguredSizingCell:cell];
 }
 
-- (CGFloat)calculateHeightForConfiguredSizingCell:(ForumTableViewCell *)sizingCell withEmailButton:(BOOL)extraHeight{
+- (CGFloat)calculateHeightForConfiguredSizingCell:(ForumTableViewCell *)sizingCell{
     [sizingCell layoutIfNeeded];
     CGSize size = [sizingCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-    if (extraHeight) {
-        return size.height+40;
-    }
     return size.height;
 }
+
+-(NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewRowAction *button = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"Email" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath)
+                                    {
+                                        [self openEmail:[self.dataSource objectAtIndex:indexPath.row]];
+                                    }];
+    button.backgroundColor = email_backgroundColor; //arbitrary color
+    UITableViewRowAction *delete = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"Delete" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath)
+                                     {
+                                         [self deleteForumPost:indexPath];
+                                     }];
+    delete.backgroundColor = [UIColor redColor]; //arbitrary color
+    
+    return @[button, delete];
+}
+
+
 
 -(void)setupDatabase{
     [[self.firebase queryLimitedToFirst:15] observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
@@ -111,7 +170,7 @@
                                   @"time":snapshot.value[@"time"]
                                   };
         [self.dataSource addObject:message];
-        NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"time"  ascending:YES];
+        NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"time"  ascending:NO];
         NSArray *messages=[self.dataSource sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]];
         self.dataSource = [NSMutableArray arrayWithArray:messages];
         NSLog(@"%@",[self.dataSource description]);
@@ -133,6 +192,18 @@
     [headerView addSubview:headerTitle];
     return headerView;
 }
+-(UIView *)setupTableFooterView{
+    UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screen_width, 20)];
+    footerView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    NSAttributedString *footerStr = [[NSAttributedString alloc]initWithString:@"Swipe left to reply forum post or delete your own post" attributes:@{
+                                                                        NSFontAttributeName:[UIFont fontWithName:@"Gotham-Light" size:10.5],NSForegroundColorAttributeName: [UIColor grayColor]
+                                                                                                    }];
+    UILabel *footerTitle = [[UILabel alloc]initWithFrame:CGRectMake(screen_width*0.1, 5, screen_width*0.8, 10)];
+    footerTitle.attributedText = footerStr;
+    footerTitle.textAlignment = NSTextAlignmentCenter;
+    [footerView addSubview:footerTitle];
+    return footerView;
+}
 
 
 - (UIImage *)resizeImage:(UIImage *)image toSize:(CGSize)resize
@@ -143,6 +214,47 @@
     UIImage *reSizeImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return reSizeImage;
+}
+-(void)viewMoreButtonTapped{
+    int i = (int)[self.dataSource count];
+    [self.dataSource removeAllObjects];
+    [[self.firebase queryLimitedToFirst:i+15] observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
+        NSDictionary *message = @{
+                                  @"forum_title":snapshot.value[@"forum_title"],
+                                  @"forum_email":snapshot.value[@"forum_email"],
+                                  @"forum_description":snapshot.value[@"forum_description"],
+                                  @"time":snapshot.value[@"time"]
+                                  };
+        [self.dataSource addObject:message];
+    }];
+    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"time"  ascending:NO];
+    NSArray *messages=[self.dataSource sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]];
+    self.dataSource = [NSMutableArray arrayWithArray:messages];
+    NSLog(@"%@",[self.dataSource description]);
+    [self.tableView reloadData];
+    [self.bottomRefresher endRefreshing];
+    //Refresh indicator show
+    
+}
+
+-(void)deleteForumPost:(NSIndexPath *)indexPath{
+    NSDictionary *message = [self.dataSource objectAtIndex:indexPath.row];
+    NSString *time = message[@"time"];
+    if ([message[@"forum_email"] isEqualToString:[[NSUserDefaults standardUserDefaults]objectForKey:@"username"]]) {
+        [[[self.firebase queryOrderedByChild:@"time"] queryEqualToValue:time ]observeSingleEventOfType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
+            [[self.firebase childByAppendingPath:snapshot.key]removeValue];
+            NSLog(@"%@", snapshot.key);
+            NSLog(@"delete");
+            [self.dataSource removeObjectAtIndex:indexPath.row];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.tableView reloadData];
+            });
+        }];
+    }else{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+        });
+    }
 }
 
 /*

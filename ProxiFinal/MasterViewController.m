@@ -10,14 +10,13 @@
 #import "LoginMainViewController.h"
 #import "ABCIntroView.h"
 
+
 @interface MasterViewController ()<ABCIntroViewDelegate>
 @property ABCIntroView *introView;
 @property (strong,nonatomic) UIButton *centerButton;
 @end
 
 @implementation MasterViewController
-#define CENTERBUTTONSIZE_WIDTH 55
-#define CENTERBUTTONSIZE_HEIGHT 45
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -83,7 +82,6 @@
     UITabBarItem *tabBarItem4 = [self.tabBar.items objectAtIndex:3];
     UITabBarItem *tabBarItem5 = [self.tabBar.items objectAtIndex:4];
     
-    
     tabBarItem1.selectedImage = [[UIImage imageNamed:@"Home_highlighted"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     tabBarItem1.image = [[UIImage imageNamed:@"Home"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     tabBarItem1.imageInsets= UIEdgeInsetsMake(5, 0, -5, 0);
@@ -120,6 +118,7 @@
         self.centerButton.hidden = YES;
     }
 }
+
 
 
 

@@ -26,10 +26,10 @@
 @property (weak, nonatomic) IBOutlet JAMValidatingTextField *recheckPassword;
 
 @property (weak, nonatomic) IBOutlet JAMValidatingTextField *phone;
+@property (weak, nonatomic) IBOutlet JAMValidatingTextField *firstName;
 
-@property (weak, nonatomic) IBOutlet JAMValidatingTextField *year;
-@property (weak, nonatomic) IBOutlet JAMValidatingTextField *month;
-@property (weak, nonatomic) IBOutlet JAMValidatingTextField *day;
+@property (weak, nonatomic) IBOutlet JAMValidatingTextField *lastName;
+
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *refresher;
 
 @end

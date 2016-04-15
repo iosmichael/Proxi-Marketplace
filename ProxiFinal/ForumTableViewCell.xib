@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -12,7 +12,7 @@
         <mutableArray key="Gotham-BookItalic.ttf">
             <string>Gotham-BookItalic</string>
         </mutableArray>
-        <mutableArray key="Gotham-Medium.otf">
+        <mutableArray key="Gotham-Medium.ttf">
             <string>Gotham-Medium</string>
         </mutableArray>
     </customFonts>
@@ -32,7 +32,7 @@
                             <constraint firstAttribute="height" constant="21" id="WVT-b6-Xzg"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Gotham-Medium" family="Gotham" pointSize="17"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;michael.liu@my.wheaton.edu&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z44-oS-u42">
@@ -41,7 +41,7 @@
                             <constraint firstAttribute="height" constant="15" id="maB-0u-fta"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Gotham-BookItalic" family="Gotham" pointSize="14"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fGM-GK-2Y8">
@@ -51,21 +51,46 @@
                         </constraints>
                         <string key="text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
                         <fontDescription key="fontDescription" name="Gotham-Book" family="Gotham" pointSize="14"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1ss-jf-ehQ">
+                        <rect key="frame" x="317" y="0.0" width="3" height="235"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="5" id="Gnm-JK-sci"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="2.5" id="OeF-2A-uqf"/>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="2.5" id="bqs-xM-3xz"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Gnm-JK-sci"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Isf-15-Etp">
+                        <rect key="frame" x="8" y="48" width="304" height="1"/>
+                        <color key="backgroundColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="Z44-oS-u42" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="4qR-wV-BEs"/>
                     <constraint firstItem="fGM-GK-2Y8" firstAttribute="top" secondItem="Z44-oS-u42" secondAttribute="bottom" constant="8" id="64d-qF-TZp"/>
+                    <constraint firstItem="Isf-15-Etp" firstAttribute="leading" secondItem="Z44-oS-u42" secondAttribute="leading" id="8gy-Mn-FwM"/>
                     <constraint firstItem="fGM-GK-2Y8" firstAttribute="leading" secondItem="Z44-oS-u42" secondAttribute="leading" id="99J-AH-fkw"/>
                     <constraint firstItem="Z44-oS-u42" firstAttribute="top" secondItem="4uX-JD-Dob" secondAttribute="bottom" constant="2" id="A2k-7U-KKP"/>
                     <constraint firstItem="Z44-oS-u42" firstAttribute="trailing" secondItem="fGM-GK-2Y8" secondAttribute="trailing" id="DVP-HM-lNa"/>
+                    <constraint firstItem="Isf-15-Etp" firstAttribute="top" secondItem="Z44-oS-u42" secondAttribute="bottom" constant="2" id="KXl-ST-FzC"/>
+                    <constraint firstItem="1ss-jf-ehQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="OnT-db-Fce"/>
                     <constraint firstItem="fGM-GK-2Y8" firstAttribute="top" secondItem="Z44-oS-u42" secondAttribute="bottom" constant="10" id="QTd-Nm-8R9"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="1ss-jf-ehQ" secondAttribute="trailing" constant="-8" id="ZMe-Km-vUD"/>
+                    <constraint firstItem="Isf-15-Etp" firstAttribute="trailing" secondItem="Z44-oS-u42" secondAttribute="trailing" id="ejK-eF-NGQ"/>
                     <constraint firstItem="Z44-oS-u42" firstAttribute="trailing" secondItem="4uX-JD-Dob" secondAttribute="trailing" id="f1N-3k-ELL"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="1ss-jf-ehQ" secondAttribute="bottom" constant="-8" id="fMg-aL-v2Z"/>
                     <constraint firstAttribute="bottomMargin" secondItem="fGM-GK-2Y8" secondAttribute="bottom" constant="-0.5" id="fNR-ja-zls"/>
                     <constraint firstItem="4uX-JD-Dob" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="fao-PL-6mQ"/>
                     <constraint firstItem="4uX-JD-Dob" firstAttribute="leading" secondItem="Z44-oS-u42" secondAttribute="leading" id="ljd-a0-MwX"/>
+                    <constraint firstItem="fGM-GK-2Y8" firstAttribute="top" secondItem="Isf-15-Etp" secondAttribute="bottom" constant="7" id="rlF-yL-drm"/>
                     <constraint firstItem="fGM-GK-2Y8" firstAttribute="top" secondItem="Z44-oS-u42" secondAttribute="bottom" constant="3" id="zuH-p5-UUh"/>
                 </constraints>
                 <variation key="default">
@@ -80,7 +105,7 @@
                 <outlet property="forum_email" destination="Z44-oS-u42" id="aLV-0s-J3o"/>
                 <outlet property="forum_title" destination="4uX-JD-Dob" id="QnF-Sd-cnT"/>
             </connections>
-            <point key="canvasLocation" x="245" y="430.5"/>
+            <point key="canvasLocation" x="233" y="428.5"/>
         </tableViewCell>
     </objects>
 </document>

@@ -8,7 +8,6 @@
 
 #import "ProfileTableViewController.h"
 #import "ChangePasswordViewController.h"
-#import "ReportViewController.h"
 
 @interface ProfileTableViewController ()
 
@@ -46,11 +45,11 @@
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     switch (indexPath.row) {
         case 0:
-            cell.textLabel.attributedText = [[NSAttributedString alloc]initWithString:@"Edit Profile" attributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:20]}];
+            cell.textLabel.attributedText = [[NSAttributedString alloc]initWithString:@"Edit Profile" attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Gotham-Light" size:20]}];
             [cell.imageView setImage:[UIImage imageNamed:@"edit_icon"]];
             break;
         case 1:
-            cell.textLabel.attributedText = [[NSAttributedString alloc]initWithString:@"Change Password" attributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:20]}];
+            cell.textLabel.attributedText = [[NSAttributedString alloc]initWithString:@"Change Password" attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Gotham-Light" size:20]}];
             [cell.imageView setImage:[UIImage imageNamed:@"change_password"]];
             break;
         default:

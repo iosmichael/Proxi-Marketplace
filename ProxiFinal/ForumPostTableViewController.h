@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import <Firebase/Firebase.h>
+#import <CCBottomRefreshControl/UIScrollView+BottomRefreshControl.h>
+#import <MessageUI/MessageUI.h>
 
 @interface ForumPostTableViewController : UITableViewController
 @property (strong,nonatomic) NSString *category;

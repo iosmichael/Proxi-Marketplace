@@ -27,8 +27,7 @@
                            @"password":user.password,
                            @"firstName":user.firstName,
                            @"lastName":user.lastName,
-                           @"phone":user.phone,
-                           @"dateOfBirth":user.dateOfBirth
+                           @"phone":user.phone
                            };
     NSLog(@"%@",[param description]);
     NSDictionary *param2 = @{
@@ -41,7 +40,6 @@
         NSData *response = responseObject;
         NSString *responseString = [[NSString alloc]initWithData:response encoding:NSUTF8StringEncoding];
         NSLog(@"%@",[responseString description]);
-        
         [[NSNotificationCenter defaultCenter]postNotificationName:@"RegisterPassNotification" object:responseString];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -50,6 +48,24 @@
     
 }
 
+-(void)registerSubMerchantInfo:(NSDictionary *)merchantInfo{
+    NSDictionary *param = @{
+                             @"object":@"User",
+                             @"method":@"registerSubMerchant",
+                             @"data":merchantInfo
+                             };
+    [self.manager POST:address parameters:param constructingBodyWithBlock:nil
+               success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                   NSData *response = responseObject;
+                   NSString *responseString = [[NSString alloc]initWithData:response encoding:NSUTF8StringEncoding];
+                   NSLog(@"%@",[responseString description]);
+                   
+                   [[NSNotificationCenter defaultCenter]postNotificationName:@"RegisterMerchantPassNotification" object:responseString];
+                   
+               } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                   [[NSNotificationCenter defaultCenter]postNotificationName:@"RegisterMerchantFailNotification" object:nil];
+               }];
+}
 
 
 
@@ -101,7 +117,7 @@
                             };
     NSDictionary *param2 = @{
                              @"object":@"User",
-                        @"method":@"retrievePassword",
+                             @"method":@"retrievePassword",
                              @"data":param
                              };
     [self.manager POST:address parameters:param2 constructingBodyWithBlock:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {

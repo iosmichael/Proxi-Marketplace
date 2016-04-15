@@ -16,6 +16,7 @@
 
 #define Image_url_prefix @"http://proximarketplace.com/database/images/"
 #define Screen_width [[UIScreen mainScreen]bounds].size.width
+#define search_color [UIColor colorWithRed:15/255.0 green:51/255.0 blue:79/255.0 alpha:1]
 
 @interface CategoryDetailTableViewController()<UISearchBarDelegate>
 @property (strong,nonatomic)NSArray *datasourceArray;
@@ -43,8 +44,12 @@
     self.searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 0, Screen_width, 44)];
     self.searchText = @"";
     self.searchBar.delegate = self;
-    self.searchBar.barTintColor = [UIColor colorWithRed:50/255.0 green:144/255.0 blue:148/255.0 alpha:1.0];
-    self.searchBar.tintColor = [UIColor whiteColor];
+    self.searchBar.barTintColor = [UIColor groupTableViewBackgroundColor];
+    self.searchBar.tintColor = search_color;
+    [[UILabel appearanceWhenContainedIn:[UISearchBar class], nil] setTextColor:search_color];
+    [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setDefaultTextAttributes:@{
+                                                                                                 NSFontAttributeName: [UIFont fontWithName:@"Gotham-LightItalic" size:20],NSForegroundColorAttributeName:search_color
+                                                                                                 }];
     self.searchBar.placeholder = @"Search Name";
     self.bottomRefresher = [UIRefreshControl new];
     self.bottomRefresher.triggerVerticalOffset = 100.;
@@ -162,14 +167,16 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    CGFloat rowHeight = Screen_width *0.5*192.0/147.0f;
     if (indexPath.row==0) {
         return 44;
     }else{
         if ([self.datasourceArray count]%2==1) {
-            return [self.datasourceArray count]*120+120;
+            return [self.datasourceArray count]*(rowHeight/2+7.5)+rowHeight/2+7.5+15;
         }
         else{
-            return [self.datasourceArray count]*120;
+            return [self.datasourceArray count]*(rowHeight/2+7.5)+15;
         }
     }
 }

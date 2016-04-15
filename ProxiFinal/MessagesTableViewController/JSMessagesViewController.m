@@ -329,6 +329,7 @@
     [self scrollToBottomAnimated:YES];
 }
 
+
 - (void)setBackgroundColor:(UIColor *)color
 {
     self.view.backgroundColor = color;

@@ -12,5 +12,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *forum_title;
 @property (weak, nonatomic) IBOutlet UILabel *forum_email;
 @property (weak, nonatomic) IBOutlet UILabel *forum_description;
+@property (weak, nonatomic) IBOutlet UIView *forum_email_button;
 
 @end

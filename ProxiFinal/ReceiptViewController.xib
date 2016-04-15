@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <mutableArray key="Gotham-Book.ttf">
+        <mutableArray key="Gotham-Book.otf">
             <string>Gotham-Book</string>
             <string>Gotham-Book</string>
             <string>Gotham-Book</string>
@@ -20,6 +22,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ReceiptViewController">
             <connections>
+                <outlet property="order_button" destination="ptZ-n9-Bfv" id="bps-d2-M9F"/>
+                <outlet property="receipt_date" destination="jsX-eR-2Xe" id="aPv-ly-rTS"/>
+                <outlet property="receipt_image" destination="Tpp-Js-ECm" id="A93-gh-LdV"/>
+                <outlet property="receipt_price" destination="JUA-Yr-o1Y" id="4qP-n1-bgn"/>
+                <outlet property="receipt_title" destination="cbm-zn-swJ" id="voe-Za-fUB"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -30,63 +37,123 @@
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Receipt" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u8d-sJ-Ukg">
                     <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="28" id="26d-Z5-crM"/>
+                    </constraints>
                     <fontDescription key="fontDescription" name="Gotham-Book" family="Gotham" pointSize="21"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
-                    <variation key="widthClass=compact" fixedFrame="YES">
-                        <rect key="frame" x="8" y="25" width="101" height="21"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="26d-Z5-crM"/>
+                        </mask>
                     </variation>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Size 16 Shoes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cbm-zn-swJ">
-                    <rect key="frame" x="-42" y="-21" width="42" height="21"/>
-                    <fontDescription key="fontDescription" name="Gotham-Book" family="Gotham" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                    <variation key="widthClass=compact" fixedFrame="YES">
-                        <rect key="frame" x="168" y="59" width="224" height="21"/>
+                    <variation key="widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="26d-Z5-crM"/>
+                        </mask>
                     </variation>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ordering Receipt" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iIf-3g-qND">
                     <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="pyc-PO-38G"/>
+                    </constraints>
                     <fontDescription key="fontDescription" name="Gotham-Book" family="Gotham" pointSize="13"/>
                     <color key="textColor" red="0.31432462993421051" green="0.31116365131578949" blue="0.31684313322368424" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
-                    <variation key="widthClass=compact" fixedFrame="YES">
-                        <rect key="frame" x="168" y="88" width="181" height="21"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="pyc-PO-38G"/>
+                        </mask>
+                    </variation>
+                    <variation key="widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="pyc-PO-38G"/>
+                        </mask>
                     </variation>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Tpp-Js-ECm">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                    <variation key="widthClass=compact" fixedFrame="YES">
-                        <rect key="frame" x="8" y="54" width="145" height="128"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="128" id="C7p-MZ-jub"/>
+                        <constraint firstAttribute="width" constant="145" id="eG6-lg-J9r"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="C7p-MZ-jub"/>
+                            <exclude reference="eG6-lg-J9r"/>
+                        </mask>
+                    </variation>
+                    <variation key="widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="C7p-MZ-jub"/>
+                            <include reference="eG6-lg-J9r"/>
+                        </mask>
                     </variation>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ptZ-n9-Bfv">
                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                     <color key="backgroundColor" red="0.39164125919342041" green="0.77771466970443726" blue="0.77132618427276611" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="217" id="Ngw-lE-2oE"/>
+                        <constraint firstAttribute="height" constant="61" id="VSX-em-jOq"/>
+                    </constraints>
                     <fontDescription key="fontDescription" name="Gotham-Book" family="Gotham" pointSize="21"/>
                     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <state key="normal" title="Complete Order"/>
-                    <variation key="widthClass=compact" fixedFrame="YES">
-                        <rect key="frame" x="92" y="522" width="217" height="61"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="Ngw-lE-2oE"/>
+                            <exclude reference="VSX-em-jOq"/>
+                        </mask>
                     </variation>
+                    <variation key="widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="Ngw-lE-2oE"/>
+                            <include reference="VSX-em-jOq"/>
+                        </mask>
+                    </variation>
+                    <connections>
+                        <action selector="paymentButtonTapped" destination="-1" eventType="touchUpInside" id="XMu-F6-n2w"/>
+                    </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Price: $5.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JUA-Yr-o1Y">
                     <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="YKc-Yq-kyu"/>
+                    </constraints>
                     <fontDescription key="fontDescription" name="Gotham-Book" family="Gotham" pointSize="19"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
-                    <variation key="widthClass=compact" fixedFrame="YES">
-                        <rect key="frame" x="168" y="136" width="224" height="21"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="YKc-Yq-kyu"/>
+                        </mask>
+                    </variation>
+                    <variation key="widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="YKc-Yq-kyu"/>
+                        </mask>
                     </variation>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(including 8% commission fee)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aCb-bo-EBK">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(including 8% commission fee)" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aCb-bo-EBK">
                     <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="32" id="rai-N4-81Z"/>
+                    </constraints>
                     <fontDescription key="fontDescription" name="Gotham-BookItalic" family="Gotham" pointSize="14"/>
                     <color key="textColor" red="0.31217136411052637" green="0.30996124897894745" blue="0.3042817670710527" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
-                    <variation key="widthClass=compact" fixedFrame="YES">
-                        <rect key="frame" x="168" y="156" width="224" height="21"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="rai-N4-81Z"/>
+                        </mask>
+                    </variation>
+                    <variation key="widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="rai-N4-81Z"/>
+                        </mask>
                     </variation>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="6:34pm on Feb. 1, 2016" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jsX-eR-2Xe">
@@ -94,34 +161,119 @@
                     <fontDescription key="fontDescription" name="Gotham-Book" family="Gotham" pointSize="13"/>
                     <color key="textColor" red="0.31432462993421051" green="0.31116365131578949" blue="0.31684313322368424" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
-                    <variation key="widthClass=compact" fixedFrame="YES">
-                        <rect key="frame" x="168" y="107" width="181" height="21"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Size 16 Shoes" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cbm-zn-swJ">
+                    <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="36" id="OTR-bp-y7m"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Gotham-Book" family="Gotham" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="OTR-bp-y7m"/>
+                        </mask>
+                    </variation>
+                    <variation key="widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="OTR-bp-y7m"/>
+                        </mask>
                     </variation>
                 </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="cbm-zn-swJ" firstAttribute="top" secondItem="Tpp-Js-ECm" secondAttribute="bottom" constant="8" symbolic="YES" id="0J6-c0-BMy"/>
+                <constraint firstItem="jsX-eR-2Xe" firstAttribute="trailing" secondItem="JUA-Yr-o1Y" secondAttribute="trailing" id="1bR-bY-q9r"/>
+                <constraint firstItem="aCb-bo-EBK" firstAttribute="trailing" secondItem="JUA-Yr-o1Y" secondAttribute="trailing" id="3F5-lz-djE"/>
+                <constraint firstItem="cbm-zn-swJ" firstAttribute="leading" secondItem="iIf-3g-qND" secondAttribute="leading" id="9rU-LW-fS7"/>
+                <constraint firstItem="cbm-zn-swJ" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailingMargin" id="Ame-XK-6Hd"/>
+                <constraint firstItem="Tpp-Js-ECm" firstAttribute="leading" secondItem="u8d-sJ-Ukg" secondAttribute="leading" id="F67-Mg-QbR"/>
+                <constraint firstItem="JUA-Yr-o1Y" firstAttribute="top" secondItem="iIf-3g-qND" secondAttribute="bottom" constant="27" id="HW3-VZ-MyT"/>
+                <constraint firstItem="u8d-sJ-Ukg" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="topMargin" id="MTa-6z-AuR"/>
+                <constraint firstItem="Tpp-Js-ECm" firstAttribute="top" secondItem="u8d-sJ-Ukg" secondAttribute="bottom" constant="8" symbolic="YES" id="RFn-lo-jGL"/>
+                <constraint firstItem="JUA-Yr-o1Y" firstAttribute="leading" secondItem="jsX-eR-2Xe" secondAttribute="leading" id="RON-wm-CnH"/>
+                <constraint firstItem="iIf-3g-qND" firstAttribute="top" secondItem="cbm-zn-swJ" secondAttribute="bottom" constant="8" symbolic="YES" id="TGF-R3-a5e"/>
+                <constraint firstItem="aCb-bo-EBK" firstAttribute="leading" secondItem="JUA-Yr-o1Y" secondAttribute="leading" id="VbY-bH-c50"/>
+                <constraint firstAttribute="bottom" secondItem="ptZ-n9-Bfv" secondAttribute="bottom" constant="17" id="XxK-pC-g2D"/>
+                <constraint firstItem="JUA-Yr-o1Y" firstAttribute="top" secondItem="jsX-eR-2Xe" secondAttribute="bottom" constant="8" symbolic="YES" id="YoW-ve-8Cz"/>
+                <constraint firstItem="cbm-zn-swJ" firstAttribute="trailing" secondItem="u8d-sJ-Ukg" secondAttribute="trailing" id="ak7-Gl-mcA"/>
+                <constraint firstItem="jsX-eR-2Xe" firstAttribute="trailing" secondItem="iIf-3g-qND" secondAttribute="trailing" id="fgH-Kh-uQH"/>
+                <constraint firstItem="u8d-sJ-Ukg" firstAttribute="centerX" secondItem="ptZ-n9-Bfv" secondAttribute="centerX" id="h82-nR-SvM"/>
+                <constraint firstItem="aCb-bo-EBK" firstAttribute="top" secondItem="jsX-eR-2Xe" secondAttribute="bottom" constant="28" id="nbi-tk-7uX"/>
+                <constraint firstItem="u8d-sJ-Ukg" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="oP8-V6-je1"/>
+                <constraint firstItem="jsX-eR-2Xe" firstAttribute="leading" secondItem="iIf-3g-qND" secondAttribute="leading" id="oT2-h5-N8x"/>
+                <constraint firstItem="cbm-zn-swJ" firstAttribute="leading" secondItem="Tpp-Js-ECm" secondAttribute="leading" id="sjv-bi-oqM"/>
+            </constraints>
             <variation key="default">
                 <mask key="subviews">
                     <exclude reference="u8d-sJ-Ukg"/>
-                    <exclude reference="cbm-zn-swJ"/>
                     <exclude reference="iIf-3g-qND"/>
                     <exclude reference="Tpp-Js-ECm"/>
                     <exclude reference="ptZ-n9-Bfv"/>
                     <exclude reference="JUA-Yr-o1Y"/>
                     <exclude reference="aCb-bo-EBK"/>
                     <exclude reference="jsX-eR-2Xe"/>
+                    <exclude reference="cbm-zn-swJ"/>
+                </mask>
+                <mask key="constraints">
+                    <exclude reference="XxK-pC-g2D"/>
+                    <exclude reference="HW3-VZ-MyT"/>
+                    <exclude reference="RON-wm-CnH"/>
+                    <exclude reference="YoW-ve-8Cz"/>
+                    <exclude reference="3F5-lz-djE"/>
+                    <exclude reference="VbY-bH-c50"/>
+                    <exclude reference="nbi-tk-7uX"/>
+                    <exclude reference="0J6-c0-BMy"/>
+                    <exclude reference="9rU-LW-fS7"/>
+                    <exclude reference="Ame-XK-6Hd"/>
+                    <exclude reference="ak7-Gl-mcA"/>
+                    <exclude reference="sjv-bi-oqM"/>
+                    <exclude reference="TGF-R3-a5e"/>
+                    <exclude reference="1bR-bY-q9r"/>
+                    <exclude reference="fgH-Kh-uQH"/>
+                    <exclude reference="oT2-h5-N8x"/>
+                    <exclude reference="MTa-6z-AuR"/>
+                    <exclude reference="h82-nR-SvM"/>
+                    <exclude reference="oP8-V6-je1"/>
+                    <exclude reference="F67-Mg-QbR"/>
+                    <exclude reference="RFn-lo-jGL"/>
                 </mask>
             </variation>
             <variation key="widthClass=compact">
                 <mask key="subviews">
                     <include reference="u8d-sJ-Ukg"/>
-                    <include reference="cbm-zn-swJ"/>
                     <include reference="iIf-3g-qND"/>
                     <include reference="Tpp-Js-ECm"/>
                     <include reference="ptZ-n9-Bfv"/>
                     <include reference="JUA-Yr-o1Y"/>
                     <include reference="aCb-bo-EBK"/>
                     <include reference="jsX-eR-2Xe"/>
+                    <include reference="cbm-zn-swJ"/>
+                </mask>
+                <mask key="constraints">
+                    <include reference="XxK-pC-g2D"/>
+                    <include reference="HW3-VZ-MyT"/>
+                    <include reference="RON-wm-CnH"/>
+                    <include reference="YoW-ve-8Cz"/>
+                    <include reference="3F5-lz-djE"/>
+                    <include reference="VbY-bH-c50"/>
+                    <include reference="nbi-tk-7uX"/>
+                    <include reference="0J6-c0-BMy"/>
+                    <include reference="9rU-LW-fS7"/>
+                    <include reference="Ame-XK-6Hd"/>
+                    <include reference="ak7-Gl-mcA"/>
+                    <include reference="sjv-bi-oqM"/>
+                    <include reference="TGF-R3-a5e"/>
+                    <include reference="1bR-bY-q9r"/>
+                    <include reference="fgH-Kh-uQH"/>
+                    <include reference="oT2-h5-N8x"/>
+                    <include reference="MTa-6z-AuR"/>
+                    <include reference="h82-nR-SvM"/>
+                    <include reference="oP8-V6-je1"/>
+                    <include reference="F67-Mg-QbR"/>
+                    <include reference="RFn-lo-jGL"/>
                 </mask>
             </variation>
         </view>

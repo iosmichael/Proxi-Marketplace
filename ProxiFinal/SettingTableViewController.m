@@ -9,7 +9,6 @@
 #import "SettingTableViewController.h"
 #import "LoginMainViewController.h"
 #import "ContactUsTableViewCell.h"
-#import "ReportViewController.h"
 #import "AboutTableViewController.h"
 #import "ProfileTableViewController.h"
 #import "PersonDetailTableViewController.h"
@@ -32,7 +31,7 @@
     self.tableView.separatorColor = [UIColor groupTableViewBackgroundColor];
     [self.navigationController.navigationBar setTitleTextAttributes:
      @{NSForegroundColorAttributeName:[UIColor whiteColor],
-       NSFontAttributeName:[UIFont fontWithName:@"Helvetica" size:20]}];
+       NSFontAttributeName:[UIFont fontWithName:@"Gotham-Book" size:25]}];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"regularCell"];
     UIView *footerView = [self setupFooterView];
     self.tableView.tableFooterView = footerView;
@@ -45,6 +44,11 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    self.email = [[NSUserDefaults standardUserDefaults]objectForKey:@"username"];
+    [super viewDidAppear:animated];
 }
 
 
@@ -62,8 +66,9 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section==0){
-        ProfileTableViewController *profTableView = [[ProfileTableViewController alloc]init];
-        [self.navigationController pushViewController:profTableView animated:YES];
+        //ProfileTableViewController *profTableView = [[ProfileTableViewController alloc]init];
+        //[self.navigationController pushViewController:profTableView animated:YES];
+        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
         return;
     }
     if (indexPath.row==0) {
@@ -77,8 +82,8 @@
         [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
     }else if (indexPath.row==2){
         //Report a Problem
-        ReportViewController *reportViewController = [[ReportViewController alloc]initWithNibName:@"ReportViewController" bundle:nil];
-        [self.navigationController pushViewController:reportViewController animated:YES];
+        [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"http://goo.gl/forms/MKuxVXNXKk"]];
+        [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
     }else if(indexPath.row==3){
         //About Page
         AboutTableViewController *aboutVC = [[AboutTableViewController alloc]init];
@@ -119,8 +124,8 @@
     if (indexPath.section==0) {
         UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"regularCell"];
         cell.accessoryType = UITableViewCellAccessoryDetailButton;
-        cell.textLabel.attributedText = [[NSAttributedString alloc]initWithString:[self profileName:self.email] attributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:20]}];
-        cell.detailTextLabel.attributedText=[[NSAttributedString alloc]initWithString:self.email attributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:14]}];
+        cell.textLabel.attributedText = [[NSAttributedString alloc]initWithString:[self profileName:self.email] attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Gotham-Book" size:20]}];
+        cell.detailTextLabel.attributedText=[[NSAttributedString alloc]initWithString:self.email attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Gotham-Light" size:14]}];
         return cell;
 
     }
@@ -128,26 +133,26 @@
     if (indexPath.row==0) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"regularCell" forIndexPath:indexPath];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        cell.textLabel.attributedText = [[NSAttributedString alloc]initWithString:@"History" attributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:20]}];
+        cell.textLabel.attributedText = [[NSAttributedString alloc]initWithString:@"History" attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Gotham-Light" size:20]}];
         [cell.imageView setImage:[UIImage imageNamed:@"history"]];
         return cell;
     }
     else if (indexPath.row==1) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"regularCell" forIndexPath:indexPath];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        cell.textLabel.attributedText = [[NSAttributedString alloc]initWithString:@"Payment" attributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:20]}];
+        cell.textLabel.attributedText = [[NSAttributedString alloc]initWithString:@"Payment" attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Gotham-Light" size:20]}];
         [cell.imageView setImage:[UIImage imageNamed:@"payment"]];
         return cell;
     }else if (indexPath.row==2){
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"regularCell" forIndexPath:indexPath];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        cell.textLabel.attributedText = [[NSAttributedString alloc]initWithString:@"Report a Problem" attributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:20]}];
+        cell.textLabel.attributedText = [[NSAttributedString alloc]initWithString:@"Report a Problem" attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Gotham-Light" size:20]}];
         [cell.imageView setImage:[UIImage imageNamed:@"problem"]];
         return cell;
     }else if (indexPath.row==3){
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"regularCell" forIndexPath:indexPath];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        cell.textLabel.attributedText = [[NSAttributedString alloc]initWithString:@"About" attributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:20]}];
+        cell.textLabel.attributedText = [[NSAttributedString alloc]initWithString:@"About" attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Gotham-Light" size:20]}];
         [cell.imageView setImage:[UIImage imageNamed:@"about"]];
         return cell;
     }else if (indexPath.row==4){
@@ -164,7 +169,9 @@
     LoginMainViewController *loginController = [self.storyboard instantiateViewControllerWithIdentifier:@"loginMain"];
     [[NSUserDefaults standardUserDefaults]setObject:nil forKey:@"username"];
     [[NSUserDefaults standardUserDefaults]setObject:nil forKey:@"password"];
+    [[NSUserDefaults standardUserDefaults]setObject:nil forKey:@"isMerchant"];    
     [self presentViewController:loginController animated:YES completion:nil];
+    
 }
 
 
@@ -180,7 +187,7 @@
     self.logoutButton.layer.borderColor = [UIColor colorWithRed:1/255.0 green:175/255.0 blue:178/255.0 alpha:1].CGColor;
     self.logoutButton.layer.borderWidth = 3;
     [self.logoutButton.layer setCornerRadius:25];
-    [self.logoutButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:22.0]];
+    [self.logoutButton.titleLabel setFont:[UIFont fontWithName:@"Gotham-Book" size:22.0]];
     [footerButtonView addSubview:self.logoutButton];
     self.logoutButton.backgroundColor = [UIColor whiteColor];
     [self.logoutButton addTarget:self action:@selector(logoutTapped) forControlEvents:UIControlEventTouchUpInside];
@@ -197,9 +204,13 @@
     
     NSString *capitalizedFirstName = [firstName stringByReplacingCharactersInRange:NSMakeRange(0,1)
                                                                         withString:[[firstName substringToIndex:1] capitalizedString]];
-    NSString *lastName = [nameComponents objectAtIndex:1];
-    NSString *capitalizedLastName = [lastName stringByReplacingCharactersInRange:NSMakeRange(0,1)
-                                                                      withString:[[lastName substringToIndex:1] capitalizedString]];
+    NSString *capitalizedLastName= capitalizedFirstName;
+    if ([nameComponents count]>1) {
+        NSString *lastName = [nameComponents objectAtIndex:1];
+        capitalizedLastName = [lastName stringByReplacingCharactersInRange:NSMakeRange(0,1)
+                                                                          withString:[[lastName substringToIndex:1] capitalizedString]];
+    }
+   
     
     NSString *fullName = [[capitalizedFirstName stringByAppendingString:@" "]stringByAppendingString:capitalizedLastName];
     return fullName;

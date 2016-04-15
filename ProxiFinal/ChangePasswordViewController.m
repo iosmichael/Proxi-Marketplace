@@ -29,7 +29,7 @@
 }
 - (IBAction)change:(id)sender {
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Sorry"
-                                                                   message:@"Unavailable for Beta Testing"
+                                                                   message:@"Unavailable for Current Version"
                                                             preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault

@@ -15,12 +15,15 @@
 #import "PasswordRetrieveViewController.h"
 
 #define LoginSuccessProtocol @"success login"
-
+#define LoginPartialSuccessProtocol @"success login without selling authority"
+#define kOFFSET_FOR_KEYBOARD 182.0
 @interface LoginViewController ()
 
 @end
 
-@implementation LoginViewController
+@implementation LoginViewController{
+    BOOL keyboardHasShown;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -28,13 +31,29 @@
     self.navigationController.navigationBarHidden = YES;
     self.refresher.hidden = YES;
     [self.loginButton.layer setCornerRadius:10];
-
-
     self.username.autocorrectionType= UITextAutocorrectionTypeNo;
     self.password.secureTextEntry = YES;
     self.username.delegate=self;
     self.password.delegate=self;
+    [self setupGestureRecognizer];
+}
 
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+}
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+    [self keyboardWillHide];
 }
 
 
@@ -68,56 +87,46 @@
 }
 
 
-
--(void)loginPass:(NSNotification *)noti{
-    BOOL success = [[noti object]isEqualToString:LoginSuccessProtocol];
-    if (success) {
-        self.refresher.hidden = YES;
-        [self.refresher stopAnimating];
-        //Success AlertView
-        NSLog(@"success");
-        [[NSUserDefaults standardUserDefaults]setObject:self.username.text forKey:@"username"];
-        [[NSUserDefaults standardUserDefaults]setObject:self.password.text forKey:@"password"];
-        [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
-        
-    }else{
-        self.refresher.hidden = YES;
-        [self.refresher stopAnimating];
-        UIAlertController * alertNo=   [UIAlertController
-                                        alertControllerWithTitle:@"Error"
-                                        message:@"Invalid Account Information"
-                                        preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction* noButton = [UIAlertAction
-                                   actionWithTitle:@"Cancel"
-                                   style:UIAlertActionStyleDefault
-                                   handler:^(UIAlertAction * action)
-                                   {
-                                       //Handel your yes please button action here
-                                       [alertNo dismissViewControllerAnimated:YES completion:nil];
-                                       self.username.text = @"";
-                                       self.password.text = @"";
-                                   }];
-        
-        [alertNo addAction:noButton];
-        [self presentViewController:alertNo animated:YES completion:nil];
-    }
-}
-
--(void)loginError{
-    
-    self.refresher.hidden = YES;
-    [self.refresher stopAnimating];
-    self.username.text =@"";
-    self.password.text =@"";
-}
-
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     
     [textField resignFirstResponder];
     return NO;
 }
 
+-(void)setupGestureRecognizer{
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
+                                   initWithTarget:self
+                                   action:@selector(dismissKeyboard)];
+    
+    [self.view addGestureRecognizer:tap];
+}
+
+-(void)dismissKeyboard{
+    [self.username resignFirstResponder];
+    [self.password resignFirstResponder];
+}
+-(void)keyboardWillShow{
+    if (keyboardHasShown) {
+        return;
+    }
+    LoginMainViewController *container = (LoginMainViewController *)self.parentViewController;
+    [UIView animateWithDuration:0.5
+                     animations:^{
+                         container.headerHeight.constant -=kOFFSET_FOR_KEYBOARD;
+                     }];
+    keyboardHasShown = YES;
+}
+-(void)keyboardWillHide{
+    if (!keyboardHasShown) {
+        return;
+    }
+    LoginMainViewController *container = (LoginMainViewController *)self.parentViewController;
+    [UIView animateWithDuration:0.5
+                     animations:^{
+                         container.headerHeight.constant +=kOFFSET_FOR_KEYBOARD;
+                     }];
+    keyboardHasShown=NO;
+}
 
 #pragma mark - Navigation
 

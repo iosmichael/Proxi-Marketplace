@@ -8,6 +8,7 @@
 
 #import "ChatViewController.h"
 #import "MasterViewController.h"
+#import "MessageConnection.h"
 
 @interface ChatViewController ()<JSMessagesViewDelegate, JSMessagesViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
@@ -20,7 +21,9 @@
 
 @end
 
-@implementation ChatViewController
+@implementation ChatViewController{
+    NSString *deviceToken;
+}
 
 
 
@@ -78,17 +81,26 @@
     Firebase *destineFirebase = [[self.firebase childByAppendingPath:self.sellerName]childByAutoId];
     [destineFirebase setValue:message withCompletionBlock:^(NSError *error, Firebase *ref) {
         if (error) {
-            [self errorResponse];
+            
         }else{
             [JSMessageSoundEffect playMessageSentSound];
             [self finishSend];
+            [self sendNotification];
+            
         }
     }];
 
 }
--(void)errorResponse{
-    
+-(void)sendNotification{
+    [[[self.firebase childByAppendingPath:self.sellerName]childByAppendingPath:@"deviceToken"] observeEventType:FEventTypeValue withBlock:^(FDataSnapshot *snapshot) {
+        deviceToken = snapshot.value;
+        NSLog(@"Device Token Received: %@",[deviceToken description]);
+        MessageConnection *notificationSender = [[MessageConnection alloc]init];
+        [notificationSender sendNotification:deviceToken];
+    }];
+   
 }
+
 - (void)cameraPressed:(id)sender{
     /*UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
@@ -273,7 +285,7 @@
 
 
 -(NSString *)profileName:(NSString *)email{
-    NSString *usernameString = email;
+    /*NSString *usernameString = email;
     NSArray *components = [usernameString componentsSeparatedByString:@"@"];
     NSString *nameString = [components objectAtIndex:0];
     NSArray *nameComponents = [nameString componentsSeparatedByString:@"."];
@@ -286,6 +298,10 @@
                                                                       withString:[[lastName substringToIndex:1] capitalizedString]];
     
     NSString *fullName = [capitalizedFirstName stringByAppendingString:capitalizedLastName];
+     */
+    NSString* fullName =
+    [[email componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@".#[]$"]]
+     componentsJoinedByString:@""];
     return fullName;
     
 }

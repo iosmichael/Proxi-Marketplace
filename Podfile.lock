@@ -1,4 +1,5 @@
 PODS:
+  - ActionSheetPicker-3.0 (2.0.5)
   - AFNetworking (2.6.1):
     - AFNetworking/NSURLConnection (= 2.6.1)
     - AFNetworking/NSURLSession (= 2.6.1)
@@ -56,12 +57,14 @@ PODS:
   - Masonry (0.6.4)
 
 DEPENDENCIES:
+  - ActionSheetPicker-3.0
   - AFNetworking (~> 2.5)
   - Braintree (~> 3.9)
   - CCBottomRefreshControl
   - Firebase (>= 2.5.0)
 
 SPEC CHECKSUMS:
+  ActionSheetPicker-3.0: 8312778b6815578e6a86d630fbcf31dc94c534e7
   AFNetworking: 8e4e60500beb8bec644cf575beee72990a76d399
   Braintree: 74f0bd85743c2227147c361cc2c5c9aefe083ae8
   CCBottomRefreshControl: 57a596348855260f627ffc2b311328ed15b94877

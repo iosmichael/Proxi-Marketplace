@@ -28,7 +28,7 @@
     [super viewDidLoad];
     [self.navigationController.navigationBar setTitleTextAttributes:
      @{NSForegroundColorAttributeName:[UIColor whiteColor],
-       NSFontAttributeName:[UIFont fontWithName:@"Helvetica" size:20]}];
+       NSFontAttributeName:[UIFont fontWithName:@"Gotham-Book" size:25]}];
     PersonDetailTableViewController *buyController = [[PersonDetailTableViewController alloc]init];
     buyController.detailCategory = @"My Orders";
     self.buyTableViewController = buyController;
@@ -41,7 +41,7 @@
     [self.switches setBackgroundImage:[self imageWithColor:[UIColor colorWithRed:216/255.0 green:216/255.0 blue:216/255.0 alpha:1]] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     [self.switches setBackgroundImage:[self imageWithColor:[UIColor colorWithWhite:1.0 alpha:1.0]] forState:UIControlStateSelected  barMetrics:UIBarMetricsDefault];
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                [UIColor whiteColor], NSForegroundColorAttributeName,
+                                [UIColor whiteColor], NSForegroundColorAttributeName,[UIFont fontWithName:@"Gotham-Book" size:20],NSFontAttributeName,
                                 nil];
     [self.switches setTitleTextAttributes:attributes forState:UIControlStateNormal];
     NSDictionary *highlightedAttributes = [NSDictionary dictionaryWithObject:[UIColor blackColor] forKey:NSForegroundColorAttributeName];

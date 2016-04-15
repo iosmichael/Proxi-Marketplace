@@ -2,20 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UIAppFonts</key>
-	<array>
-		<string>Gotham-ThinItalic.otf</string>
-		<string>Gotham-Thin.otf</string>
-		<string>Gotham-MediumItalic.otf</string>
-		<string>Gotham-Medium.otf</string>
-		<string>Gotham-LightItalic.otf</string>
-		<string>Gotham-Light.otf</string>
-		<string>Gotham-BookItalic.otf</string>
-		<string>Gotham-Book.otf</string>
-		<string>Gotham-Bold.otf</string>
-		<string>Gotham-BlackItalic.otf</string>
-		<string>Gotham-Black.otf</string>
-	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -25,11 +11,11 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>Proxi</string>
+	<string>PROXI</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.5.5</string>
+	<string>2.1</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -46,7 +32,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>2</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -54,6 +40,20 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Gotham-ThinItalic.otf</string>
+		<string>Gotham-Thin.otf</string>
+		<string>Gotham-MediumItalic.otf</string>
+		<string>Gotham-Medium.otf</string>
+		<string>Gotham-LightItalic.otf</string>
+		<string>Gotham-Light.otf</string>
+		<string>Gotham-BookItalic.otf</string>
+		<string>Gotham-Book.otf</string>
+		<string>Gotham-Bold.otf</string>
+		<string>Gotham-BlackItalic.otf</string>
+		<string>Gotham-Black.otf</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

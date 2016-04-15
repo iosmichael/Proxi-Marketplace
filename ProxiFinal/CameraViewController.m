@@ -2,6 +2,7 @@
 #import "CameraViewController.h"
 #import "PostItemDetailViewController.h"
 #import "LoginViewController.h"
+#import "BraintreeAccountSignUpViewController.h"
 
 
 @interface CameraViewController () <CACameraSessionDelegate>
@@ -19,8 +20,14 @@
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:36/255.0 green:104/255.0 blue:156/255.0 alpha:1.0];
     [self.navigationController setNavigationBarHidden:YES];
+    
+    
 }
 -(void)viewDidAppear:(BOOL)animated{
+    if (![[NSUserDefaults standardUserDefaults]objectForKey:@"isMerchant"]) {
+        BraintreeAccountSignUpViewController *braintreeMerchantViewController = [[BraintreeAccountSignUpViewController alloc]initWithNibName:@"BraintreeAccountSignUpViewController" bundle:nil];
+        [self.navigationController pushViewController:braintreeMerchantViewController animated:YES];
+    }
     [super viewDidAppear:animated];
     self.tabBarController.tabBar.hidden = NO;
     [self.navigationController setNavigationBarHidden:YES animated:YES];
@@ -74,6 +81,7 @@
     postItemViewController.image = self.captureImage;
 //        [self presentViewController:postItemViewController animated:YES completion:nil];
     [self.navigationController pushViewController:postItemViewController animated:YES];
+        self.tabBarController.tabBar.hidden = YES;
     }
 
    // [self.cameraView removeFromSuperview];

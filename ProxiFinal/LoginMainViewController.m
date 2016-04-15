@@ -10,6 +10,7 @@
 #import "LoginViewController.h"
 #import "RegisterViewController.h"
 #import "MasterViewController.h"
+#define LoginPartialSuccessProtocol @"success login without selling authority"
 #define LoginSuccessProtocol @"success login"
 @interface LoginMainViewController ()
 @property (strong,nonatomic) LoginViewController *loginViewController;
@@ -74,8 +75,14 @@
         NSLog(@"success");
         [[NSUserDefaults standardUserDefaults]setObject:self.loginViewController.username.text forKey:@"username"];
         [[NSUserDefaults standardUserDefaults]setObject:self.loginViewController.password.text forKey:@"password"];
+        [[NSUserDefaults standardUserDefaults]setObject:@"yes" forKey:@"isMerchant"];
         [self dismissViewControllerAnimated:YES completion:nil];
         
+    }else if ([[noti object]isEqualToString:LoginPartialSuccessProtocol]){
+        [[NSUserDefaults standardUserDefaults]setObject:self.loginViewController.username.text forKey:@"username"];
+        [[NSUserDefaults standardUserDefaults]setObject:self.loginViewController.password.text forKey:@"password"];
+        [[NSUserDefaults standardUserDefaults]setObject:nil forKey:@"isMerchant"];
+        [self dismissViewControllerAnimated:YES completion:nil];
     }else{
 
         UIAlertController * alertNo=   [UIAlertController
@@ -179,7 +186,6 @@
 }
 - (void)indexDidChangeForSegmentedControl:(UISegmentedControl *)sender
 {
-    
     NSUInteger index = sender.selectedSegmentIndex;
     
     if (UISegmentedControlNoSegment != index) {

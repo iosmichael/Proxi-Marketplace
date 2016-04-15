@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="jrS-r0-y1N">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="jrS-r0-y1N">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -35,7 +35,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cUu-1j-WPY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1263" y="386"/>
+            <point key="canvasLocation" x="1275" y="334"/>
         </scene>
         <!--Camera View Controller-->
         <scene sceneID="P9M-gN-QiN">
@@ -206,7 +206,7 @@
                             <constraint firstItem="WZh-Yd-qpP" firstAttribute="trailing" secondItem="79L-Wz-vH4" secondAttribute="trailing" id="7a3-DE-ung"/>
                             <constraint firstItem="eny-0j-WFc" firstAttribute="centerX" secondItem="B7k-37-qif" secondAttribute="centerX" id="EBz-F1-DTu"/>
                             <constraint firstItem="ERn-1J-rjm" firstAttribute="top" secondItem="eny-0j-WFc" secondAttribute="bottom" constant="128" id="QuG-8X-OTl">
-                                <variation key="widthClass=compact" constant="118"/>
+                                <variation key="widthClass=compact" constant="80"/>
                             </constraint>
                             <constraint firstItem="WZh-Yd-qpP" firstAttribute="leading" secondItem="cEL-o6-jAM" secondAttribute="leading" id="W9E-jR-lvZ"/>
                             <constraint firstItem="cEL-o6-jAM" firstAttribute="top" secondItem="79L-Wz-vH4" secondAttribute="bottom" constant="7" id="Xsr-bT-XdE"/>
@@ -301,35 +301,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jrx-ba-XKK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-864" y="329"/>
-        </scene>
-        <!--Forum Post Table View Controller-->
-        <scene sceneID="rbE-60-hf5">
-            <objects>
-                <tableViewController id="L8a-EK-nGl" customClass="ForumPostTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="sFf-K0-ZKq">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="5tH-VG-cF0">
-                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5tH-VG-cF0" id="D7Z-s6-rk9">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="L8a-EK-nGl" id="xxY-F5-2N2"/>
-                            <outlet property="delegate" destination="L8a-EK-nGl" id="7Su-dM-BEO"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="6mw-2K-cAA"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Dos-xi-5Lk" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-642" y="-339"/>
         </scene>
         <!--Password Retrieve View Controller-->
         <scene sceneID="sRS-bW-4Wj">
@@ -564,7 +535,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gZU-xw-AnP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="54" y="-334"/>
+            <point key="canvasLocation" x="-196.5" y="-328"/>
         </scene>
         <!--Login Main View Controller-->
         <scene sceneID="FLY-7V-vNX">
@@ -811,7 +782,7 @@ from around Wheaton’s campus quickly and easily</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZz-8J-FxB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1671" y="-281"/>
+            <point key="canvasLocation" x="1551" y="-396"/>
         </scene>
         <!--Home Table View Controller-->
         <scene sceneID="7XO-0m-1tK">
@@ -918,7 +889,7 @@ from around Wheaton’s campus quickly and easily</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xil-FG-eGE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="589" y="386"/>
+            <point key="canvasLocation" x="582" y="334"/>
         </scene>
         <!--Chat View Controller-->
         <scene sceneID="LFb-5w-jmk">
@@ -1134,24 +1105,6 @@ from around Wheaton’s campus quickly and easily</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Th8-xM-J1I" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3096" y="-281"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="rjq-ic-CXT">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="UDV-4V-EqS" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ejJ-M0-LVt">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="L8a-EK-nGl" kind="relationship" relationship="rootViewController" id="YJS-Lv-ZUN"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="pFR-gZ-z4U" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1560" y="-339"/>
         </scene>
     </scenes>
     <resources>

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <mutableArray key="Gotham-Bold.otf">
+        <mutableArray key="Gotham-Bold.ttf">
             <string>Gotham-Bold</string>
         </mutableArray>
         <mutableArray key="Gotham-Book.ttf">
@@ -96,7 +96,7 @@
                     </variation>
                 </label>
             </subviews>
-            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+            <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="yUK-KF-zuI" firstAttribute="leading" secondItem="cB8-hk-hMP" secondAttribute="leading" id="3y3-YZ-E3A"/>
                 <constraint firstItem="PcS-De-snF" firstAttribute="trailing" secondItem="cB8-hk-hMP" secondAttribute="trailing" id="Kfr-1O-IBh"/>
@@ -115,15 +115,15 @@
                     <exclude reference="yUK-KF-zuI"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="T2u-wy-tbd"/>
-                    <exclude reference="btN-gh-PlO"/>
-                    <exclude reference="ms7-WP-Qo3"/>
+                    <exclude reference="Kfr-1O-IBh"/>
+                    <exclude reference="gzq-wR-bcF"/>
                     <exclude reference="3y3-YZ-E3A"/>
                     <exclude reference="T5P-3d-FEL"/>
                     <exclude reference="iNJ-dV-QMd"/>
                     <exclude reference="yvJ-DT-WHT"/>
-                    <exclude reference="Kfr-1O-IBh"/>
-                    <exclude reference="gzq-wR-bcF"/>
+                    <exclude reference="T2u-wy-tbd"/>
+                    <exclude reference="btN-gh-PlO"/>
+                    <exclude reference="ms7-WP-Qo3"/>
                 </mask>
             </variation>
             <variation key="widthClass=compact">
@@ -133,15 +133,15 @@
                     <include reference="yUK-KF-zuI"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="T2u-wy-tbd"/>
-                    <include reference="btN-gh-PlO"/>
-                    <include reference="ms7-WP-Qo3"/>
+                    <include reference="Kfr-1O-IBh"/>
+                    <include reference="gzq-wR-bcF"/>
                     <include reference="3y3-YZ-E3A"/>
                     <include reference="T5P-3d-FEL"/>
                     <include reference="iNJ-dV-QMd"/>
                     <include reference="yvJ-DT-WHT"/>
-                    <include reference="Kfr-1O-IBh"/>
-                    <include reference="gzq-wR-bcF"/>
+                    <include reference="T2u-wy-tbd"/>
+                    <include reference="btN-gh-PlO"/>
+                    <include reference="ms7-WP-Qo3"/>
                 </mask>
             </variation>
         </view>

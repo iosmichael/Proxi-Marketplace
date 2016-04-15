@@ -21,7 +21,7 @@
 #import "GMDCircleLoader.h"
 
 #define Image_url_prefix @"http://proximarketplace.com/database/images/"
-
+#define screen_width [UIScreen mainScreen].bounds.size.width
 @interface PersonDetailTableViewController ()<MyTableViewCellDelegate,HHAlertViewDelegate>
 @property (nonatomic,strong) ItemConnection *itemConnection;
 @property (strong,nonatomic) ItemContainer *itemContainer;
@@ -42,10 +42,12 @@
     BOOL sync_order;
     BOOL sync_item;
     UIViewController *presentingModalViewController;
+    int numberToWarn;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
     [GMDCircleLoader setOnView:self.view withTitle:@"Loading..." animated:YES];
     [self.tableView registerNib:[UINib nibWithNibName:@"MyTableViewCell" bundle:nil] forCellReuseIdentifier:@"myTableViewCell"];
     if ([self.detailCategory isEqualToString:@"My Items"]) {
@@ -53,6 +55,9 @@
     }
     self.tableView.backgroundColor = [UIColor colorWithRed:239/255.0 green:239/255.0 blue:244/255.0 alpha:1];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    numberToWarn = 0;
+    //self.tableView.tableHeaderView = [self setupTableViewHeader:![self.detailCategory isEqualToString:@"My Sales"] numberToWarn:numberToWarn];
     self.firebase = [[[[[Firebase alloc]initWithUrl:@"https://luminous-inferno-5888.firebaseio.com"]childByAppendingPath:@"users"]childByAppendingPath:@"WheatonCollege"]childByAppendingPath:[self profileName:[[NSUserDefaults standardUserDefaults]objectForKey:@"username"] withSpace:NO]];
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refreshControlRefresh)
@@ -61,6 +66,9 @@
     [[HHAlertView shared]setDelegate:self];
     [self filterDetailCategory];
     
+}
+-(void)viewDidAppear:(BOOL)animated{
+    [[HHAlertView shared]setDelegate:self];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -108,6 +116,9 @@
     return 102;
 }
 -(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    if (section==1) {
+        return [self setupSubtableFooterView];
+    }
     UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 43)];
     if ([self.detailCategory isEqualToString:@"My Sales"]) {
         //Three Icon Instructions
@@ -118,7 +129,7 @@
         [footer addSubview:iconSecond];
         [footer addSubview:iconThird];
     }
-    footer.backgroundColor = [UIColor colorWithRed:239/255.0 green:239/255.0 blue:244/255.0 alpha:1];
+    footer.backgroundColor = [UIColor groupTableViewBackgroundColor];
     return footer;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
@@ -128,8 +139,18 @@
     if (section==0) {
         return 43;
     }else{
-        return 0;
+        return 20;
     }
+}
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([self.detailCategory isEqualToString:@"My Sales"]) {
+        if (indexPath.section==1) {
+            return UITableViewCellEditingStyleDelete;
+        }
+    }else if([[self.itemContainer.container objectAtIndex:indexPath.row]isKindOfClass:[Transaction class]]){
+        return UITableViewCellEditingStyleDelete;
+    }
+    return UITableViewCellEditingStyleNone;
 }
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -155,7 +176,7 @@
             deleteRow = indexPath;
         }
         else{
-                return;
+                return ;
             }
         }
     
@@ -188,6 +209,8 @@
             }else if ([order.item_status isEqualToString:@"receive"]&&[order.order_status isEqualToString:@"held"]){
                 cell.badge.image = [UIImage imageNamed:@"checkMark"];
                 cell.leftButton.enabled = YES;
+                numberToWarn++;
+                //self.tableView.tableHeaderView = [self setupTableViewHeader:YES numberToWarn:numberToWarn];
             }else if([order.item_status isEqualToString:@"paid"]){
                 cell.badge.image = [UIImage imageNamed:@"waitingDelivery"];
             }
@@ -222,9 +245,11 @@
             
             if(order.message_number&&![order.message_number isEqualToString:@"0"]){
                 cell.badge.hidden = NO;
+               
             }else if (![order.order_status isEqualToString:@"held"]){
                 cell.badge.hidden=NO;
                 cell.badge.image = [UIImage imageNamed:@"finance"];
+               
             }else if ([order.item_status isEqualToString:@"receive"]){
                 cell.badge.hidden=NO;
                 cell.badge.image = [UIImage imageNamed:@"checkMark"];
@@ -365,7 +390,7 @@
     [icon setImage:insturctionImage];
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(20+10, 0, 45, 25)];
     label.numberOfLines= 0;
-    label.attributedText = [[NSAttributedString alloc]initWithString:words attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Helvetica" size:10]}];
+    label.attributedText = [[NSAttributedString alloc]initWithString:words attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Gotham-Light" size:10]}];
     [instructionView addSubview:icon];
     [instructionView addSubview:label];
     return instructionView;
@@ -384,7 +409,7 @@
         }else{
             msgStr = @"Message to Seller";
         }
-        label.attributedText = [[NSAttributedString alloc]initWithString:msgStr attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Helvetica" size:13],NSForegroundColorAttributeName:[UIColor whiteColor]}];
+        label.attributedText = [[NSAttributedString alloc]initWithString:msgStr attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Gotham-Light" size:12],NSForegroundColorAttributeName:[UIColor whiteColor]}];
         if (cell.setRight) {
             return;
         }
@@ -417,7 +442,7 @@
                 msgStr = @"Contact Proxi";
             }
         }
-        label.attributedText = [[NSAttributedString alloc]initWithString:msgStr attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Helvetica" size:13],NSForegroundColorAttributeName:[UIColor whiteColor]}];
+        label.attributedText = [[NSAttributedString alloc]initWithString:msgStr attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Gotham-Light" size:13],NSForegroundColorAttributeName:[UIColor whiteColor]}];
         if (cell.setLeft) {
             [cell.leftButtonLabel removeFromSuperview];
             cell.leftButtonLabel = label;
@@ -440,7 +465,6 @@
     [self.storeContainer addItemsFromJSONDictionaries:[noti object]];
     self.itemsArray = [self.storeContainer allItem];
     [self refreshTheWholeTable];
-
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     
@@ -451,7 +475,7 @@
         if (section==0) {
             return @"Sold";
         }else if (section==1){
-            return @"My Store";
+            return @"My Items";
         }else{
             return nil;
         }
@@ -463,6 +487,7 @@
 }
 
 -(void)refreshTheWholeTable{
+    numberToWarn = 0;
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView reloadData];
             [GMDCircleLoader hideFromView:self.view animated:YES];
@@ -494,6 +519,7 @@
         }
         [array addObject:order];
     }
+    
     self.itemContainer.container = array;
     self.datasourceArray = array;
     [self refreshTheWholeTable];
@@ -572,10 +598,12 @@
     
 }
 - (void)didClickButtonAnIndex:(HHAlertButton )button{
-    [presentingModalViewController dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)refreshControlRefresh{
+    self.firebase = [[[[[Firebase alloc]initWithUrl:@"https://luminous-inferno-5888.firebaseio.com"]childByAppendingPath:@"users"]childByAppendingPath:@"WheatonCollege"]childByAppendingPath:[self profileName:[[NSUserDefaults standardUserDefaults]objectForKey:@"username"] withSpace:NO]];
+    
     if([self.detailCategory isEqualToString:@"My Orders"]){
         [self.itemConnection myOrders:[[NSUserDefaults standardUserDefaults]objectForKey:@"username"] detail_category:@"myOrders"];
     }
@@ -644,9 +672,13 @@
     
     NSString *capitalizedFirstName = [firstName stringByReplacingCharactersInRange:NSMakeRange(0,1)
                                                                         withString:[[firstName substringToIndex:1] capitalizedString]];
-    NSString *lastName = [nameComponents objectAtIndex:1];
-    NSString *capitalizedLastName = [lastName stringByReplacingCharactersInRange:NSMakeRange(0,1)
-                                                                      withString:[[lastName substringToIndex:1] capitalizedString]];
+    NSString *capitalizedLastName= capitalizedFirstName;
+    if ([nameComponents count]>1) {
+        NSString *lastName = [nameComponents objectAtIndex:1];
+        capitalizedLastName = [lastName stringByReplacingCharactersInRange:NSMakeRange(0,1)
+                                                                withString:[[lastName substringToIndex:1] capitalizedString]];
+    }
+    
     NSString *fullName;
     if (space) {
         fullName = [capitalizedFirstName stringByAppendingString:[@" " stringByAppendingString:capitalizedLastName]];
@@ -660,7 +692,7 @@
 
 -(void)badgeUpdater:(NSString *)email order:(Order *)order{
 
-    [[[self.firebase queryOrderedByChild:@"sender"]queryEqualToValue:[self profileName:email withSpace:NO]] observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
+    [[[self.firebase queryOrderedByChild:@"sender"]queryEqualToValue:email] observeEventType:FEventTypeChildAdded withBlock:^(FDataSnapshot *snapshot) {
         if ([snapshot.value[@"read"]isEqualToString:@"yes"]) {
             return;
         }
@@ -717,9 +749,13 @@
     
     NSString *capitalizedFirstName = [firstName stringByReplacingCharactersInRange:NSMakeRange(0,1)
                                                                         withString:[[firstName substringToIndex:1] capitalizedString]];
-    NSString *lastName = [nameComponents objectAtIndex:1];
-    NSString *capitalizedLastName = [lastName stringByReplacingCharactersInRange:NSMakeRange(0,1)
-                                                                      withString:[[lastName substringToIndex:1] capitalizedString]];
+    NSString *capitalizedLastName= capitalizedFirstName;
+    if ([nameComponents count]>1) {
+        NSString *lastName = [nameComponents objectAtIndex:1];
+        capitalizedLastName = [lastName stringByReplacingCharactersInRange:NSMakeRange(0,1)
+                                                                withString:[[lastName substringToIndex:1] capitalizedString]];
+    }
+    
     
     NSString *fullName = [capitalizedFirstName stringByAppendingString:[@" " stringByAppendingString:capitalizedLastName]];
     return fullName;
@@ -763,14 +799,16 @@
         refundViewController.order = order;
         [self dismissViewControllerAnimated:YES completion:nil];
     }];  // UIAlertActionStyleDestructive
+    
     [deliverActionSheet addAction:cancelAction];
     [deliverActionSheet addAction:itemInfo];
     if ([order.item_status isEqualToString:@"receive"]&&[order.order_status isEqualToString:@"held"]) {
         deliverActionSheet.message = @"By admitting this, you are confirming that you have received and are satisfied with the item.";
         deliverActionSheet.title =@"Transaction Confirmation";
         [deliverActionSheet addAction:okAction];
+    }else{
+        [deliverActionSheet addAction:refundAction];
     }
-    [deliverActionSheet addAction:refundAction];
     if (self.presentedViewController == NULL) {
         [self presentViewController:deliverActionSheet animated:YES completion:nil];
     }
@@ -816,9 +854,7 @@
         [HHAlertView showAlertWithStyle:HHAlertStyleError inView:alertViewContainer.view Title:@"Error" detail:@"Please Contact Us" cancelButton:nil Okbutton:@"Cancel"];
     }
     if (self.presentedViewController == NULL) {
-        [self presentViewController:alertViewContainer animated:YES completion:^{
-            presentingModalViewController = alertViewContainer;
-        }];
+        [self presentViewController:alertViewContainer animated:YES completion:nil];
     }
 }
 
@@ -854,5 +890,38 @@
     return viewcontroller;
 }
 
+-(UIView *)setupTableViewHeader:(BOOL)isLeft numberToWarn:(NSInteger)number{
+    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screen_width, 20)];
+    UILabel *headerLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 5, screen_width, 10)];
+    headerLabel.textAlignment = NSTextAlignmentCenter;
+    if (number!=0) {
+        headerView.backgroundColor = [UIColor yellowColor];
+    }
+    NSString *alert= [NSString stringWithFormat:@"%li",(long)number];
+    if (isLeft) {
+        alert = [alert stringByAppendingString:@" transactions needed to confirm."];
+    }else{
+        alert = [alert stringByAppendingString:@" items needed to deliver."];
+        
+    }
+    NSAttributedString *labelDes = [[NSAttributedString alloc]initWithString:alert attributes:@{
+                                                                    NSForegroundColorAttributeName:[UIColor grayColor],NSFontAttributeName:[UIFont fontWithName:@"Gotham-Light" size:12]
+                                                                                                }];
+    headerLabel.attributedText = labelDes;
+    [headerView addSubview:headerLabel];
+    return headerView;
+}
 
+-(UIView *)setupSubtableFooterView{
+    UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screen_width, 20)];
+    footerView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    NSAttributedString *footerStr = [[NSAttributedString alloc]initWithString:@"Swipe left to remove items" attributes:@{
+                                                                                                                             NSFontAttributeName:[UIFont fontWithName:@"Gotham-Light" size:10.5],NSForegroundColorAttributeName: [UIColor grayColor]
+                                                                                                                             }];
+    UILabel *footerTitle = [[UILabel alloc]initWithFrame:CGRectMake(screen_width*0.1, 5, screen_width*0.8, 10)];
+    footerTitle.attributedText = footerStr;
+    footerTitle.textAlignment = NSTextAlignmentCenter;
+    [footerView addSubview:footerTitle];
+    return footerView;
+}
 @end

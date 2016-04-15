@@ -24,11 +24,10 @@
 @interface RegisterViewController ()<UITextFieldDelegate,UIScrollViewDelegate,HHAlertViewDelegate>
 @property (strong,nonatomic) NSString *capitalizedFirstName;
 @property (strong,nonatomic) NSString *capitalizedLastName;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topDistance;
+
 
 
 @end
-#warning Email registeration for Venmo
 
 @implementation RegisterViewController{
     BOOL agreeTerms;
@@ -58,8 +57,8 @@
     
 }
 
--(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(registerPass:) name:@"RegisterPassNotification" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(registerFail) name:@"RegisterFailNotification" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -74,6 +73,8 @@
     
     
 }
+
+
 -(void)keyboardWillHide{
     if (!keyboardHasShown) {
         return;
@@ -90,6 +91,7 @@
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter]removeObserver:self];
+    [self keyboardWillHide];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -114,9 +116,9 @@
     if (!self.registerButton.enabled) {
         return;
     }
-    NSString *dOB =[[[[self.year.text stringByAppendingString:@"-"] stringByAppendingString:self.month.text]stringByAppendingString:@"-"]stringByAppendingString:self.day.text];
+    
     [self namesWithEmail:self.email.text];
-    User *user = [[User alloc]initWithEmail:self.email.text firstName:self.capitalizedFirstName lastName:self.capitalizedLastName password:self.password.text phone:self.phone.text dateOfBirth:dOB];
+    User *user = [[User alloc]initWithEmail:self.email.text firstName:self.capitalizedFirstName lastName:self.capitalizedLastName password:self.password.text phone:self.phone.text];
     UserConnection *connection = [[UserConnection alloc]init];
     self.registerButton.enabled = NO;
     self.refresher.hidden = NO;
@@ -149,7 +151,7 @@
                                     style:UIAlertActionStyleDefault
                                     handler:^(UIAlertAction * action)
                                     {
-                                        //Handel your yes please button action here
+                                        //Handel yes please button action here
                                         [alertYes dismissViewControllerAnimated:YES completion:nil];
                                         if ([self.parentViewController isKindOfClass:[LoginMainViewController class]]) {
                                             LoginMainViewController *mainController = (LoginMainViewController *)self.parentViewController;
@@ -192,9 +194,9 @@
 - (IBAction)braintreeliabilityLink:(id)sender {
     [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"https://www.braintreepayments.com/legal/payment-services-agreement"]];
 }
-#warning terms and liability
+
 - (IBAction)proxiliabilityLink:(id)sender {
-    
+    [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"https://www.proximarketplace.com"]];
 }
 
 -(void)clearAll{
@@ -202,17 +204,15 @@
     self.email.text = @"";
     self.recheckPassword.text=@"";
     self.phone.text =@"";
-    self.month.text=@"";
-    self.day.text=@"";
-    self.year.text=@"";
+    self.firstName.text=@"";
+    self.lastName.text=@"";
     
     [self.password validate];
     [self.email validate];
     [self.recheckPassword validate];
     [self.phone validate];
-    [self.month validate];
-    [self.day validate];
-    [self.year validate];
+    [self.firstName validate];
+    [self.lastName validate];
     
 }
 
@@ -241,67 +241,43 @@
         return JAMValidatingTextFieldStatusInvalid;
 
     };
-    self.year.validationBlock = ^{
-        if (self.year.text.length==0) {
+    self.firstName.validationBlock = ^{
+        if (self.firstName.text.length==0) {
             return JAMValidatingTextFieldStatusIndeterminate;
         }
-        if (![self isInteger:self.year.text]|| [self.year.text integerValue]>2000||[self.year.text integerValue]<1900) {
-            return JAMValidatingTextFieldStatusInvalid;
+        else{
+            return JAMValidatingTextFieldStatusValid;
         }
-        if (!(self.year.text.length==4)) {
-            return JAMValidatingTextFieldStatusInvalid;
+        
+    };
+    self.lastName.validationBlock = ^{
+        if (self.lastName.text.length==0) {
+            return JAMValidatingTextFieldStatusIndeterminate;
         }
         else{
             return JAMValidatingTextFieldStatusValid;
         }
     };
-    self.month.validationBlock = ^{
-        if (self.month.text.length==0) {
-            return JAMValidatingTextFieldStatusIndeterminate;
-        }
-        if (!([self isInteger:self.month.text])||!([self.month.text integerValue]>0)||!([self.month.text integerValue]<13)) {
-            return JAMValidatingTextFieldStatusInvalid;
-        }
-        if (!(self.month.text.length==2)) {
-            return JAMValidatingTextFieldStatusInvalid;
-        }else{
-            return JAMValidatingTextFieldStatusValid;
-        }
-    };
-    self.day.validationBlock = ^{
-        if (self.day.text.length==0) {
-            return JAMValidatingTextFieldStatusIndeterminate;
-        }
-        if (!([self isInteger:self.day.text])||!([self.day.text integerValue]>0)||!([self.day.text integerValue]<32)) {
-            return JAMValidatingTextFieldStatusInvalid;
-        }
-        if (!(self.day.text.length==2)) {
-            return JAMValidatingTextFieldStatusInvalid;
-        }else{
-            return JAMValidatingTextFieldStatusValid;
-        }
-    };
     self.password.required = YES;
     self.recheckPassword.required = YES;
-    self.year.required=  YES;
-    self.month.required = YES;
-    self.day.required = YES;
+    self.firstName.required = YES;
+    self.lastName.required = YES;
     self.email.delegate = self;
     self.phone.delegate = self;
     self.recheckPassword.delegate = self;
     self.password.delegate = self;
-    self.year.delegate = self;
-    self.month.delegate = self;
-    self.day.delegate = self;
+    self.firstName.delegate = self;
+    self.lastName.delegate = self;
+    
+    
 }
 
 -(void)checkAllValidation{
     if (self.email.validationStatus==JAMValidatingTextFieldStatusValid&&
         self.phone.validationStatus==JAMValidatingTextFieldStatusValid&&
         self.recheckPassword.validationStatus==JAMValidatingTextFieldStatusValid&&
-        self.year.validationStatus==JAMValidatingTextFieldStatusValid&&
-        self.month.validationStatus==JAMValidatingTextFieldStatusValid&&
-        self.day.validationStatus==JAMValidatingTextFieldStatusValid&&
+        self.lastName.validationStatus==JAMValidatingTextFieldStatusValid&&
+        self.firstName.validationStatus==JAMValidatingTextFieldStatusValid&&
         agreeTerms) {
             self.registerButton.enabled=YES;
             [self.registerButton setBackgroundColor:highlight_color];
@@ -334,15 +310,10 @@
 }
 
 -(void)namesWithEmail:(NSString *)email{
-    NSArray *components = [email componentsSeparatedByString:@"@"];
-    NSString *nameString = [components objectAtIndex:0];
-    NSArray *nameComponents = [nameString componentsSeparatedByString:@"."];
-    NSString *firstName = [nameComponents objectAtIndex:0];
-    self.capitalizedFirstName = [firstName stringByReplacingCharactersInRange:NSMakeRange(0,1)
-                                                                        withString:[[firstName substringToIndex:1]    capitalizedString]];
-    NSString *lastName = [nameComponents objectAtIndex:1];
-    self.capitalizedLastName = [lastName stringByReplacingCharactersInRange:NSMakeRange(0,1)
-                                                                      withString:[[lastName substringToIndex:1] capitalizedString]];
+    self.capitalizedFirstName = [self.firstName.text stringByReplacingCharactersInRange:NSMakeRange(0,1)
+                                                                        withString:[[self.firstName.text substringToIndex:1]    capitalizedString]];
+    self.capitalizedLastName = [self.lastName.text stringByReplacingCharactersInRange:NSMakeRange(0,1)
+                                                                      withString:[[self.lastName.text substringToIndex:1] capitalizedString]];
 }
 
 -(void)setupGestureRecognizer{
@@ -359,9 +330,8 @@
     [self.password resignFirstResponder];
     [self.recheckPassword resignFirstResponder];
     [self.phone resignFirstResponder];
-    [self.year resignFirstResponder];
-    [self.month resignFirstResponder];
-    [self.day resignFirstResponder];
+    [self.firstName resignFirstResponder];
+    [self.lastName resignFirstResponder];
     [self checkAllValidation];
 }
 

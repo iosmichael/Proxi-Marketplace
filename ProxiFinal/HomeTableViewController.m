@@ -31,7 +31,6 @@
 @property (strong,nonatomic) ItemContainer *itemContainer;
 @property (strong,nonatomic) ItemConnection *itemConnection;
 @property (strong,nonatomic) NSArray *datasourceItemArray;
-@property (strong,nonatomic) UIButton *viewMoreButton;
 @property (strong,nonatomic) NSArray *categoryImagesArray;
 
 @end
@@ -43,7 +42,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupDatabase];
-    self.categoryImagesArray = @[@"Book",@"Ride",@"Clothing",@"Service",@"Furniture",@"Other"];
+    self.categoryImagesArray = @[@"Book",@"Electronic",@"Clothing",@"Equipment",@"Furniture",@"Other"];
 
     self.itemConnection = [[ItemConnection alloc]init];
     [self setupTestingSources];
@@ -295,7 +294,6 @@
     NSLog(@"update");
     self.datasourceItemArray = [[self.itemContainer allItem] copy];
     [self.tableView reloadData];
-    self.viewMoreButton.enabled = YES;
     [self.refresh endRefreshing];
     [self.bottomRefresher endRefreshing];
 }
@@ -303,7 +301,6 @@
     NSInteger containerNum = [self.itemContainer.container count];
     [self.itemContainer.container removeAllObjects];
     [self.itemConnection fetchItemFromIndex:0 amount:containerNum];
-    self.viewMoreButton.enabled = YES;
     [self.refresh endRefreshing];
     [self.bottomRefresher endRefreshing];
 }
@@ -312,23 +309,20 @@
     NSInteger containerNum = [self.itemContainer.container count];
     [self.itemContainer.container removeAllObjects];
     [self.itemConnection fetchItemFromIndex:0 amount:containerNum+i];
-    self.viewMoreButton.enabled = NO;
+
     //Refresh indicator show
     
 }
 -(void)updateViewController{
     [self.itemConnection fetchItemFromIndex:0 amount:[self.itemContainer.container count]];
     [self.itemContainer.container removeAllObjects];
-    self.viewMoreButton.enabled = NO;
 }
 
 -(void)refreshData{
     NSInteger containerNum = [self.itemContainer.container count];
     [self.itemContainer.container removeAllObjects];
     [self.itemConnection fetchItemFromIndex:0 amount: containerNum];
-    self.viewMoreButton.enabled = NO;
     [self.refresh beginRefreshing];
-
 }
 
 @end

@@ -14,10 +14,10 @@
 #import "ItemDetailViewController.h"
 #import "ItemContainer.h"
 #import "ItemConnection.h"
-#import "CategoryTableViewCell.h"
 #import "Item.h"
-#import "Store.h"
 
+#define search_color [UIColor colorWithRed:15/255.0 green:51/255.0 blue:79/255.0 alpha:1]
+#define screen_width [UIScreen mainScreen].bounds.size.width
 
 @interface SearchTableViewController ()<UISearchResultsUpdating, UISearchBarDelegate,UICollectionViewDelegate,UICollectionViewDataSource>
 
@@ -55,10 +55,13 @@
     
     self.searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x, self.searchController.searchBar.frame.origin.y, self.searchController.searchBar.frame.size.width, 50.0);
     
-    [self.searchController.searchBar setBarTintColor:[UIColor colorWithRed:50/255.0 green:144/255.0 blue:148/255.0 alpha:1.0]];
-    [self.searchController.searchBar setTintColor:[UIColor whiteColor]];
-    [self.searchController.searchBar setPlaceholder:@"Search"];
-
+    [self.searchController.searchBar setBarTintColor:[UIColor groupTableViewBackgroundColor]];
+    [self.searchController.searchBar setTintColor:search_color];
+    [self.searchController.searchBar setPlaceholder:@"Search "];
+    [[UILabel appearanceWhenContainedIn:[UISearchBar class], nil] setTextColor:search_color];
+    [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setDefaultTextAttributes:@{
+                                        NSFontAttributeName: [UIFont fontWithName:@"Gotham-LightItalic" size:20],NSForegroundColorAttributeName:search_color
+                                                                                                 }];
     [self.searchController.searchBar.layer setBorderColor:[UIColor clearColor].CGColor];
     [self.searchController.searchBar setSearchBarStyle:UISearchBarStyleDefault];
     self.tableView.backgroundColor = [UIColor whiteColor];
@@ -131,9 +134,6 @@
         storeViewController.store = store;
         [self.navigationController pushViewController:storeViewController animated:YES];
         */
-       /* Event *event = [self.eventArray objectAtIndex:indexPath.item];
-        [[UIApplication sharedApplication]openURL:[NSURL URLWithString:event.url]];
-        */
         NSString *forum_category = [categoryArray objectAtIndex:indexPath.row];
         ForumPostTableViewController *forumViewController = [[ForumPostTableViewController alloc]init];
         forumViewController.category = forum_category;
@@ -147,20 +147,6 @@
         UINib *nib = [UINib nibWithNibName:@"ItemBigCollectionViewCell" bundle: nil];
         [collectionView registerNib:nib forCellWithReuseIdentifier:@"ItemBigCollectionCell"];
         ItemBigCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ItemBigCollectionCell" forIndexPath:indexPath];
-        
-        //custom cell
-        /*Store *store = [self.storeArray objectAtIndex:indexPath.row];
-        if ([store.store_status isEqualToString:@"open"]) {
-            [cell.cellImage setImage:[UIImage imageNamed:@"store_open"]];
-        }else{
-            [cell.cellImage setImage:[UIImage imageNamed:@"store_close"]];
-        }
-        NSString *store_title = store.store_location;
-        
-        cell.cellPrice.text =store.store_open_time;
-        cell.cellTitle.text = store_title;
-        return cell;
-         */
         [cell.cellImage setImage:[imagesArray objectAtIndex:indexPath.row]];
         return cell;
     }else{
@@ -184,7 +170,7 @@
 {
     if(indexPath.section ==0){
         
-        return [categoryArray count]*180;//[[UIScreen mainScreen]bounds].size.height*0.4-20+15);
+        return [categoryArray count]*((screen_width-10)/298*170+10);//[[UIScreen mainScreen]bounds].size.height*0.4-20+15);
         
     }else{
         return 0;

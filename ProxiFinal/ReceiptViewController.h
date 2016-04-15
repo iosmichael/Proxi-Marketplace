@@ -7,7 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Braintree/Braintree.h>
+#import "Item.h"
 
 @interface ReceiptViewController : UIViewController
-
+@property (weak, nonatomic) IBOutlet UILabel *receipt_title;
+@property (weak, nonatomic) IBOutlet UILabel *receipt_date;
+@property (weak, nonatomic) IBOutlet UILabel *receipt_price;
+@property (weak, nonatomic) IBOutlet UIButton *order_button;
+@property (weak, nonatomic) IBOutlet UIImageView *receipt_image;
+@property (strong,nonatomic) Item *item;
+@property (strong,nonatomic) Braintree *braintree;
+@property (strong,nonatomic) NSString *timeStr;
 @end

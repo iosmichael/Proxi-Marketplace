@@ -141,7 +141,6 @@ static const CGFloat kTextEdgeInset = 6;
             if (match.resultType == NSTextCheckingTypeLink &&
                 [match.URL.absoluteString rangeOfString:@"mailto:"].location != NSNotFound) {
                 if ([weakSelf.text containsString:@"@my.wheaton.edu"]) {
-                    
                 return JAMValidatingTextFieldStatusValid;
                 }
             }

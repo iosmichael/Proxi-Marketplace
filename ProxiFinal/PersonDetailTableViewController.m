@@ -847,14 +847,22 @@
 -(void)checkoutPostSuccess:(NSNotification *)noti{
     NSString *protocal = [noti object];
     NSLog(@"protocal: %@",[protocal description]);
-    UIViewController *alertViewContainer = [self makingAlertViewController];
+    
+    UIAlertController *alert = [[UIAlertController alloc]init];
     if ([protocal isEqualToString:@"success"]) {
-        [HHAlertView showAlertWithStyle:HHAlertStyleOk inView:alertViewContainer.view Title:@"Success" detail:@"Thank you!" cancelButton:nil Okbutton:@"OK"];
+        alert.title =@"Success";
+        alert.message = @"Your Payment has been successfully processed! Please Continue to use Proxi in the future!";
     }else{
-        [HHAlertView showAlertWithStyle:HHAlertStyleError inView:alertViewContainer.view Title:@"Error" detail:@"Please Contact Us" cancelButton:nil Okbutton:@"Cancel"];
+        alert.title =@"Error";
+        alert.message = @"Your Payment has not been processed. Please contact Proxi Team for Troubleshooting.";
     }
+    UIAlertAction *yesButton = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }];
+    [alert addAction:yesButton];
+    
     if (self.presentedViewController == NULL) {
-        [self presentViewController:alertViewContainer animated:YES completion:nil];
+        [self presentViewController:alert animated:YES completion:nil];
     }
 }
 
@@ -863,17 +871,15 @@
     UIAlertController *alert= [UIAlertController alertControllerWithTitle:@"Confirmed?" message:@"This Action Cannot be Undone" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *yesButton = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         OrderConnection *orderConnection = [[OrderConnection alloc]init];
-        [orderConnection finishCheckOut:order.item_id];
         [self dismissViewControllerAnimated:YES completion:nil];
+        [orderConnection finishCheckOut:order.item_id];
     }];
     UIAlertAction *noButton = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         [self dismissViewControllerAnimated:YES completion:nil];
     }];
     [alert addAction:yesButton];
     [alert addAction:noButton];
-    if (self.presentedViewController == NULL) {
-        [self presentViewController:alert animated:YES completion:nil];
-    }
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section

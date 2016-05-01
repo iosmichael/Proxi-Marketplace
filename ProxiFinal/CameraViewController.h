@@ -6,6 +6,7 @@
 //
 #import <UIKit/UIKit.h>
 #import "CameraSessionView.h"
+#import <AVFoundation/AVFoundation.h>
 
 
 @interface CameraViewController : UIViewController

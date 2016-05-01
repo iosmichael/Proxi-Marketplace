@@ -5,6 +5,7 @@
 #import "BraintreeAccountSignUpViewController.h"
 
 
+
 @interface CameraViewController () <CACameraSessionDelegate>
 
 @property (nonatomic, strong) CameraSessionView *cameraView;
@@ -32,6 +33,7 @@
     self.tabBarController.tabBar.hidden = NO;
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     [self launchCamera];
+    [self launchSettingsAlert];
 }
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
@@ -120,6 +122,12 @@
     return resizedImage;
 }
 
+-(void)launchSettingsAlert{
+    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+    if (authStatus==AVAuthorizationStatusDenied) {
+        NSLog(@"denied");
+    }
+}
 
 
 

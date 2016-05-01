@@ -21,7 +21,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    [self.order_button setEnabled:NO];
     [self setupBraintree];
+    
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(orderPostSuccess:) name:@"CheckoutNotification" object:nil];
     [self setupElements];
     [[HHAlertView shared]setDelegate:self];
@@ -56,10 +58,6 @@
 #pragma mark- Braintree API
 
 -(void)setupBraintree{
-    // TODO: Handle errors
-    
-    //Only for sandbox
-    
     NSURL *clientTokenURL = [NSURL URLWithString:@"https://www.proximarketplace.com/database/generator.php"];
     NSMutableURLRequest *clientTokenRequest = [NSMutableURLRequest requestWithURL:clientTokenURL];
     [clientTokenRequest setValue:@"text/plain" forHTTPHeaderField:@"Accept"];
@@ -70,9 +68,11 @@
         
         // Initialize `Braintree` once per checkout session
         self.braintree = [Braintree braintreeWithClientToken:clientToken];
+        [self.order_button setEnabled:YES];
         // As an example, you may wish to present our Drop-in UI at this point.
         // Continue to the next section to learn more...
     }] resume];
+    
 }
 
 - (void)dropInViewController:(__unused BTDropInViewController *)viewController didSucceedWithPaymentMethod:(BTPaymentMethod *)paymentMethod {

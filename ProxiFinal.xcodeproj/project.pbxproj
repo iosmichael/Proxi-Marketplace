@@ -168,7 +168,6 @@
 		9E8093F31C4B3BE200BBA16F /* ContactUsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E8093F11C4B3BE200BBA16F /* ContactUsTableViewCell.m */; };
 		9E8093F41C4B3BE200BBA16F /* ContactUsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E8093F21C4B3BE200BBA16F /* ContactUsTableViewCell.xib */; };
 		9E8093F61C4B3C9B00BBA16F /* resource.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E8093F51C4B3C9B00BBA16F /* resource.xcassets */; };
-		9E8093F91C4B511200BBA16F /* AboutTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E8093F81C4B511200BBA16F /* AboutTableViewController.m */; };
 		9E8093FC1C4B5A2600BBA16F /* IssueConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E8093FB1C4B5A2600BBA16F /* IssueConnection.m */; };
 		9E8573FA1C8CD1170050938A /* Forum.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E8573F91C8CD1170050938A /* Forum.m */; };
 		9E8BA26D1BEFEAE30039F790 /* Transaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E8BA26C1BEFEAE30039F790 /* Transaction.m */; };
@@ -189,6 +188,7 @@
 		9EE687531BC037C80030BC8F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9EE687511BC037C80030BC8F /* LaunchScreen.storyboard */; };
 		9EE6875E1BC037C80030BC8F /* ProxiFinalTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EE6875D1BC037C80030BC8F /* ProxiFinalTests.m */; };
 		9EE687691BC037C80030BC8F /* ProxiFinalUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EE687681BC037C80030BC8F /* ProxiFinalUITests.m */; };
+		9EF2142B1CC67D2100FF5754 /* AboutTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E8093F81C4B511200BBA16F /* AboutTableViewController.m */; };
 		9EF4C4251BC9CE8D00F4ED38 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF4C4241BC9CE8D00F4ED38 /* MasterViewController.m */; };
 		9EF4C42E1BC9CFE600F4ED38 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF4C42C1BC9CFE600F4ED38 /* LoginViewController.m */; };
 		9EF4C4331BC9D05E00F4ED38 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EF4C4311BC9D05E00F4ED38 /* RegisterViewController.m */; };
@@ -1452,7 +1452,6 @@
 				9E8093931C3E3AD600BBA16F /* UIImage+JSMessagesView.m in Sources */,
 				9EF4C4331BC9D05E00F4ED38 /* RegisterViewController.m in Sources */,
 				9E8093621C3E3AD600BBA16F /* NSString+JSMessagesView.m in Sources */,
-				9E8093F91C4B511200BBA16F /* AboutTableViewController.m in Sources */,
 				9E8093DD1C4B1DAB00BBA16F /* ProfileTableViewController.m in Sources */,
 				9E0ECF911BC9A6E500D6B749 /* CameraSessionView.m in Sources */,
 				9EF4C47A1BCDA19E00F4ED38 /* ItemBigCollectionViewCell.m in Sources */,
@@ -1477,6 +1476,7 @@
 				9E8093601C3E3AD600BBA16F /* JSMessagesViewController.m in Sources */,
 				9E0ECF721BC9A45300D6B749 /* CameraViewController.m in Sources */,
 				9EB66B0B1BD08A7D001D5416 /* HHAlertView.m in Sources */,
+				9EF2142B1CC67D2100FF5754 /* AboutTableViewController.m in Sources */,
 				9EF4C4251BC9CE8D00F4ED38 /* MasterViewController.m in Sources */,
 				9E2D37BC1BD6DA42005BE36A /* MyTableViewCell.m in Sources */,
 				9EC219961C0ACE330004F426 /* GMDCircleLoader.m in Sources */,
